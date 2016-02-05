@@ -1,0 +1,502 @@
+{
+    "admin": 1,
+    "awards": [{
+        "award": "Picture",
+        "nominees": [{
+            "film": "The Big Short",
+            "nominee": ""
+        }, {
+            "film": "Bridge of Spies",
+            "nominee": ""
+        }, {
+            "film": "Brooklyn",
+            "nominee": ""
+        }, {
+            "film": "Mad Max: Fury Road",
+            "nominee": ""
+        }, {
+            "film": "The Martian",
+            "nominee": ""
+        }, {
+            "film": "The Revenant",
+            "nominee": ""
+        }, {
+            "film": "Room",
+            "nominee": ""
+        }, {
+            "film": "Spotlight",
+            "nominee": ""
+        }],
+        "points": 3,
+        "winner": 2
+    }, {
+        "award": "Director",
+        "nominees": [{
+            "film": "Room",
+            "nominee": "Lenny Abrahamson"
+        }, {
+            "film": "The Revenant",
+            "nominee": "Alejandro G. IÃ±Ã¡rritu"
+        }, {
+            "film": "Spotlight",
+            "nominee": "Tom McCarthy"
+        }, {
+            "film": "The Big Short",
+            "nominee": "Adam McKay"
+        }, {
+            "film": "Mad Max: Fury Road",
+            "nominee": "George Miller"
+        }],
+        "points": 1,
+        "winner": 2
+    }, {
+        "award": "Actor",
+        "nominees": [{
+            "film": "Trumbo",
+            "nominee": "Bryan Cranston"
+        }, {
+            "film": "The Martian",
+            "nominee": "Matt Damon"
+        }, {
+            "film": "The Revenant",
+            "nominee": "Leonardo DiCaprio"
+        }, {
+            "film": "Steve Jobs",
+            "nominee": "Michael Fassbender"
+        }, {
+            "film": "The Danish Girl",
+            "nominee": "Eddie Redmayne"
+        }],
+        "points": 1,
+        "winner": 2
+    }, {
+        "award": "Actress",
+        "nominees": [{
+            "film": "Carol",
+            "nominee": "Cate Blanchett"
+        }, {
+            "film": "Room",
+            "nominee": "Brie Larson"
+        }, {
+            "film": "Joy",
+            "nominee": "Jennifer Lawrence"
+        }, {
+            "film": "45 Years",
+            "nominee": "Charlotte Rampling"
+        }, {
+            "film": "Brooklyn",
+            "nominee": "Saoirse Ronan"
+        }],
+        "points": 1
+    }, {
+        "award": "Supporting Actor",
+        "nominees": [{
+            "film": "The Big Short",
+            "nominee": "Christian Bale"
+        }, {
+            "film": "The Revenant",
+            "nominee": "Tom Hardy"
+        }, {
+            "film": "Bridge of Spies",
+            "nominee": "Mark Rylance"
+        }, {
+            "film": "Spotlight",
+            "nominee": "Mark Ruffalo"
+        }, {
+            "film": "Creed",
+            "nominee": "Sylvester Stallone"
+        }],
+        "points": 1,
+        "winner": 2
+    }, {
+        "award": "Supporting Actress",
+        "nominees": [{
+            "film": "The Hateful Eight",
+            "nominee": "Jennifer Jason Leigh"
+        }, {
+            "film": "Carol",
+            "nominee": "Rooney Mara"
+        }, {
+            "film": "Spotlight",
+            "nominee": "Rachel McAdams"
+        }, {
+            "film": "The Danish Girl",
+            "nominee": "Alicia Vikander"
+        }, {
+            "film": "Steve Jobs",
+            "nominee": "Kate Winslet"
+        }],
+        "points": 1
+    }, {
+        "award": "Original Screenplay",
+        "nominees": [{
+            "film": "Bridge of Spies",
+            "nominee": "Matt Charman, Ethan Coen and Joel Coen"
+        }, {
+            "film": "Ex Machina",
+            "nominee": "Alex Garland"
+        }, {
+            "film": "Inside Out",
+            "nominee": "Pete Docter, Meg LeFauve, Josh Cooley, and Ronnie del Carmen"
+        }, {
+            "film": "Spotlight",
+            "nominee": "Josh Singer and Tom McCarthy"
+        }, {
+            "film": "Straight Outta Compton",
+            "nominee": "Jonathan Herman, Andrea Berloff, S. Leigh Savidge, and Alan Wenkus"
+        }],
+        "points": 1
+    }, {
+        "award": "Adapted Screenplay",
+        "nominees": [{
+            "film": "The Big Short",
+            "nominee": "Charles Randolph and Adam McKay"
+        }, {
+            "film": "Brooklyn",
+            "nominee": "Nick Hornby"
+        }, {
+            "film": "Carol",
+            "nominee": "Phyllis Nagy"
+        }, {
+            "film": "The Martian",
+            "nominee": "Drew Goddard"
+        }, {
+            "film": "Room",
+            "nominee": "Emma Donoghue"
+        }],
+        "points": 1
+    }, {
+        "award": "Animated Feature Film",
+        "nominees": [{
+            "film": "Anomalisa",
+            "nominee": ""
+        }, {
+            "film": "Boy and the World",
+            "nominee": ""
+        }, {
+            "film": "Inside Out",
+            "nominee": ""
+        }, {
+            "film": "Shaun the Sheep Movie",
+            "nominee": ""
+        }, {
+            "film": "When Marnie Was There",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Foreign Language Film",
+        "nominees": [{
+            "film": "A War (Denmark)",
+            "nominee": ""
+        }, {
+            "film": "Embrace of the Serpent (Colombia)",
+            "nominee": ""
+        }, {
+            "film": "Mustang (France)",
+            "nominee": ""
+        }, {
+            "film": "Son of Saul (Hungary)",
+            "nominee": ""
+        }, {
+            "film": "Theeb (Jordan)",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Documentary - Feature",
+        "nominees": [{
+            "film": "Amy",
+            "nominee": ""
+        }, {
+            "film": "Cartel Land",
+            "nominee": ""
+        }, {
+            "film": "The Look of Silence",
+            "nominee": ""
+        }, {
+            "film": "What Happened, Miss Simone?",
+            "nominee": ""
+        }, {
+            "film": "Winter on Fire: Ukraineâ€™s Fight for Freedom",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Documentary - Short Subject",
+        "nominees": [{
+            "film": "Body Team 12",
+            "nominee": ""
+        }, {
+            "film": "Chau, beyond the Lines",
+            "nominee": ""
+        }, {
+            "film": "Claude Lanzmann: Spectres of the Shoah",
+            "nominee": ""
+        }, {
+            "film": "The Girl on the River: The Price of Forgiveness",
+            "nominee": ""
+        }, {
+            "film": "Last Day of Freedom",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Live Action Short Film",
+        "nominees": [{
+            "film": "Ave Maria",
+            "nominee": ""
+        }, {
+            "film": "Day One",
+            "nominee": ""
+        }, {
+            "film": "Everything Will Be Okay (Alles Wird Gut)",
+            "nominee": ""
+        }, {
+            "film": "Shok",
+            "nominee": ""
+        }, {
+            "film": "Stutterer",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Animated Short Film",
+        "nominees": [{
+            "film": "Bear Story",
+            "nominee": ""
+        }, {
+            "film": "Prologue",
+            "nominee": ""
+        }, {
+            "film": "Sanjayâ€™s Super Team",
+            "nominee": ""
+        }, {
+            "film": "We Canâ€™t Live without Cosmos",
+            "nominee": ""
+        }, {
+            "film": "World of Tomorrow",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Original Score",
+        "nominees": [{
+            "film": "Bridge of Spies",
+            "nominee": "Thomas Newman"
+        }, {
+            "film": "Carol",
+            "nominee": "Carter Burwell"
+        }, {
+            "film": "Sicario",
+            "nominee": "JÃ³hann JÃ³hannsson"
+        }, {
+            "film": "Star Wars: The Force Awakens",
+            "nominee": "John Williams"
+        }, {
+            "film": "The Hateful Eight",
+            "nominee": "Ennio Morricone"
+        }],
+        "points": 1
+    }, {
+        "award": "Original Song",
+        "nominees": [{
+            "film": "Fifty Shades of Grey",
+            "nominee": "Earned It"
+        }, {
+            "film": "Racing Extinction",
+            "nominee": "Manta Ray"
+        }, {
+            "film": "Youth",
+            "nominee": "Simple Song #3"
+        }, {
+            "film": "The Hunting Ground",
+            "nominee": "Til It Happens to You"
+        }, {
+            "film": "Spectre",
+            "nominee": "Writing's on the Wall"
+        }],
+        "points": 1
+    }, {
+        "award": "Sound Editing",
+        "nominees": [{
+            "film": "Mad Max: Fury Road",
+            "nominee": ""
+        }, {
+            "film": "The Martian",
+            "nominee": ""
+        }, {
+            "film": "The Revenant",
+            "nominee": ""
+        }, {
+            "film": "Sicario",
+            "nominee": ""
+        }, {
+            "film": "Star Wars: The Force Awakens",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Sound Mixing",
+        "nominees": [{
+            "film": "Bridge of Spies",
+            "nominee": ""
+        }, {
+            "film": "Mad Max: Fury Road",
+            "nominee": ""
+        }, {
+            "film": "The Martian",
+            "nominee": ""
+        }, {
+            "film": "The Revenant",
+            "nominee": ""
+        }, {
+            "film": "Star Wars: The Force Awakens",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Production Design",
+        "nominees": [{
+            "film": "Bridge of Spies",
+            "nominee": ""
+        }, {
+            "film": "Mad Max: Fury Road",
+            "nominee": ""
+        }, {
+            "film": "The Danish Girl",
+            "nominee": ""
+        }, {
+            "film": "The Martian",
+            "nominee": ""
+        }, {
+            "film": "The Revenant",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Cinematography",
+        "nominees": [{
+            "film": "Carol",
+            "nominee": ""
+        }, {
+            "film": "Mad Max: Fury Road",
+            "nominee": ""
+        }, {
+            "film": "Sicario",
+            "nominee": ""
+        }, {
+            "film": "The Hateful Eight",
+            "nominee": ""
+        }, {
+            "film": "The Revenant",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Makeup and Hairstyling",
+        "nominees": [{
+            "film": "Mad Max: Fury Road",
+            "nominee": ""
+        }, {
+            "film": "The One Hundred Year Old Men Who Climbed Out The Window And Dissapeared",
+            "nominee": ""
+        }, {
+            "film": "The Revenant",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Costume Design",
+        "nominees": [{
+            "film": "Carol",
+            "nominee": ""
+        }, {
+            "film": "The Cinderella",
+            "nominee": ""
+        }, {
+            "film": "Mad Max: Fury Road",
+            "nominee": ""
+        }, {
+            "film": "The Danish Girl",
+            "nominee": ""
+        }, {
+            "film": "The Revenant",
+            "nominee": ""
+        }],
+        "points": 1
+    }, {
+        "award": "Film Editing",
+        "nominees": [{
+            "film": "Mad Max: Fury Road",
+            "nominee": "Margaret Sixel"
+        }, {
+            "film": "The Big Short",
+            "nominee": "Hank Corwin"
+        }, {
+            "film": "Spotlight",
+            "nominee": "Tom McArdle"
+        }, {
+            "film": "The Revenant",
+            "nominee": "Stephen Mirrione"
+        }, {
+            "film": "Star Wars: The Force Awakens",
+            "nominee": "Maryann Brandon and Mary Jo Markey"
+        }],
+        "points": 1
+    }],
+    "users": {
+        "facebook:10101440252179991": {
+            "age_range": {
+                "min": 21
+            },
+            "first_name": "Logan",
+            "gender": "male",
+            "id": "10101440252179991",
+            "last_name": "Joecks",
+            "link": "https://www.facebook.com/app_scoped_user_id/10101440252179991/",
+            "locale": "en_US",
+            "name": "Logan Joecks",
+            "picture": {
+                "data": {
+                    "is_silhouette": false,
+                    "url": "https://scontent.xx.fbcdn.net/hprofile-xap1/v/t1.0-1/p100x100/12191949_10101806740065331_7262066711725894295_n.jpg?oh=1a1a9b1520f505b54b6c841a27d01fff&oe=5738850C"
+                }
+            },
+            "timezone": -5,
+            // "competitions": {
+            //   "compId2": "pickId1",
+            //   "compId3": "pickId1"
+            // },
+            "picks": {
+                "pickId1": "compId2",
+                "pickId2": "compId3"
+            }
+        }
+    },
+    "picks": {
+        "pickId1": ["1", "2", "3", "1", "1", "3", "2", "0", "1", "2", "3", "2", "1", "2", "3", "2", "4", "2", "4", "4", "2", "4", "2"],
+        "pickId2": ["1", "2", "3", "1", "1", "3", "2", "0", "1", "2", "3", "2", "1", "2", "3", "2", "4", "2", "4", "4", "2", "4", "2"],
+        "pickId3": ["1", "2", "3", "1", "1", "3", "2", "0", "1", "2", "3", "2", "1", "2", "3", "2", "4", "2", "4", "4", "2", "4", "2"],
+        "pickId4": ["1", "2", "3", "1", "1", "3", "2", "0", "1", "2", "3", "2", "1", "2", "3", "2", "4", "2", "4", "4", "2", "4", "2"],
+    },
+    "competitions": {
+        "compId1": {
+            "name": "dudes",
+            "creator": "facebook:349830498304938",
+            "anyoneCanAdd": true,
+            "competitors": {
+                "facebook:10101440252179991": "pickId1",
+                "facebook:10101440252179991": "pickId1"
+            }
+        },
+        "compId2": {
+            "name": "yayas",
+            "competitors": {
+                "facebook:10101440252179991": "pickId1",
+                "facebook:10101440252179991": "pickId1",
+                "facebook:10101440252179991": "pickId1"
+            }
+        }
+    }
+}
