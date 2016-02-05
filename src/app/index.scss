@@ -1,0 +1,99 @@
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
+ */
+
+$nav-pills-active-link-hover-bg: #af9751;
+$link-color: black;
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+
+// bower:scss
+// endbower
+@import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
+$fa-font-path: "../../bower_components/font-awesome/fonts";
+@import "../../bower_components/font-awesome/scss/font-awesome.scss";
+.panel,
+.navbar {
+    font-family: 'Oswald', sans-serif;
+}
+
+// .navbar-brand {
+//     font-size: 29px;
+//     i {
+//         color: #af9751;
+//         padding-left: 10px;
+//         padding-right: 10px;
+//     }
+// }
+.header {
+    border-bottom: 1px solid #e5e5e5;
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 40px;
+        padding-bottom: 19px;
+    }
+}
+
+.correct {
+    background-color: lightgreen;
+}
+
+.incorrect {
+    background-color: rgb(255, 192, 203);
+}
+
+.title {
+    text-align: center;
+    .fa-star {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+.superlatives {
+    width: 100%;
+    .first {
+        td {
+            padding-top: 20px;
+            vertical-align: middle;
+            border-top: 2px solid lightgrey;
+        }
+    }
+    .second {
+        td {
+            padding-bottom: 20px;
+            // vertical-align: bottom;
+        }
+    }
+    .big {
+        font-size: 150%;
+        padding-left: 15px;
+    }
+}
+
+.footer,
+.header {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+
+
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+
+// injector
+// endinjector
