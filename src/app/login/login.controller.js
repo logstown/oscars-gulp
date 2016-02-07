@@ -1,68 +1,68 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('oscarsNew')
-		.controller('LoginController', LoginController);
+    angular
+        .module('oscarsNew')
+        .controller('LoginController', LoginController);
 
-	/** @ngInject */
-	function LoginController($rootScope, $firebaseObject, $state, Auth, currentAuth) {
-		var vm = this;
+    /** @ngInject */
+    function LoginController($rootScope, $firebaseObject, $state, Auth, currentAuth) {
+        var vm = this;
 
-		vm.login = login;
+        vm.login = login;
 
-		activate();
+        activate();
 
-		function activate() {
-			if (currentAuth !== null) {
-				$state.go('/');
-			}
-		}
+        function activate() {
+            if (currentAuth !== null) {
+                $state.go('/');
+            }
+        }
 
-		function login(provider) {
-			Auth.$authWithOAuthPopup(provider)
-				.then(function(result) {
-					var ref = new Firebase($rootScope.url + 'users/' + result.auth.uid);
-					var user = $firebaseObject(ref);
+        function login(provider) {
+            Auth.$authWithOAuthPopup(provider)
+                .then(function(result) {
+                    var ref = new Firebase($rootScope.url + 'users/' + result.auth.uid);
+                    var user = $firebaseObject(ref);
 
-					user.$loaded()
-						.then(function(data) {
-							if (!data.$value) {
-								user.$value = getProfile(provider);
-								user.$save();
-							}
-						});
-				});
-		}
+                    user.$loaded()
+                        .then(function() {
+                            if (user.$value === null) {
+                                user.$value = getProfile(result);
+                                user.$save();
+                            }
+                        });
+                });
+        }
 
-		function getProfile(result) {
-			var profile = result[result.provider].cachedUserProfile;
+        function getProfile(result) {
+            var profile = result[result.provider].cachedUserProfile;
 
-			switch (result.provider) {
-				case 'facebook':
-					return {
-						firstName: profile.first_name,
-						lastName: profile.last_name,
-						fullName: profile.name,
-						link: profile.link,
-						id: profile.id,
-						locale: profile.locale,
-						gender: profile.gender,
-						picture: profile.picture.data.url
-					};
+            switch (result.provider) {
+                case 'facebook':
+                    return {
+                        firstName: profile.first_name,
+                        lastName: profile.last_name,
+                        fullName: profile.name,
+                        link: profile.link,
+                        id: profile.id,
+                        locale: profile.locale,
+                        gender: profile.gender,
+                        picture: profile.picture.data.url
+                    };
 
-				case 'google':
-					return {
-						firstName: profile.given_name,
-						lastName: profile.family_name,
-						fullName: profile.name,
-						link: profile.link,
-						id: profile.id,
-						locale: profile.locale,
-						gender: profile.gender,
-						picture: profile.picture
-					}
-			}
-		}
-	}
+                case 'google':
+                    return {
+                        firstName: profile.given_name,
+                        lastName: profile.family_name,
+                        fullName: profile.name,
+                        link: profile.link,
+                        id: profile.id,
+                        locale: profile.locale,
+                        gender: profile.gender,
+                        picture: profile.picture
+                    }
+            }
+        }
+    }
 })();
