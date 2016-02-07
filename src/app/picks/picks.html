@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="page-header">
+        <h1>Your Picks</h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <input type="search" class="form-control" placeholder="Search..." ng-model="picks.searchTerm">
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-3 hidden-sm hidden-xs" ng-if="!picks.searchTerm">
+            <div class="affix hidden-print" bs-affix data-offset-top="-15">
+                <ul class="nav nav-stacked nav-pills">
+                    <li ng-repeat="award in picks.awards" ng-class="highlight($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
+                        <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">{{award.award}} <i ng-if="time < oscarStart" ng-show="user.picks[$index]"class="fa fa-check fa-fw text-success"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9" ng-class="{'col-md-offset-1': picks.searchTerm}">
+            <div id="award-{{$index}}" ng-repeat="award in picks.awards | filter:picks.searchTerm" class="panel panel-default">
+                <div class="panel-heading" style="background-color: #af9751; color: black">
+                    <h1 class="panel-title pull-left" style="text-shadow: 2px 2px 2px lightgrey; font-size: 20px;"><i class="fa fa-star"></i> {{award.award}}</h1>
+                    <div class="pull-right">
+                        <span class="badge alert-success">{{award.points}} pt<span ng-show="award.points > 1">s</span> </span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="highlightNom($parent.$index, $index)">
+                        <div class="radio pull-left" style="margin: 0;" ng-click="picks.createWinner($parent.$index, $index)">
+                            <label>
+                                <input type="radio" ng-model="user.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
+                                <span ng-show="nom.nominee"><span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span></span>
+                                <span ng-hide="nom.nominee"><span class="lead">{{nom.film}}</span></span>
+                                <i ng-if="time > oscarStart" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
+                            </label>
+                        </div>
+                        <div class="pull-right">
+                            <img ng-repeat="voter in userDist[$parent.$index].nominees[$index].users" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

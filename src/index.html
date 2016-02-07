@@ -2,85 +2,85 @@
 <html ng-app="oscarsNew">
 
 <head>
-	<meta charset="utf-8">
-	<title>oscarsNew</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width">
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<!-- build:css({.tmp/serve,src}) styles/vendor.css -->
-	<!-- bower:css -->
-	<!-- run `gulp inject` to automatically populate bower styles dependencies -->
-	<!-- endbower -->
-	<!-- endbuild -->
-	<!-- build:css({.tmp/serve,src}) styles/app.css -->
-	<!-- inject:css -->
-	<!-- css files will be automatically insert here -->
-	<!-- endinject -->
-	<!-- endbuild -->
+    <meta charset="utf-8">
+    <title>oscarsNew</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- inject:css -->
+    <!-- css files will be automatically insert here -->
+    <!-- endinject -->
+    <!-- endbuild -->
 </head>
 
 <body>
-	<!--[if lt IE 10]>
+    <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-	<div ng-controller="NavbarController as nav" ng-cloak>
-		<nav class="navbar navbar-inverse">
-			<div class="container" bs-collapse>
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" bs-collapse-toggle aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Oscar time!</a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="navbar-collapse" bs-collapse-target>
-					<!-- <form ng-show="nav.authData" class="navbar-form navbar-left" role="search">
+    <div ng-controller="NavbarController as nav" ng-cloak>
+        <nav class="navbar navbar-inverse">
+            <div class="container" bs-collapse>
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" bs-collapse-toggle aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Oscar time!</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="navbar-collapse" bs-collapse-target>
+                    <!-- <form ng-show="nav.authData" class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Search">
 						</div>
 						<button type="submit" class="btn btn-default">Submit</button>
 					</form> -->
-					<ul ng-show="nav.authData" class="nav navbar-nav navbar-right">
-						<li><a href="#">Link</a></li>
-						<li class="divider-vertical"></li>
-						<li class="dropdown">
-							<a href="#" bs-dropdown role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 5px;" data-animation="am-fade" data-placement="bottom-right">
-								<img ng-src="{{nav.user.picture}}" style="height: 40px; margin-right: 10px;" alt=""> {{nav.user.firstName}}
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href ng-click="nav.logout()">Logout</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<!-- /.navbar-collapse -->
-			</div>
-			<!-- /.container-fluid -->
-		</nav>
-	</div>
-	<div ui-view></div>
-	<!-- build:js(src) scripts/vendor.js -->
-	<!-- bower:js -->
-	<!-- run `gulp inject` to automatically populate bower script dependencies -->
-	<!-- endbower -->
-	<!-- endbuild -->
-	<!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
-	<!-- inject:js -->
-	<!-- js files will be automatically insert here -->
-	<!-- endinject -->
-	<!-- inject:partials -->
-	<!-- angular templates will be automatically converted in js and inserted here -->
-	<!-- endinject -->
-	<!-- endbuild -->
+                    <ul ng-show="nav.authData" class="nav navbar-nav navbar-right">
+                        <li><a href ng-click="nav.createNewPool()">Create New Pool</a></li>
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown">
+                            <a href="#" bs-dropdown role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 5px;" data-animation="am-fade" data-placement="bottom-right">
+                                <img ng-src="{{nav.user.picture}}" style="height: 40px; margin-right: 10px;" alt=""> {{nav.user.firstName}}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a ui-sref="picks">Picks</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href ng-click="nav.logout()">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+    <div ui-view></div>
+    <!-- build:js(src) scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- run `gulp inject` to automatically populate bower script dependencies -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+    <!-- inject:js -->
+    <!-- js files will be automatically insert here -->
+    <!-- endinject -->
+    <!-- inject:partials -->
+    <!-- angular templates will be automatically converted in js and inserted here -->
+    <!-- endinject -->
+    <!-- endbuild -->
 </body>
 
 </html>
