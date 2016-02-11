@@ -32,7 +32,7 @@
                 url: '/picks',
                 templateUrl: 'app/picks/picks.html',
                 controller: 'PicksController',
-                controllerAs: 'picks',
+                controllerAs: 'vm',
                 resolve: {
                     // controller will not be loaded until $requireAuth resolves
                     // Auth refers to our $firebaseAuth wrapper in the example above

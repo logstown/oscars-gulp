@@ -5,6 +5,7 @@
   angular
     .module('oscarsNew')
     .constant('malarkey', malarkey)
-    .constant('moment', moment);
+    .constant('moment', moment)
+    .constant('FBUrl', 'https://oscars.firebaseio.com/');
 
 })();
