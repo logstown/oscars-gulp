@@ -28,10 +28,10 @@
                     <div class="clearfix"></div>
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="vm.validateNominee($parent.$index, $index)">
+                    <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="vm.validateNominee($parent.$index, $index)" ng-click="vm.pickWinner($parent.$index, $index)">
                         <div class="radio pull-left" style="margin: 0;">
                             <label>
-                                <input type="radio" ng-model="vm.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="vm.isAfterOscarStart()" style="margin-top: 8px" ng-change="vm.nomineeClicked($parent.$index, $index)">
+                                <input type="radio" ng-model="vm.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="vm.isAfterOscarStart()" style="margin-top: 8px" ng-change="vm.nomineeClicked($parent.$index)">
                                 <span ng-show="nom.nominee"><span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span></span>
                                 <span ng-hide="nom.nominee"><span class="lead">{{nom.film}}</span></span>
                                 <i ng-if="vm.isAfterOscarStart()" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>

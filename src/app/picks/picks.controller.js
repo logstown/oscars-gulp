@@ -13,12 +13,12 @@
     function PicksController(FBUrl, $firebaseArray, $firebaseObject, Auth, TimeService, $document) {
         var vm = this;
         var currentUserId = Auth.$getAuth().uid;
-        console.log(Auth.$getAuth())
 
         vm.nomineeClicked = nomineeClicked;
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;
         vm.validateAward = validateAward;
         vm.validateNominee = validateNominee;
+        vm.pickWinner = pickWinner;
 
         activate();
 
@@ -33,18 +33,17 @@
             }
         }
 
-        function nomineeClicked(awardIdx, nomineeIdx) {
+        function nomineeClicked(awardIdx) {
             vm.picks.$save();
-
-            if (!isAuthorized()) {
-                return;
-            }
-
-            var award = vm.awards[awardIdx];
-            award.winner = nomineeIdx;
-            vm.awards.$save(award);
-
             scrollToNext(awardIdx);
+        }
+
+        function pickWinner(awardIdx, nomineeIdx) {
+            if (isAuthorized() && TimeService.isAfterOscarStart()) {
+                var award = vm.awards[awardIdx];
+                award.winner = nomineeIdx;
+                vm.awards.$save(award);
+            }
         }
 
         function isAuthorized() {
