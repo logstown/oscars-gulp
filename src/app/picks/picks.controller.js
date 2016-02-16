@@ -19,7 +19,6 @@
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;
         vm.validateAward = validateAward;
         vm.validateNominee = validateNominee;
-        vm.scrollToNext = scrollToNext;
 
         activate();
 
@@ -44,6 +43,8 @@
             var award = vm.awards[awardIdx];
             award.winner = nomineeIdx;
             vm.awards.$save(award);
+
+            scrollToNext(awardIdx);
         }
 
         function isAuthorized() {
@@ -70,9 +71,28 @@
             return !vm.picks[awardIdx] || !vm.awards[awardIdx].winner || !vm.isAfterOscarStart();
         }
 
-        function scrollToNext(awardIdx) {
-            var someElement = angular.element(document.getElementById('award-' + (awardIdx + 1)));
-            $document.scrollToElementAnimated(someElement, 0, SCROLL_DURATION);
+        function scrollToNext(awardIdxClicked) {
+            var nextAwards = _.omitBy(vm.picks, function(nomineeIdx, awardIdx) {
+                return awardIdx <= awardIdxClicked;
+            })
+
+            var lastIdx = awardIdxClicked;
+            _.forEach(nextAwards, function(nomineeIdx, awardIdx) {
+                awardIdx = Number(awardIdx)
+
+                if (isNaN(awardIdx) || awardIdx - lastIdx > 1) {
+                    return false;
+                }
+
+                lastIdx = awardIdx;
+            });
+
+            if (lastIdx === vm.awards.length - 1) {
+                return;
+            }
+
+            var nextAward = angular.element(document.getElementById('award-' + (lastIdx + 1)));
+            $document.scrollToElementAnimated(nextAward, 0, SCROLL_DURATION);
         }
     }
 })();
