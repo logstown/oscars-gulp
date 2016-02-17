@@ -1,1 +1,8 @@
-<div>hi</div>
+<div class="container">
+    <div ng-show="!vm.isAfterOscarStart()" class="jumbotron">
+        <h2 class="text-center">
+    <i class="fa fa-clock-o"></i> Starts in
+    <timer end-time="vm.oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0"> {{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0"> {{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0"> {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
+  </h2>
+    </div>
+</div>

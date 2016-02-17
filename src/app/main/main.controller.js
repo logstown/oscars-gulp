@@ -1,16 +1,15 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('oscarsNew')
-		.controller('MainController', MainController);
+    angular
+        .module('oscarsNew')
+        .controller('MainController', MainController);
 
-	/** @ngInject */
-	function MainController($scope, $rootScope, $firebase, $location, $timeout, $modal, Auth, User) {
-		var vm = this;
+    /** @ngInject */
+    function MainController(TimeService) {
+        var vm = this;
 
-		vm.logout = function() {
-			Auth.$unauth();
-		}
-	}
+        vm.isAfterOscarStart = TimeService.isAfterOscarStart;
+        vm.oscarStart = TimeService.getOscarStart();
+    }
 })();
