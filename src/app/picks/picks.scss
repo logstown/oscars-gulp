@@ -1,0 +1,7 @@
+.nominees {
+    li {
+        &:focus {
+            outline: none;
+        }
+    }
+}

@@ -27,7 +27,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <ul class="list-group">
+                <ul class="list-group nominees">
                     <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="vm.validateNominee($parent.$index, $index)" ng-click="vm.pickWinner($parent.$index, $index)">
                         <div class="radio pull-left" style="margin: 0;">
                             <label>
