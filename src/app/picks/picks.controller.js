@@ -10,10 +10,11 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController(FBUrl, $firebaseArray, $firebaseObject, Auth, TimeService, $document, $modal) {
+    function PicksController(FBUrl, $firebaseArray, $firebaseObject, Auth, TimeService, $document, $modal, User) {
         var vm = this;
         var currentUserId = Auth.$getAuth().uid;
         var informedUser = false;
+        var ref = new Firebase(FBUrl);
 
         vm.nomineeClicked = nomineeClicked;
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;
@@ -24,14 +25,26 @@
         activate();
 
         function activate() {
-            var ref = new Firebase(FBUrl);
-
             vm.awards = $firebaseArray(ref.child('awards'));
             vm.picks = $firebaseObject(ref.child('picks').child(currentUserId));
 
             if (TimeService.isAfterOscarStart()) {
-
+                afterStart();
             }
+        }
+
+        function afterStart() {
+            var competition
+            var user = User(currentUserId);
+
+            user.$loaded()
+                .then(function() {
+                    competition = $firebaseObject(ref.child('competitions').child(user.compId));
+                    competition.$loaded()
+                        .then(function() {
+
+                        })
+                })
         }
 
         function nomineeClicked(awardIdx) {
