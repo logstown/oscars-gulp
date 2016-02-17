@@ -6,7 +6,7 @@
         .factory('TimeService', TimeService);
 
     /** @ngInject */
-    function TimeService($rootScope, $firebaseObject, $interval) {
+    function TimeService($interval) {
         var currentTime = new Date();
         var oscarStart = new Date(2016, 1, 29, 1, 30 - currentTime.getTimezoneOffset());
 
