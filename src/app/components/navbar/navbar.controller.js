@@ -5,17 +5,14 @@
         .module('oscarsNew')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['Auth', 'User', '$modal'];
-
     /* @ngInject */
-    function NavbarController(Auth, User, $modal) {
+    function NavbarController(Auth, User) {
         var vm = this;
         vm.auth = Auth;
         vm.authData = false;
         vm.user = {};
 
-        vm.logout = logout
-        vm.createNewPool = createNewPool;
+        vm.logout = logout;
 
         activate();
 
@@ -33,28 +30,6 @@
 
         function logout() {
             vm.auth.$unauth();
-        }
-
-        function createNewPool() {
-            $modal({
-                templateUrl: 'app/pool/_addPool.html',
-                show: true,
-                controller: function() {
-                    var vm = this;
-
-                    vm.newPool = {
-                        allowOthers: false
-                    };
-
-                    vm.create = create;
-
-                    function create() {
-                        console.log(vm.newPool)
-                    }
-                },
-                controllerAs: 'vm',
-                animation: 'am-fade-and-scale'
-            });
         }
     }
 })();
