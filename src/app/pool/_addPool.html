@@ -1,26 +1,36 @@
 <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Create New Pool</h4>
-            </div>
-            <div class="modal-body">
-                <form>
+        <div class="modal-content" ng-hide="vm.poolUrl">
+            <form ng-submit="vm.create()">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Create New Pool</h4>
+                </div>
+                <div class="modal-body">
                     <div class="form-group">
                         <label>Pick a name</label>
-                        <input type="text" ng-model="vm.newPool.name" class="form-control" placeholder="Name">
+                        <input type="text" ng-model="vm.newPoolName" focus-me class="form-control" required placeholder="Name">
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="vm.newPool.allowOthers"> Participants can invite others
-                        </label>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Create</button>
+                    <button type="button" class="btn btn-danger" ng-click="$hide()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-content" ng-if="vm.poolUrl">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Pool Created!</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Share this link with others:</label>
+                    <input id="pool-url" type="text" select-me readonly ng-model="vm.poolUrl" class="form-control">
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" ng-click="$hide()">Cancel</button>
-                <button type="button" class="btn btn-success" ng-click="vm.create()">Create</button>
+                <button type="button" class="btn btn-info" ng-click="$hide()">Close</button>
             </div>
         </div>
     </div>
