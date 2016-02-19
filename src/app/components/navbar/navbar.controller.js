@@ -6,7 +6,7 @@
         .controller('NavbarController', NavbarController);
 
     /* @ngInject */
-    function NavbarController(Auth, User) {
+    function NavbarController(Auth, User, $state) {
         var vm = this;
         vm.auth = Auth;
         vm.authData = false;
@@ -24,6 +24,8 @@
                 vm.authData = authData;
                 if (vm.authData) {
                     vm.user = User(authData.uid)
+                } else {
+                    $state.go('login');
                 }
             });
         }

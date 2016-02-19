@@ -6,7 +6,7 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController(FBUrl, $firebaseObject, $state, Auth, currentAuth) {
+    function LoginController(FBUrl, $firebaseObject, $state, Auth, currentAuth, $rootScope) {
         var vm = this;
 
         vm.login = login;
@@ -15,7 +15,7 @@
 
         function activate() {
             if (currentAuth !== null) {
-                $state.go('/');
+                $state.go('home');
             }
         }
 
@@ -27,10 +27,22 @@
 
                     user.$loaded()
                         .then(function() {
+                            var route = {
+                                state: 'home',
+                                params: {}
+                            }
+
+                            if ($rootScope.intendedRoute) {
+                                route = $rootScope.intendedRoute
+                                $rootScope.intendedRoute = undefined;
+                            }
+
                             if (user.$value === null) {
                                 user.$value = getProfile(result);
                                 user.$save();
                             }
+
+                            $state.go(route.state, route.params);
                         });
                 });
         }
