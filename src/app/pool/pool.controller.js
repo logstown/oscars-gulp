@@ -6,22 +6,48 @@
         .controller('PoolController', PoolController);
 
     /** @ngInject */
-    function PoolController(FBUrl, $firebaseObject, $stateParams, toastr, $state) {
-        var vm = this;
+    function PoolController(FBUrl, $stateParams, toastr, $state, currentAuth) {
         var ref = new Firebase(FBUrl);
+        var poolRef = ref.child('pools').child($stateParams.id);
 
         activate();
 
         function activate() {
-            vm.pool = $firebaseObject(ref.child('pools').child($stateParams.id));
+            poolRef.once('value', processPoolToJoin)
+        }
 
-            vm.pool.$loaded()
-                .then(function() {
-                    if (vm.pool.$value === null) {
-                        toastr.error('Error', 'Invalid Pool ID');
-                        $state.go('home');
-                    }
-                })
+        function processPoolToJoin(snap) {
+            if (snap.val() === null) {
+                toastr.error('Invalid Pool ID');
+                $state.go('home');
+            } else {
+                var oldPoolIdRef = ref.child('users').child(currentAuth.uid).child('poolId');
+                oldPoolIdRef.once('value', processOldPool)
+            }
+        }
+
+        function processOldPool(snap) {
+            var oldPoolId = snap.val();
+
+            if (oldPoolId) {
+                if (confirm('Are you sure you want to abandon your other pool and join this one?')) {
+                    ref.child('pools').child(oldPoolId).child('competitors').child(currentAuth.uid).remove();
+                    addUserToPool();
+                } else {
+                    toastr.info('Keeping original Pool')
+                    $state.go('home');
+                }
+            } else {
+                addUserToPool();
+            }
+        }
+
+        function addUserToPool() {
+            poolRef.child('competitors').child(currentAuth.uid).set(true);
+            ref.child('users').child(currentAuth.uid).child('poolId').set($stateParams.id);
+
+            toastr.success('You have been added to this Pool!')
+            $state.go('home');
         }
     }
 })();

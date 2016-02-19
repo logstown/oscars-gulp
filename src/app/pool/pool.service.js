@@ -13,20 +13,15 @@
             create: create
         };
 
-        function create(name, uid) {
-            var newPool = {
-                name: name,
-                creator: uid,
-                competitors: {}
-            };
-
-            newPool.competitors[uid] = true;
+        function create(pool) {
+            pool.competitors = {}
+            pool.competitors[pool.creator] = true;
 
             var pools = $firebaseArray(poolsRef);
 
-            return pools.$add(newPool)
+            return pools.$add(pool)
                 .then(function(newPoolRef) {
-                    var user = User(uid);
+                    var user = User(pool.creator);
                     return user.$loaded()
                         .then(function() {
                             user.poolId = newPoolRef.key();

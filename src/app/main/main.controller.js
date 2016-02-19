@@ -71,16 +71,19 @@
                     var newPool = this;
 
                     newPool.poolUrl = '';
-                    newPool.newPoolName = '';
+                    newPool.pool = {
+                        name: '',
+                        creator: Auth.$getAuth().uid
+                    };
 
                     newPool.create = create;
 
                     function create() {
-                        if (!newPool.newPoolName) {
+                        if (!newPool.pool.name) {
                             return;
                         }
 
-                        PoolService.create(newPool.newPoolName, Auth.$getAuth().uid)
+                        PoolService.create(newPool.pool)
                             .then(function(poolId) {
                                 newPool.poolUrl = POOL_URL + poolId;
                             })
