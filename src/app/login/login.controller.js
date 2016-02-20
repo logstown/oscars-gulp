@@ -57,7 +57,7 @@
                         lastName: profile.last_name,
                         fullName: profile.name,
                         link: profile.link,
-                        id: profile.id,
+                        uid: result.auth.uid,
                         locale: profile.locale,
                         gender: profile.gender,
                         picture: profile.picture.data.url
@@ -69,7 +69,7 @@
                         lastName: profile.family_name,
                         fullName: profile.name,
                         link: profile.link,
-                        id: profile.id,
+                        uid: result.auth.uid,
                         locale: profile.locale,
                         gender: profile.gender,
                         picture: profile.picture
@@ -80,7 +80,7 @@
                         screenName: profile.screen_name,
                         fullName: profile.name,
                         link: profile.url,
-                        id: profile.id,
+                        uid: result.auth.uid,
                         locale: profile.lang,
                         picture: profile.profile_image_url
                     }
@@ -90,7 +90,7 @@
                         screenName: profile.login,
                         fullName: profile.name,
                         link: profile.url,
-                        id: profile.id,
+                        uid: result.auth.uid,
                         picture: profile.avatar_url
                     }
             }
