@@ -1,23 +1,30 @@
 <div class="container">
     <div class="jumbotron">
         <div class="page-header">
-            <h1 class="text-center">Welcome to the Jenkins Family Oscar Competition!</h1>
+            <h1 class="text-center">Welcome to an Oscar Competition!</h1>
         </div>
         <div class="row">
-            <div class="col-sm-4">
-                <button class="btn btn-lg btn-primary btn-block" ng-click="vm.login('facebook')">
-                    Login with Facebook
-                </button>
-            </div>
-            <div class="col-sm-4">
-                <button class="btn btn-lg btn-danger btn-block" ng-click="vm.login('google')">
-                    Login with Google
-                </button>
-            </div>
-            <div class="col-sm-4">
-                <button class="btn btn-lg btn-info btn-block" ng-click="vm.login('twitter')">
-                    Login with Twitter
-                </button>
+            <div class="col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+                <div class="row login-btn">
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="vm.login('facebook')">
+                        <span><i class="fa fa-facebook fa-fw"></i></span> <span>Login with Facebook</span>
+                    </button>
+                </div>
+                <div class="row login-btn">
+                    <button class="btn btn-lg btn-danger btn-block" ng-click="vm.login('google')">
+                        <span><i class="fa fa-google fa-fw"></i></span> <span>Login with Google</span>
+                    </button>
+                </div>
+                <div class="row login-btn">
+                    <button class="btn btn-lg btn-info btn-block" ng-click="vm.login('twitter')">
+                        <span><i class="fa fa-twitter fa-fw"></i></span> <span>Login with Twitter</span>
+                    </button>
+                </div>
+                <div class="row login-btn">
+                    <button class="btn btn-lg btn-inverse btn-block" ng-click="vm.login('github')">
+                        <span><i class="fa fa-github fa-fw"></i></span> <span>Login with Github</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

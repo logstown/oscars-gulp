@@ -84,6 +84,15 @@
                         locale: profile.lang,
                         picture: profile.profile_image_url
                     }
+
+                case 'github':
+                    return {
+                        screenName: profile.login,
+                        fullName: profile.name,
+                        link: profile.url,
+                        id: profile.id,
+                        picture: profile.avatar_url
+                    }
             }
         }
     }

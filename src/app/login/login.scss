@@ -1,0 +1,15 @@
+.login-btn {
+    margin-bottom: 5px;
+    .btn {
+        text-align: left;
+        span {
+            &:first-child {
+                padding-right: 5px;
+                border-right: 1px solid;
+            }
+            &:last-child {
+                padding-left: 5px;
+            }
+        }
+    }
+}
