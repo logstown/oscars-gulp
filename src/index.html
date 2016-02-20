@@ -49,12 +49,12 @@
                         <li class="divider-vertical"></li>
                         <li class="dropdown">
                             <a href bs-dropdown role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 5px;" data-animation="am-fade" data-placement="bottom-right">
-                                <img ng-src="{{nav.user.picture}}" style="height: 40px; margin-right: 10px;" alt=""> {{nav.user.firstName}}
+                                <img ng-src="{{nav.user.picture}}" style="height: 40px; margin-right: 10px;" alt=""> {{nav.user.firstName || nav.user.screenName}}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a ui-sref="picks">Picks</a></li>
-                                <li><a href="#">Another action</a></li>
+                                <li><a href ng-click="nav.editProfile()">Edit Profile</a></li>
                                 <li><a href="#">Something else here</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href ng-click="nav.logout()">Logout</a></li>

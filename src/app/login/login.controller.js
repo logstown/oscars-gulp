@@ -30,7 +30,7 @@
                             var route = {
                                 state: 'home',
                                 params: {}
-                            }
+                            };
 
                             if ($rootScope.intendedRoute) {
                                 route = $rootScope.intendedRoute
@@ -73,6 +73,16 @@
                         locale: profile.locale,
                         gender: profile.gender,
                         picture: profile.picture
+                    };
+
+                case 'twitter':
+                    return {
+                        screenName: profile.screen_name,
+                        fullName: profile.name,
+                        link: profile.url,
+                        id: profile.id,
+                        locale: profile.lang,
+                        picture: profile.profile_image_url
                     }
             }
         }
