@@ -11,14 +11,20 @@
     function MainController(TimeService, Auth, $firebaseObject, FBUrl, User, $modal, PoolService, $scope) {
         var vm = this;
         var ref = new Firebase(FBUrl);
-        var uid = Auth.$getAuth().uid;
+        var currentUid = Auth.$getAuth().uid;
+        var picks = [];
 
         vm.pool = undefined;
         vm.noPool = false;
+        vm.picksSize = 0;
 
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;
         vm.oscarStart = TimeService.getOscarStart();
         vm.createNewPool = createNewPool;
+        vm.getProgressWidth = getProgressWidth;
+        vm.getProgressBarColor = getProgressBarColor;
+        vm.showRemove = showRemove;
+        vm.removeUser = removeUser;
 
         activate();
 
@@ -31,32 +37,82 @@
         }
 
         function loadUserAndPool() {
-            var user = User(uid);
+            var user = User(currentUid);
 
             user.$loaded()
                 .then(function() {
                     if (user.poolId) {
                         vm.users = [];
                         vm.pool = $firebaseObject(ref.child('pools').child(user.poolId));
-                        vm.poolUrl = POOL_URL + user.poolId;
 
                         vm.pool.$loaded()
                             .then(function() {
+                                if (vm.pool.$value === null) {
+                                    ref.child('users').child(currentUid).child('poolId').remove();
+                                    vm.pool.$destroy();
+
+                                    return;
+                                }
+
                                 var usersRef = ref.child('users');
                                 var competitorsRef = ref.child('pools').child(user.poolId).child('competitors');
+                                vm.poolUrl = POOL_URL + user.poolId;
 
                                 competitorsRef.on('child_added', function(snap) {
                                     usersRef.child(snap.key()).once('value', function(deal) {
                                         vm.users.push(deal.val())
-                                    })
-                                })
-
-
-                            })
+                                    });
+                                });
+                            });
                     } else {
                         vm.noPool = true;
                     }
-                })
+
+                    picks = $firebaseObject(ref.child('picks').child(currentUid));
+
+                    picks.$loaded()
+                        .then(function() {
+                            // This is duplicated in picks.controller
+                            vm.picksSize = _.chain(picks)
+                                .omitBy(function(value, key) {
+                                    return isNaN(Number(key));
+                                })
+                                .size()
+                                .value();
+                        })
+                });
+        }
+
+        function getProgressWidth() {
+            var width = vm.picksSize ? (vm.picksSize / 23) * 100 : '';
+
+            return width + '%';
+        }
+
+        function getProgressBarColor() {
+            if (!vm.picksSize) {
+                return;
+            }
+
+            if (vm.picksSize < 12) {
+                return 'progress-bar-danger';
+            } else if (vm.picksSize < 23) {
+                return 'progress-bar-warning';
+            } else {
+                return 'progress-bar-success';
+            }
+        }
+
+        function showRemove(uid) {
+            return currentUid === vm.pool.creator && uid !== vm.pool.creator;
+        }
+
+        function removeUser(user) {
+            if (confirm('Confirm removing user from Pool')) {
+                ref.child('pools').child(vm.pool.$id).child('competitors').child(user.uid).remove();
+
+                _.remove(vm.users, user);
+            }
         }
 
         function createNewPool() {
