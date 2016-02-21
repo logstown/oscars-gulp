@@ -57,7 +57,6 @@
                 .size()
                 .value();
 
-
             if (picksSize === vm.awards.length && !informedUser) {
                 $modal({
                     title: 'All Done!',
