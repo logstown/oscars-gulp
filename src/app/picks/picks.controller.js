@@ -10,7 +10,7 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController(FBUrl, $firebaseArray, $firebaseObject, Auth, TimeService, $document, $modal, User) {
+    function PicksController(FBUrl, $firebaseArray, $firebaseObject, Auth, TimeService, $document, $modal, User, PicksService) {
         var vm = this;
         var currentUserId = Auth.$getAuth().uid;
         var informedUser = false;
@@ -50,14 +50,7 @@
         function nomineeClicked(awardIdx) {
             vm.picks.$save();
 
-            var picksSize = _.chain(vm.picks)
-                .omitBy(function(value, key) {
-                    return isNaN(Number(key));
-                })
-                .size()
-                .value();
-
-            if (picksSize === vm.awards.length && !informedUser) {
+            if (PicksService.getSize(vm.picks) === vm.awards.length && !informedUser) {
                 $modal({
                     title: 'All Done!',
                     content: 'Come back during the Oscars Ceremony to check on your progress.',

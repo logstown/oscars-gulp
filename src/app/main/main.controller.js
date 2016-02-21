@@ -8,11 +8,10 @@
         .controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(TimeService, Auth, $firebaseObject, FBUrl, User, $modal, PoolService, $scope) {
+    function MainController(TimeService, Auth, $firebaseObject, FBUrl, User, $modal, $scope, PicksService) {
         var vm = this;
         var ref = new Firebase(FBUrl);
         var currentUid = Auth.$getAuth().uid;
-        var picks = [];
 
         vm.pool = undefined;
         vm.noPool = false;
@@ -34,6 +33,7 @@
 
         function activate() {
             loadUserAndPool();
+            getPicksSize();
         }
 
         function loadUserAndPool() {
@@ -59,28 +59,24 @@
                                 vm.poolUrl = POOL_URL + user.poolId;
 
                                 competitorsRef.on('child_added', function(snap) {
-                                    usersRef.child(snap.key()).once('value', function(deal) {
-                                        vm.users.push(deal.val())
+                                    usersRef.child(snap.key()).once('value', function(user) {
+                                        vm.users.push(user.val())
                                     });
                                 });
                             });
                     } else {
                         vm.noPool = true;
                     }
-
-                    picks = $firebaseObject(ref.child('picks').child(currentUid));
-
-                    picks.$loaded()
-                        .then(function() {
-                            // This is duplicated in picks.controller
-                            vm.picksSize = _.chain(picks)
-                                .omitBy(function(value, key) {
-                                    return isNaN(Number(key));
-                                })
-                                .size()
-                                .value();
-                        })
                 });
+        }
+
+        function getPicksSize() {
+            var picks = $firebaseObject(ref.child('picks').child(currentUid));
+
+            picks.$loaded()
+                .then(function() {
+                    vm.picksSize = PicksService.getSize(picks);
+                })
         }
 
         function getProgressWidth() {
@@ -116,14 +112,13 @@
         }
 
         function createNewPool() {
-
             $modal({
                 templateUrl: 'app/pool/_addPool.html',
                 show: true,
                 controllerAs: 'vm',
                 animation: 'am-fade-and-scale',
                 prefixEvent: 'add.pool',
-                controller: function() {
+                controller: function(Auth, PoolService) {
                     var newPool = this;
 
                     newPool.poolUrl = '';
