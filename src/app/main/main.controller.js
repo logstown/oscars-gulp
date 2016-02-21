@@ -15,6 +15,7 @@
 
         vm.pool = undefined;
         vm.picksSize = 0;
+        vm.noPool = false;
 
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;
         vm.oscarStart = TimeService.getOscarStart();
@@ -41,6 +42,7 @@
             user.$loaded()
                 .then(function() {
                     if (!user.poolId) {
+                        vm.noPool = true;
                         return;
                     }
 
@@ -52,6 +54,8 @@
                             if (vm.pool.$value === null) {
                                 ref.child('users').child(currentUid).child('poolId').remove();
                                 vm.pool.$destroy();
+
+                                vm.noPool = true;
 
                                 return;
                             }

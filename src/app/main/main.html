@@ -20,7 +20,7 @@
             <a ui-sref="picks" class="btn btn-primary btn-lg">Make Picks</a>
         </div>
     </div>
-    <div class="row" ng-hide="vm.pool">
+    <div class="row" ng-show="vm.noPool">
         <div class="col-md-6 col-md-offset-3 text-center">
             <p class="lead">Looks like you're not part of a pool yet.</p>
             <p class="lead">Join a pool by clicking a link sent to you by a friend, or create a new one by clicking below</p>
@@ -32,10 +32,9 @@
     <div class="row" ng-show="vm.pool">
         <div class="col-md-6 col-md-offset-3">
             <div class="jumbotron">
-                <h3>Your Pool</h3>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{vm.pool.name}}</h3>
+                        <h3>{{vm.pool.name}}</h3>
                     </div>
                     <ul class="list-group">
                         <li class="list-group-item" ng-repeat="user in vm.users">
