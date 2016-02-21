@@ -1,11 +1,11 @@
 <div class="container">
-    <div ng-show="!vm.isAfterOscarStart()" class="jumbotron">
-        <h2 class="text-center">
-            <i class="fa fa-clock-o"></i> Starts in
-            <timer end-time="vm.oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0"> {{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0"> {{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0"> {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
-        </h2>
+    <div class="text-center">
+        <h1>Oscar Winner Competition</h1>
+        <h5 ng-hide="vm.isAfterOscarStart()">
+            <i class="fa fa-clock-o"></i> Starts in <timer end-time="vm.oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0"> {{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0"> {{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0"> {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
+        </h5>
     </div>
-    <div class="row" style="margin-bottom: 50px;">
+    <div class="row" style="margin-bottom: 50px; margin-top: 50px;">
         <div class="col-md-6 col-md-offset-3 text-center">
             <div class="progress">
                 <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{vm.picksSize}}" aria-valuemin="0" aria-valuemax="23" ng-style="{'width': vm.getProgressWidth()}" ng-class="vm.getProgressBarColor()">
@@ -20,7 +20,7 @@
             <a ui-sref="picks" class="btn btn-primary btn-lg">Make Picks</a>
         </div>
     </div>
-    <div class="row" ng-show="vm.noPool">
+    <div class="row" ng-hide="vm.pool">
         <div class="col-md-6 col-md-offset-3 text-center">
             <p class="lead">Looks like you're not part of a pool yet.</p>
             <p class="lead">Join a pool by clicking a link sent to you by a friend, or create a new one by clicking below</p>

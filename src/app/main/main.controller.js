@@ -14,7 +14,6 @@
         var currentUid = Auth.$getAuth().uid;
 
         vm.pool = undefined;
-        vm.noPool = false;
         vm.picksSize = 0;
 
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;
@@ -41,32 +40,32 @@
 
             user.$loaded()
                 .then(function() {
-                    if (user.poolId) {
-                        vm.users = [];
-                        vm.pool = $firebaseObject(ref.child('pools').child(user.poolId));
+                    if (!user.poolId) {
+                        return;
+                    }
 
-                        vm.pool.$loaded()
-                            .then(function() {
-                                if (vm.pool.$value === null) {
-                                    ref.child('users').child(currentUid).child('poolId').remove();
-                                    vm.pool.$destroy();
+                    vm.users = [];
+                    vm.pool = $firebaseObject(ref.child('pools').child(user.poolId));
 
-                                    return;
-                                }
+                    vm.pool.$loaded()
+                        .then(function() {
+                            if (vm.pool.$value === null) {
+                                ref.child('users').child(currentUid).child('poolId').remove();
+                                vm.pool.$destroy();
 
-                                var usersRef = ref.child('users');
-                                var competitorsRef = ref.child('pools').child(user.poolId).child('competitors');
-                                vm.poolUrl = POOL_URL + user.poolId;
+                                return;
+                            }
 
-                                competitorsRef.on('child_added', function(snap) {
-                                    usersRef.child(snap.key()).once('value', function(user) {
-                                        vm.users.push(user.val())
-                                    });
+                            var usersRef = ref.child('users');
+                            var competitorsRef = ref.child('pools').child(user.poolId).child('competitors');
+                            vm.poolUrl = POOL_URL + user.poolId;
+
+                            competitorsRef.on('child_added', function(snap) {
+                                usersRef.child(snap.key()).once('value', function(user) {
+                                    vm.users.push(user.val())
                                 });
                             });
-                    } else {
-                        vm.noPool = true;
-                    }
+                        });
                 });
         }
 
@@ -118,6 +117,7 @@
                 controllerAs: 'vm',
                 animation: 'am-fade-and-scale',
                 prefixEvent: 'add.pool',
+                scope: $scope,
                 controller: function(Auth, PoolService) {
                     var newPool = this;
 
