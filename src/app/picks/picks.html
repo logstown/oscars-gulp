@@ -28,7 +28,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <ul class="list-group nominees">
-                    <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="vm.validateNominee($parent.$index, $index)" ng-click="vm.pickWinner($parent.$index, $index)">
+                    <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="vm.validateNominee($parent.$index, $index)">
                         <div class="radio pull-left" style="margin: 0;">
                             <label>
                                 <input type="radio" ng-model="vm.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="vm.isAfterOscarStart()" style="margin-top: 8px" ng-change="vm.nomineeClicked($parent.$index)">
@@ -40,6 +40,7 @@
                         <div class="pull-right">
                             <img ng-repeat="voter in vm.getVoters($parent.$index, $index)" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
                         </div>
+                        <button class="btn btn-default" ng-if="vm.isAfterOscarStart() &&  vm.isAuthorized()" style="position: absolute; right:-66px;" ng-click="vm.pickWinner($parent.$index, $index)">Winner</button>
                         <div class="clearfix"></div>
                     </li>
                 </ul>

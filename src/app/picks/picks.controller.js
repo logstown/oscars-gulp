@@ -21,6 +21,7 @@
         vm.validateAward = validateAward;
         vm.validateNominee = validateNominee;
         vm.pickWinner = pickWinner;
+        vm.isAuthorized = isAuthorized;
 
         activate();
 
