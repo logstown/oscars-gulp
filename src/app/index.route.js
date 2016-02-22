@@ -66,6 +66,10 @@
                         return Auth.$requireAuth();
                     }]
                 }
+            })
+            .state('faq', {
+                url: '/faq',
+                templateUrl: 'app/faq/faq.html'
             });
 
         $urlRouterProvider.otherwise('/');
