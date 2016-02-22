@@ -38,7 +38,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="pull-left" style="margin-top: 10px;">{{vm.pool.name}}</h3>
-                    <button class="btn btn-info pull-right" data-animation="am-fade-and-scale" data-template-url="pool-link.html" bs-modal><i class="fa fa-share-alt" style="margin-right: 5px;"></i>Get Link</button>
+                    <button class="btn btn-info pull-right" style="margin-top: 7px;" data-animation="am-fade-and-scale" data-template-url="pool-link.html" bs-modal><i class="fa fa-share-alt" style="margin-right: 5px;"></i>Get Link</button>
                     <div class="clearfix"></div>
                 </div>
                 <table class="table pool-competitors">
@@ -50,7 +50,7 @@
                             <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
                         </td>
                         <td class="user-name">
-                            <span data-title="Admin" data-container="body" bs-tooltip data-bs-enabled="vm.showAdmin(user.uid)" ng-class="{'label label-info':vm.showAdmin(user.uid)}">{{user.fullName}}</span>
+                            <span data-title="Admin" data-container="body" bs-tooltip data-bs-enabled="vm.showAdmin(user.uid)" ng-class="{'admin':vm.showAdmin(user.uid)}">{{user.fullName}}</span>
                         </td>
                         <td class="user-progress">
                             <div class="progress">
