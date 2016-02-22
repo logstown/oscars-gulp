@@ -24,7 +24,7 @@
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div ng-controller="NavbarController as nav" ng-cloak>
+    <div ng-controller="NavbarController as nav">
         <nav class="navbar navbar-inverse">
             <div class="container" bs-collapse>
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -48,7 +48,7 @@
                     <ul class="nav navbar-nav navbar-left">
                         <li><a ui-sref="faq">FAQ</a></li>
                     </ul>
-                    <ul ng-show="nav.authData" class="nav navbar-nav navbar-right">
+                    <ul ng-show="nav.authData" class="nav navbar-nav navbar-right" ng-cloak>
                         <!-- <li class="divider-vertical"></li> -->
                         <li class="dropdown">
                             <a href bs-dropdown role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 5px;" data-animation="am-fade" data-placement="bottom-right">

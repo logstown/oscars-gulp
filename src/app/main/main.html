@@ -2,7 +2,7 @@
     <div class="text-center">
         <h1 style="font-size: 50px;">Oscar Showdown</h1>
         <h3 ng-hide="vm.isAfterOscarStart()">
-            <i class="fa fa-clock-o"></i> Starts in <timer end-time="vm.oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0"> {{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0"> {{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0"> {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
+            <i class="fa fa-clock-o"></i> Starts in<timer end-time="vm.oscarStart"><span ng-show="days > 0" class="countdown-unit">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0" class="countdown-unit">{{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0" class="countdown-unit">{{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0" class="countdown-unit">{{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
         </h3>
     </div>
     <div class="row" ng-show="vm.noPool" style="margin-top: 50px;">
