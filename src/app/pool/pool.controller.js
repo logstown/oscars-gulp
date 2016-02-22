@@ -30,7 +30,9 @@
             var oldPoolId = snap.val();
 
             if (oldPoolId) {
-                if (confirm('Are you sure you want to abandon your other pool and join this one?')) {
+                if (oldPoolId === $stateParams.id) {
+                    $state.go('home');
+                } else if (confirm('Are you sure you want to abandon your other pool and join this one?')) {
                     ref.child('pools').child(oldPoolId).child('competitors').child(currentAuth.uid).remove();
                     addUserToPool();
                 } else {
