@@ -1,50 +1,91 @@
 <div class="container">
     <div class="text-center">
-        <h1>Oscar Winner Competition</h1>
-        <h5 ng-hide="vm.isAfterOscarStart()">
+        <h1 style="font-size: 50px;">Oscar Showdown</h1>
+        <h3 ng-hide="vm.isAfterOscarStart()">
             <i class="fa fa-clock-o"></i> Starts in <timer end-time="vm.oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0"> {{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0"> {{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0"> {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
-        </h5>
+        </h3>
     </div>
-    <div class="row" style="margin-bottom: 50px; margin-top: 50px;">
-        <div class="col-md-6 col-md-offset-3 text-center">
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{vm.picksSize}}" aria-valuemin="0" aria-valuemax="23" ng-style="{'width': vm.getProgressWidth()}" ng-class="vm.getProgressBarColor()">
-                    <span class="sr-only">{{vm.getProgressWidth()}}% Complete</span>
+    <div class="row" ng-show="vm.noPool" style="margin-top: 50px;">
+        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 text-center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="lead">Looks like you're not part of a pool yet.</p>
+                    <p class="lead">Join a pool by clicking a link sent to you by a friend, or create a new one by clicking below</p>
+                    <div class="text-center">
+                        <button class="btn btn-success btn-lg" ng-click="vm.createNewPool()">Create a Pool</button>
+                    </div>
                 </div>
             </div>
-            <p class="lead" ng-hide="vm.picksSize === 23">{{vm.picksSize}} / 23 awards complete</p>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 50px; margin-top: 50px;">
+        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 text-center">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{vm.picksSize}}" aria-valuemin="0" aria-valuemax="23" ng-style="{'width': vm.getProgressWidth(vm.picksSize)}" ng-class="vm.getProgressBarColor(vm.picksSize)">
+                    <span class="sr-only">{{vm.getProgressWidth(vm.picksSize)}}% Complete</span>
+                </div>
+            </div>
+            <p class="lead text-warning" ng-hide="vm.picksSize === 23">{{vm.picksSize}} / 23 nominees picked</p>
             <div ng-show="vm.picksSize === 23">
-                <p class="lead">Your picks are complete!</p>
+                <p class="lead text-success">Your picks are complete!</p>
                 <p class="lead">Check back in when the ceremony starts or second guess yourself below:</p>
             </div>
             <a ui-sref="picks" class="btn btn-primary btn-lg">Make Picks</a>
         </div>
     </div>
-    <div class="row" ng-show="vm.noPool">
-        <div class="col-md-6 col-md-offset-3 text-center">
-            <p class="lead">Looks like you're not part of a pool yet.</p>
-            <p class="lead">Join a pool by clicking a link sent to you by a friend, or create a new one by clicking below</p>
-            <div class="text-center">
-                <button class="btn btn-success btn-lg" ng-click="vm.createNewPool()">Create a Pool</button>
-            </div>
-        </div>
-    </div>
     <div class="row" ng-show="vm.pool">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="jumbotron">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3>{{vm.pool.name}}</h3>
-                    </div>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="user in vm.users">
-                            <div class="pull-left"><img ng-src="{{user.picture}}" style="height: 40px; margin-right: 10px;" alt="">{{user.fullName}}</div>
-                            <div class="pull-right"><i class="fa fa-close fa-2x" ng-click="vm.removeUser(user)" ng-show="vm.showRemove(user.uid)" data-title="Remove from Pool" data-placement="auto right" data-container="body" bs-tooltip style="color: #d9534f; cursor: pointer;"></i></div>
-                            <div class="clearfix"></div>
-                        </li>
-                    </ul>
+        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="pull-left" style="margin-top: 10px;">{{vm.pool.name}}</h3>
+                    <button class="btn btn-info pull-right" data-animation="am-fade-and-scale" data-template-url="pool-link.html" bs-modal><i class="fa fa-share-alt" style="margin-right: 5px;"></i>Get Link</button>
+                    <div class="clearfix"></div>
                 </div>
+                <table class="table pool-competitors">
+                    <tr ng-repeat="user in vm.users" class="competitor">
+                        <td class="user-remove" ng-if="vm.currentUid === vm.pool.creator">
+                            <i class="fa fa-close text-danger" ng-click="vm.removeUser(user)" ng-hide="user.uid === vm.pool.creator" data-title="Remove from Pool" data-placement="auto left" data-container="body" bs-tooltip style="cursor: pointer;"></i>
+                        </td>
+                        <td class="user-picture">
+                            <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
+                        </td>
+                        <td class="user-name">
+                            <span data-title="Admin" data-container="body" bs-tooltip data-bs-enabled="vm.showAdmin(user.uid)" ng-class="{'label label-info':vm.showAdmin(user.uid)}">{{user.fullName}}</span>
+                        </td>
+                        <td class="user-progress">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{user.progress}}" aria-valuemin="0" aria-valuemax="23" ng-style="{'width': vm.getProgressWidth(user.progress)}" ng-class="vm.getProgressBarColor(user.progress)">
+                                    <span class="sr-only">{{vm.getProgressWidth(user.progress)}}% Complete</span>
+                                </div>
+                            </div>
+                            <div class="pull-right">{{user.progress}} / 23 nominees picked</div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
 </div>
+<script type="text/ng-template" id="pool-link.html">
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Share Pool Link!</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Duplicate code in main.html -->
+                    <div class="form-group">
+                        <label>Share this link with others:</label>
+                        <input id="pool-url" type="text" select-me readonly ng-model="vm.poolUrl" class="form-control">
+                    </div>
+                    <!--  -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="$hide()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

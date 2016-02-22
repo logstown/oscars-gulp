@@ -1,7 +1,12 @@
-.nominees {
-    li {
-        &:focus {
-            outline: none;
+.award-radio {
+    .award-points {
+        font-size: 130%;
+    }
+    .nominees {
+        li {
+            &:focus {
+                outline: none;
+            }
         }
     }
 }

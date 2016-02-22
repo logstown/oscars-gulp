@@ -8,11 +8,11 @@
         .controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(TimeService, Auth, $firebaseObject, FBUrl, User, $modal, $scope, PicksService) {
+    function MainController(TimeService, Auth, $firebaseObject, FBUrl, User, $modal, $scope, PicksService, $sce) {
         var vm = this;
         var ref = new Firebase(FBUrl);
-        var currentUid = Auth.$getAuth().uid;
 
+        vm.currentUid = Auth.$getAuth().uid;
         vm.pool = undefined;
         vm.picksSize = 0;
         vm.noPool = false;
@@ -22,12 +22,16 @@
         vm.createNewPool = createNewPool;
         vm.getProgressWidth = getProgressWidth;
         vm.getProgressBarColor = getProgressBarColor;
-        vm.showRemove = showRemove;
         vm.removeUser = removeUser;
+        vm.showAdmin = showAdmin
+        vm.test = function() {
+            console.log(vm.poolLinkModal)
+        }
 
         activate();
 
         $scope.$on('add.pool.hide', function() {
+            vm.noPool = false;
             loadUserAndPool();
         })
 
@@ -37,7 +41,7 @@
         }
 
         function loadUserAndPool() {
-            var user = User(currentUid);
+            var user = User(vm.currentUid);
 
             user.$loaded()
                 .then(function() {
@@ -52,7 +56,7 @@
                     vm.pool.$loaded()
                         .then(function() {
                             if (vm.pool.$value === null) {
-                                ref.child('users').child(currentUid).child('poolId').remove();
+                                ref.child('users').child(vm.currentUid).child('poolId').remove();
                                 vm.pool.$destroy();
 
                                 vm.noPool = true;
@@ -62,19 +66,29 @@
 
                             var usersRef = ref.child('users');
                             var competitorsRef = ref.child('pools').child(user.poolId).child('competitors');
-                            vm.poolUrl = POOL_URL + user.poolId;
+                            createPoolUrl(user);
 
                             competitorsRef.on('child_added', function(snap) {
-                                usersRef.child(snap.key()).once('value', function(user) {
-                                    vm.users.push(user.val())
+                                usersRef.child(snap.key()).once('value', function(competitor) {
+                                    competitor = competitor.val();
+
+                                    ref.child('picks').child(competitor.uid).once('value', function(userPicks) {
+                                        console.log(userPicks.val())
+                                        competitor.progress = PicksService.getSize(userPicks.val())
+                                        vm.users.push(competitor)
+                                    })
                                 });
                             });
                         });
                 });
         }
 
+        function createPoolUrl(user) {
+            vm.poolUrl = POOL_URL + user.poolId;
+        }
+
         function getPicksSize() {
-            var picks = $firebaseObject(ref.child('picks').child(currentUid));
+            var picks = $firebaseObject(ref.child('picks').child(vm.currentUid));
 
             picks.$loaded()
                 .then(function() {
@@ -82,28 +96,28 @@
                 })
         }
 
-        function getProgressWidth() {
-            var width = vm.picksSize ? (vm.picksSize / 23) * 100 : '';
+        function getProgressWidth(picksSize) {
+            var width = picksSize ? (picksSize / 23) * 100 : '';
 
             return width + '%';
         }
 
-        function getProgressBarColor() {
-            if (!vm.picksSize) {
+        function getProgressBarColor(picksSize) {
+            if (!picksSize) {
                 return;
             }
 
-            if (vm.picksSize < 12) {
+            if (picksSize < 12) {
                 return 'progress-bar-danger';
-            } else if (vm.picksSize < 23) {
+            } else if (picksSize < 23) {
                 return 'progress-bar-warning';
             } else {
                 return 'progress-bar-success';
             }
         }
 
-        function showRemove(uid) {
-            return currentUid === vm.pool.creator && uid !== vm.pool.creator;
+        function showAdmin(uid) {
+            return uid === vm.pool.creator;
         }
 
         function removeUser(user) {

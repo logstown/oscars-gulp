@@ -17,7 +17,7 @@
             $timeout(function() {
                 element[0].focus()
                 element[0].select();
-            }, 2000);
+            }, 1000);
         }
     }
 
