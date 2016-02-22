@@ -23,10 +23,7 @@
         vm.getProgressWidth = getProgressWidth;
         vm.getProgressBarColor = getProgressBarColor;
         vm.removeUser = removeUser;
-        vm.showAdmin = showAdmin
-        vm.test = function() {
-            console.log(vm.poolLinkModal)
-        }
+        vm.showAdmin = showAdmin;
 
         activate();
 
@@ -73,7 +70,6 @@
                                     competitor = competitor.val();
 
                                     ref.child('picks').child(competitor.uid).once('value', function(userPicks) {
-                                        console.log(userPicks.val())
                                         competitor.progress = PicksService.getSize(userPicks.val())
                                         vm.users.push(competitor)
                                     })
