@@ -38,7 +38,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="pull-left" style="margin-top: 10px;">{{vm.pool.name}}</h3>
-                    <button class="btn btn-info pull-right" style="margin-top: 7px;" data-animation="am-fade-and-scale" data-template-url="pool-link.html" bs-modal><i class="fa fa-share-alt" style="margin-right: 5px;"></i>Get Link</button>
+                    <button class="btn btn-info pull-right" style="margin-top: 7px;" data-animation="am-fade-and-scale" data-template-url="pool-link.html" bs-modal><i class="fa fa-share-alt" style="margin-right: 5px;"></i>Invite Others</button>
                     <div class="clearfix"></div>
                 </div>
                 <table class="table pool-competitors">
@@ -72,12 +72,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Share Pool Link!</h4>
+                    <h4 class="modal-title">Invite others to join the Fun!</h4>
                 </div>
                 <div class="modal-body">
                     <!-- Duplicate code in main.html -->
                     <div class="form-group">
-                        <label>Share this link with others:</label>
+                        <label>Share this link:</label>
                         <input id="pool-url" type="text" select-me readonly ng-model="vm.poolUrl" class="form-control">
                     </div>
                     <!--  -->
