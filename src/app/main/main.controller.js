@@ -136,7 +136,7 @@
                 animation: 'am-fade-and-scale',
                 prefixEvent: 'add.pool',
                 scope: $scope,
-                controller: function(Auth, PoolService) {
+                controller: ['Auth', 'PoolService', function(Auth, PoolService) {
                     var newPool = this;
 
                     newPool.poolUrl = '';
@@ -157,7 +157,7 @@
                                 newPool.poolUrl = POOL_URL + poolId;
                             })
                     }
-                }
+                }]
             });
         }
     }

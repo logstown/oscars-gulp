@@ -48,9 +48,9 @@
                     <ul class="nav navbar-nav navbar-left">
                         <li><a ui-sref="faq">FAQ</a></li>
                     </ul>
-                    <ul ng-show="nav.authData" class="nav navbar-nav navbar-right" ng-cloak>
+                    <ul ng-show="nav.authData" class="nav navbar-nav navbar-right">
                         <!-- <li class="divider-vertical"></li> -->
-                        <li class="dropdown">
+                        <li class="dropdown ng-cloak">
                             <a href bs-dropdown role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 5px;" data-animation="am-fade" data-placement="bottom-right">
                                 <img ng-src="{{nav.user.picture}}" style="height: 40px; margin-right: 10px;" alt=""> {{nav.user.firstName || nav.user.screenName}}
                                 <span class="caret"></span>

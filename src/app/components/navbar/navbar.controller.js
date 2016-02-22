@@ -40,7 +40,7 @@
                 show: true,
                 controllerAs: 'vm',
                 animation: 'am-fade-and-scale',
-                controller: function(FBUrl, User, Auth) {
+                controller: ['FBUrl', 'User', 'Auth', function(FBUrl, User, Auth) {
                     var profile = this;
 
                     profile.userNotLoaded = true;
@@ -65,7 +65,7 @@
                                 hide();
                             })
                     }
-                }
+                }]
             });
         }
     }
