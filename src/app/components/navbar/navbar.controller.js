@@ -31,6 +31,7 @@
 
         function logout() {
             vm.auth.$unauth();
+            $state.go('login');
         }
 
         function editProfile() {
