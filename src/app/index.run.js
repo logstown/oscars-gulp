@@ -6,7 +6,7 @@
         .run(runBlock);
 
     /** @ngInject */
-    function runBlock($log, $rootScope) {
+    function runBlock($log, $rootScope, $state) {
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
             // We can catch the error thrown when the $requireAuth promise is rejected
             // and redirect the user back to the home page
@@ -15,6 +15,8 @@
                     state: toState.name,
                     params: toParams
                 };
+
+                $state.go('login')
             }
         });
 

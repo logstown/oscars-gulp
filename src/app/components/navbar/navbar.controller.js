@@ -25,8 +25,6 @@
                 vm.authData = authData;
                 if (vm.authData) {
                     vm.user = User(authData.uid)
-                } else {
-                    $state.go('login');
                 }
             });
         }
