@@ -75,6 +75,12 @@
                                     })
                                 });
                             });
+
+                            competitorsRef.on('child_removed', function(snap) {
+                                usersRef.child(snap.key()).once('value', function(competitor) {
+                                    _.remove(vm.users, competitor.val());
+                                })
+                            })
                         });
                 });
         }
@@ -119,8 +125,6 @@
         function removeUser(user) {
             if (confirm('Confirm removing user from Pool')) {
                 ref.child('pools').child(vm.pool.$id).child('competitors').child(user.uid).remove();
-
-                _.remove(vm.users, user);
             }
         }
 
