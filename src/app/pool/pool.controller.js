@@ -10,6 +10,10 @@
         var ref = new Firebase(FBUrl);
         var poolRef = ref.child('pools').child($stateParams.id);
 
+        if (!currentAuth.uid) {
+            $state.go('login')
+        }
+
         activate();
 
         function activate() {

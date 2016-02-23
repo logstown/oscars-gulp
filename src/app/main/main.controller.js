@@ -6,7 +6,7 @@
         .controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(Auth, FBUrl, User, $modal, baseUrl) {
+    function MainController(Auth, FBUrl, User, $modal, baseUrl, $state) {
         var vm = this;
 
         var ref = new Firebase(FBUrl);
@@ -29,14 +29,15 @@
         }
 
         function loadUserAndPool() {
+            if (!vm.currentUid) {
+                $state.go('login');
+            }
+
             var user = User(vm.currentUid);
 
             user.$loaded()
                 .then(function(user) {
-                    if (!user.pools) {
-                        vm.noPools = true;
-                        return;
-                    }
+                    vm.noPools = !user.pools;
 
                     getPools();
                 });

@@ -10,9 +10,9 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController(FBUrl, $firebaseArray, $firebaseObject, Auth, TimeService, $document, $modal, User, PicksService) {
+    function PicksController(FBUrl, $firebaseArray, $firebaseObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
         var vm = this;
-        var currentUserId = Auth.$getAuth().uid;
+        var currentUserId = currentAuth.uid;
         var informedUser = false;
         var ref = new Firebase(FBUrl);
 
@@ -26,6 +26,10 @@
         activate();
 
         function activate() {
+            if (!currentUserId) {
+                $state.go('login');
+            }
+
             vm.awards = $firebaseArray(ref.child('awards'));
             vm.picks = $firebaseObject(ref.child('picks').child(currentUserId));
 
