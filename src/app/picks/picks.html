@@ -9,11 +9,14 @@
     <div class="row">
     </div>
     <div class="row" style="margin-top: 20px;">
-        <div class="col-md-3 hidden-sm hidden-xs" ng-if="!vm.searchTerm">
+        <div class="col-md-3 hidden-sm hidden-xs award-list" ng-if="!vm.searchTerm">
             <div class="affix hidden-print" bs-affix data-offset-top="-15">
                 <ul class="nav nav-stacked nav-pills">
                     <li ng-repeat="award in vm.awards" ng-class="vm.validateAward($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
                         <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">{{award.award}} <i ng-if="!vm.isAfterOscarStart()" ng-show="vm.picks[$index]"class="fa fa-check fa-fw text-success"></i></a>
+                    </li>
+                    <li style="margin-top: 1px;">
+                        <a href="#navbar" du-smooth-scroll style="padding: 3px 15px;"><small class="text-primary">Go to Top</small></a>
                     </li>
                 </ul>
             </div>
