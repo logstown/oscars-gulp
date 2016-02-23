@@ -11,7 +11,7 @@
         var poolRef = ref.child('pools').child($stateParams.id);
 
         if (!currentAuth.uid) {
-            $state.go('login')
+            $state.go('login');
         }
 
         activate();
