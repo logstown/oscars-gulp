@@ -24,11 +24,14 @@
                     var user = User(pool.creator);
                     return user.$loaded()
                         .then(function() {
-                            user.poolId = newPoolRef.key();
+                            if (!user.pools) {
+                                user.pools = {};
+                            }
+                            user.pools[newPoolRef.key()] = true;
 
                             return user.$save()
                                 .then(function() {
-                                    return user.poolId;
+                                    return newPoolRef.key();
                                 });
                         })
                 });

@@ -1,0 +1,3 @@
+- Add Github and About links on navbar
+
+- Custom Point values
