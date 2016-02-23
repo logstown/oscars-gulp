@@ -54,7 +54,6 @@
             })
             .state('pool', {
                 url: '/pool/:id',
-                templateUrl: 'app/pool/pool.html',
                 controller: 'PoolController',
                 controllerAs: 'vm',
                 resolve: {

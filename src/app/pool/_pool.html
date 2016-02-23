@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="pull-left" style="margin-top: 10px;">{{pool.name}}</h3>
+        <i class="fa fa-close fa-2x pull-right text-danger" style="margin-top: 10px;" ng-click="leavePool(pool)" data-title="Leave Pool" data-container="body" bs-tooltip></i>
+        <div class="clearfix"></div>
+    </div>
+    <table class="table pool-competitors">
+        <tr ng-repeat="user in pool.users" class="competitor">
+            <td class="user-remove" ng-if="currentUid === pool.creator">
+                <i class="fa fa-close text-danger" ng-click="removeUser(pool, user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" data-container="body" bs-tooltip></i>
+            </td>
+            <td class="user-picture">
+                <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
+            </td>
+            <td class="user-name">
+                <span data-title="Admin" data-container="body" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.fullName}}</span>
+            </td>
+            <td class="user-progress">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{user.progress}}" aria-valuemin="0" aria-valuemax="23" ng-style="{'width': getProgressWidth(user.progress)}" ng-class="getProgressBarColor(user.progress)">
+                        <span class="sr-only">{{getProgressWidth(user.progress)}}% Complete</span>
+                    </div>
+                </div>
+                <div class="pull-right">{{user.progress}} / 23 nominees picked</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="{{getInviteColspan(pool)}}" class="text-center">
+                <button class="btn btn-default btn-lg btn-block raised" ng-click="inviteOthers(pool)">
+                    <h4 style="margin:0"><i class="fa fa-share-alt" style="margin-right: 10px;"></i> Invite Others</h4>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

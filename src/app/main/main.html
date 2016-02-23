@@ -2,14 +2,9 @@
     <div class="text-center">
         <h1 style="font-size: 50px;">Oscar Showdown</h1>
     </div>
-    <div class="row" ng-hide="vm.isAfterOscarStart() || vm.dismissCountdown">
+    <div class="row">
         <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
-            <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="close" aria-label="Close" ng-click="vm.dismissCountdown = true;"><span aria-hidden="true">&times;</span></button>
-                <h3>
-                    <i class="fa fa-clock-o"></i> Starts in<timer end-time="vm.oscarStart"><span ng-show="days > 0" class="countdown-unit">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0" class="countdown-unit">{{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0" class="countdown-unit">{{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0" class="countdown-unit">{{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
-                </h3>
-            </div>
+            <oscar-countdown></oscar-countdown>
         </div>
     </div>
     <div class="row" ng-show="vm.noPool" style="margin-top: 50px;">
@@ -49,64 +44,7 @@
     </div>
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" ng-repeat="pool in vm.pools">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="pull-left" style="margin-top: 10px;">{{pool.name}}</h3>
-                    <i class="fa fa-close fa-2x pull-right text-danger" style="margin-top: 10px;" ng-click="vm.leavePool(pool)" data-title="Leave Pool" data-container="body" bs-tooltip></i>
-                    <div class="clearfix"></div>
-                </div>
-                <table class="table pool-competitors">
-                    <tr ng-repeat="user in pool.users" class="competitor">
-                        <td class="user-remove" ng-if="vm.currentUid === pool.creator">
-                            <i class="fa fa-close text-danger" ng-click="vm.removeUser(user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" data-container="body" bs-tooltip></i>
-                        </td>
-                        <td class="user-picture">
-                            <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
-                        </td>
-                        <td class="user-name">
-                            <span data-title="Admin" data-container="body" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.fullName}}</span>
-                        </td>
-                        <td class="user-progress">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{user.progress}}" aria-valuemin="0" aria-valuemax="23" ng-style="{'width': vm.getProgressWidth(user.progress)}" ng-class="vm.getProgressBarColor(user.progress)">
-                                    <span class="sr-only">{{vm.getProgressWidth(user.progress)}}% Complete</span>
-                                </div>
-                            </div>
-                            <div class="pull-right">{{user.progress}} / 23 nominees picked</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="{{vm.getInviteColspan(pool)}}" class="text-center">
-                            <button class="btn btn-default btn-lg btn-block raised" ng-click="vm.inviteOthers(pool)">
-                                <h4 style="margin:0"><i class="fa fa-share-alt" style="margin-right: 10px;"></i> Invite Others</h4>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <oscar-pool pool="pool"></oscar-pool>
         </div>
     </div>
 </div>
-<script type="text/ng-template" id="pool-link.html">
-    <div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog text-left">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Invite others to join this Pool!</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- Duplicate code in main.html -->
-                    <div class="form-group">
-                        <label>Share this link:</label>
-                        <input id="pool-url" type="text" select-me readonly ng-model="vm.poolUrl" class="form-control">
-                    </div>
-                    <!--  -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="$hide()">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>

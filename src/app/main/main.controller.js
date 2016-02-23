@@ -1,15 +1,14 @@
 (function() {
     'use strict';
 
-    const POOL_URL = 'http://oscars.firebaseapp.com/pool/';
-
     angular
         .module('oscarsNew')
         .controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(TimeService, Auth, $firebaseObject, FBUrl, User, $modal) {
+    function MainController(Auth, FBUrl, User, $modal, baseUrl) {
         var vm = this;
+
         var ref = new Firebase(FBUrl);
         var poolsRef = ref.child('pools');
         var picksRef = ref.child('picks');
@@ -20,22 +19,9 @@
         vm.picksSize = 0;
         vm.noPool = false;
 
-        vm.isAfterOscarStart = TimeService.isAfterOscarStart;
-        vm.oscarStart = TimeService.getOscarStart();
         vm.createNewPool = createNewPool;
-        vm.getProgressWidth = getProgressWidth;
-        vm.getProgressBarColor = getProgressBarColor;
-        vm.removeUser = removeUser;
-        vm.inviteOthers = inviteOthers;
-        vm.getInviteColspan = getInviteColspan;
-        vm.leavePool = leavePool;
 
         activate();
-
-        // $scope.$on('add.pool.hide', function() {
-        //     vm.noPool = false;
-        //     loadUserAndPool();
-        // })
 
         function activate() {
             loadUserAndPool();
@@ -111,70 +97,6 @@
             })
         }
 
-        function getProgressWidth(picksSize) {
-            var width = picksSize ? (picksSize / 23) * 100 : '';
-
-            return width + '%';
-        }
-
-        function getProgressBarColor(picksSize) {
-            if (!picksSize) {
-                return;
-            }
-
-            if (picksSize < 12) {
-                return 'progress-bar-danger';
-            } else if (picksSize < 23) {
-                return 'progress-bar-warning';
-            } else {
-                return 'progress-bar-success';
-            }
-        }
-
-        function removeUser(user) {
-            if (confirm('Confirm removing user from Pool')) {
-                ref.child('pools').child(vm.pool.$id).child('competitors').child(user.uid).remove();
-            }
-        }
-
-        function getInviteColspan(pool) {
-            return vm.currentUid === pool.creator ? 4 : 3;
-        }
-
-        function leavePool(pool) {
-            var message = 'Are you sure you want to leave ' + pool.name + '?';
-
-            if (vm.currentUid === pool.creator) {
-                message += ' Note: Since you are the Admin, you will be deleting the entire pool as well.'
-            }
-            if (confirm(message)) {
-                ref.child('pools').child(pool.id).child('competitors').child(vm.currentUid).remove();
-                ref.child('users').child(vm.currentUid).child('pools').child(pool.id).remove();
-
-                if (vm.currentUid === pool.creator) {
-                    ref.child('pools').child(pool.id).remove();
-                }
-            }
-        }
-
-        function inviteOthers(pool) {
-            $modal({
-                animation: 'am-fade-and-scale',
-                container: 'body',
-                templateUrl: 'pool-link.html',
-                locals: {
-                    poolUrl: POOL_URL + pool.id
-                },
-                controllerAs: 'vm',
-                show: true,
-                controller: ['poolUrl', function(poolUrl) {
-                    var share = this;
-
-                    share.poolUrl = poolUrl;
-                }]
-            });
-        }
-
         function createNewPool() {
             $modal({
                 templateUrl: 'app/pool/_addPool.html',
@@ -199,7 +121,7 @@
 
                         PoolService.create(newPool.pool)
                             .then(function(poolId) {
-                                newPool.poolUrl = POOL_URL + poolId;
+                                newPool.poolUrl = baseUrl + 'pool/' + poolId;
                             })
                     }
                 }]
