@@ -17,7 +17,7 @@
         vm.currentUid = Auth.$getAuth().uid;
         vm.pools = [];
         vm.picksSize = 0;
-        vm.noPool = false;
+        vm.noPools = false;
 
         vm.createNewPool = createNewPool;
 
@@ -56,6 +56,8 @@
                         userPoolsRef.child(poolId).remove();
                         vm.noPools = true;
                     } else {
+                        vm.noPools = false;
+
                         pool.id = poolId;
                         pool.users = [];
                         vm.pools.push(pool);
@@ -88,6 +90,10 @@
 
             userPoolsRef.on('child_removed', function(poolIdSnap) {
                 _.remove(vm.pools, { id: poolIdSnap.key() })
+
+                if (!vm.pools.length) {
+                    vm.noPools = true;
+                }
             })
         }
 
