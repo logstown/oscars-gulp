@@ -10,3 +10,13 @@
         }
     }
 }
+
+.award-list {
+    li {
+        a {
+            &:hover {
+                background-color: darken($nav-link-hover-bg, 10%)
+            }
+        }
+    }
+}
