@@ -51,12 +51,14 @@
         <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" ng-repeat="pool in vm.pools">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 style="margin-top: 10px;">{{pool.name}}</h3>
+                    <h3 class="pull-left" style="margin-top: 10px;">{{pool.name}}</h3>
+                    <i class="fa fa-close fa-2x pull-right text-danger" style="margin-top: 10px;" ng-click="vm.leavePool(pool)" data-title="Leave Pool" data-container="body" bs-tooltip></i>
+                    <div class="clearfix"></div>
                 </div>
                 <table class="table pool-competitors">
                     <tr ng-repeat="user in pool.users" class="competitor">
                         <td class="user-remove" ng-if="vm.currentUid === pool.creator">
-                            <i class="fa fa-close text-danger" ng-click="vm.removeUser(user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" data-container="body" bs-tooltip style="cursor: pointer;"></i>
+                            <i class="fa fa-close text-danger" ng-click="vm.removeUser(user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" data-container="body" bs-tooltip></i>
                         </td>
                         <td class="user-picture">
                             <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
@@ -74,10 +76,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="text-center">
-                            <h4 style="margin-top: 10px;">
-                                <button class="btn btn-default btn-lg btn-block raised" data-animation="am-fade-and-scale" data-container="body" data-template-url="pool-link.html" bs-modal><i class="fa fa-share-alt" style="margin-right: 10px;"></i> Invite Others</button>
-                            </h4>
+                        <td colspan="{{vm.getInviteColspan(pool)}}" class="text-center">
+                            <button class="btn btn-default btn-lg btn-block raised" ng-click="vm.inviteOthers(pool)">
+                                <h4 style="margin:0"><i class="fa fa-share-alt" style="margin-right: 10px;"></i> Invite Others</h4>
+                            </button>
                         </td>
                     </tr>
                 </table>
