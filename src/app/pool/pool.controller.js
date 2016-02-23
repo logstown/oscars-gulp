@@ -17,7 +17,7 @@
         activate();
 
         function activate() {
-            poolRef.once('value', processPoolToJoin)
+            poolRef.once('value', processPoolToJoin);
         }
 
         function processPoolToJoin(snap) {
