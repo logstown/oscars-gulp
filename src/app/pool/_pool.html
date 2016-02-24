@@ -5,7 +5,7 @@
         <div class="clearfix"></div>
     </div>
     <table class="table pool-competitors">
-        <tr ng-repeat="user in pool.users" class="competitor">
+        <tr ng-repeat="user in pool.users | orderBy: 'dateJoined'" class="competitor">
             <td class="user-remove" ng-if="currentUid === pool.creator">
                 <i class="fa fa-close text-danger" ng-click="removeUser(pool, user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" data-container="body" bs-tooltip></i>
             </td>

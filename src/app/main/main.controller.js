@@ -72,6 +72,7 @@
 
                                 competitor.id = competitorId;
                                 competitor.progress = 0;
+                                competitor.dateJoined = competitorIdSnap.val();
                                 vm.pools[poolIdx].users.push(competitor);
 
                                 picksRef.child(competitor.uid).on('child_added', function() {
