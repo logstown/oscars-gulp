@@ -38,7 +38,9 @@
                             }
 
                             if (user.$value === null) {
-                                user.$value = getProfile(result);
+                                var profile = getProfile(result);
+                                profile.joinDate = new Date().getTime();
+                                user.$value = profile;
                                 user.$save();
                             }
 

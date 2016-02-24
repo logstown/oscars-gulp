@@ -24,8 +24,10 @@
             if (snap.val() === null) {
                 toastr.error('Invalid Pool ID');
             } else {
-                poolRef.child('competitors').child(currentAuth.uid).set(true);
-                ref.child('users').child(currentAuth.uid).child('pools').child($stateParams.id).set(true);
+                var now = new Date().getTime();
+
+                poolRef.child('competitors').child(currentAuth.uid).set(now);
+                ref.child('users').child(currentAuth.uid).child('pools').child($stateParams.id).set(now);
 
                 toastr.success('You have been added to this Pool!')
             }

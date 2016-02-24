@@ -15,7 +15,7 @@
 
         function create(pool) {
             pool.competitors = {}
-            pool.competitors[pool.creator] = true;
+            pool.competitors[pool.creator] = new Date().getTime();
 
             var pools = $firebaseArray(poolsRef);
 
@@ -27,7 +27,7 @@
                             if (!user.pools) {
                                 user.pools = {};
                             }
-                            user.pools[newPoolRef.key()] = true;
+                            user.pools[newPoolRef.key()] = new Date().getTime();
 
                             return user.$save()
                                 .then(function() {
