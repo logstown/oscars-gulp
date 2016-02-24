@@ -1,16 +1,16 @@
 (function() {
     'use strict';
 
-    const ADMIN_GOOGLE_UID = 'google:106090281405764589476';
-    const ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
-    const SCROLL_DURATION = 1000;
-
     angular
         .module('oscarsNew')
         .controller('PicksController', PicksController);
 
     /** @ngInject */
     function PicksController(FBUrl, $firebaseArray, $firebaseObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
+        var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
+        var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
+        var SCROLL_DURATION = 1000;
+
         var vm = this;
         var currentUserId = currentAuth.uid;
         var informedUser = false;
