@@ -26,7 +26,6 @@
             scope.removeUser = removeUser;
             scope.getProgressWidth = getProgressWidth;
             scope.getProgressBarColor = getProgressBarColor;
-            scope.getInviteColspan = getInviteColspan;
             scope.inviteOthers = inviteOthers;
 
             function leavePool(pool) {
@@ -70,10 +69,6 @@
                 } else {
                     return 'progress-bar-success';
                 }
-            }
-
-            function getInviteColspan(pool) {
-                return scope.currentUid === pool.creator ? 4 : 3;
             }
 
             function inviteOthers(pool) {

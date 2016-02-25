@@ -5,32 +5,3 @@
 .countdown-unit {
     margin-left: 4px;
 }
-
-.pool-competitors {
-    .competitor {
-        td {
-            padding: 10px;
-            vertical-align: middle;
-        }
-        .user-remove {
-            width: 1px;
-        }
-        .user-picture {
-            width: 1px;
-        }
-        .user-name {
-            width: 1px;
-            .admin {
-                cursor: help;
-                border-bottom: 1px dotted #777777
-            }
-        }
-        .user-progress {
-            padding-top: 15px;
-            padding-bottom: 15px;
-            .progress {
-                margin-bottom: 10px;
-            }
-        }
-    }
-}

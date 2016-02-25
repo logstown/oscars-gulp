@@ -1,0 +1,39 @@
+$competitor-height: 80px;
+.pool-competitors-wrapper {
+    max-height: $competitor-height * 6;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+    .pool-competitors {
+        margin-bottom: 0;
+        .competitor {
+            td {
+                padding: 10px;
+                vertical-align: middle;
+            }
+            .user-remove {
+                width: 1px;
+            }
+            .user-picture {
+                width: 1px;
+            }
+            .user-name {
+                width: 1px;
+                .admin {
+                    cursor: help;
+                    border-bottom: 1px dotted #777777
+                }
+            }
+            .user-progress {
+                padding-top: 15px;
+                padding-bottom: 15px;
+                .progress {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
+
+.invite-others {
+    padding: 10px;
+}
