@@ -3,10 +3,10 @@
 
     angular
         .module('oscarsNew')
-        .controller('MainController', MainController);
+        .controller('AfterStartController', AfterStartController);
 
     /** @ngInject */
-    function MainController(TimeService) {
+    function AfterStartController(TimeService) {
         var vm = this;
 
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;

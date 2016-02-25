@@ -18,7 +18,6 @@
         /** @ngInject */
         function link(scope) {
             scope.dismissCountdown = false;
-            scope.isAfterOscarStart = TimeService.isAfterOscarStart;
             scope.oscarStart = TimeService.getOscarStart();
 
             scope.dismiss = dismiss;

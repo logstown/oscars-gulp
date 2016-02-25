@@ -10,9 +10,23 @@
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: 'app/main/main.html',
-                controller: 'MainController',
-                controllerAs: 'vm',
+                views: {
+                    '': {
+                        templateUrl: 'app/main/main.html',
+                        controller: 'MainController',
+                        controllerAs: 'vm',
+                    },
+                    'beforeStart@home': {
+                        templateUrl: 'app/main/before-start/before-start.html',
+                        controller: 'BeforeStartController',
+                        controllerAs: 'vm'
+                    },
+                    'afterStart@home': {
+                        templateUrl: 'app/main/after-start/after-start.html',
+                        controller: 'AfterStartController',
+                        controllerAs: 'vm'
+                    }
+                },
                 resolve: {
                     // controller will not be loaded until $requireAuth resolves
                     // Auth refers to our $firebaseAuth wrapper in the example above

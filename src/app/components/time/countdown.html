@@ -1,4 +1,4 @@
-<div class="alert alert-warning alert-dismissible" role="alert" ng-if="!isAfterOscarStart() && !dismissCountdown">
+<div class="alert alert-warning alert-dismissible" role="alert" ng-if="!dismissCountdown">
     <button type="button" class="close" aria-label="Close" ng-click="dismiss()"><span aria-hidden="true">&times;</span></button>
     <h3>
         <i class="fa fa-clock-o"></i> Starts in<timer end-time="oscarStart"><span ng-show="days > 0" class="countdown-unit">{{days}} day<span ng-hide="days===1">s</span><span ng-show="hours > 0 || minutes > 0 || seconds > 0">,</span></span><span ng-show="hours > 0" class="countdown-unit">{{hours}} hour<span ng-hide="hours===1">s</span><span ng-show="minutes > 0 || seconds > 0">,</span></span><span ng-show="minutes > 0" class="countdown-unit">{{minutes}} minute<span ng-hide="minutes===1">s</span><span ng-show="seconds >0">,</span></span><span ng-show="seconds > 0" class="countdown-unit">{{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
