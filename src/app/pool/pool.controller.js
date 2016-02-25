@@ -25,11 +25,16 @@
                 toastr.error('Invalid Pool ID');
             } else {
                 var now = new Date().getTime();
+                var competitorRef = poolRef.child('competitors').child(currentAuth.uid);
 
-                poolRef.child('competitors').child(currentAuth.uid).set(now);
-                ref.child('users').child(currentAuth.uid).child('pools').child($stateParams.id).set(now);
+                competitorRef.once('value', function(competitorSnap) {
+                    if (competitorSnap.val() === null) {
+                        competitorRef.set(now);
+                        ref.child('users').child(currentAuth.uid).child('pools').child($stateParams.id).set(now);
 
-                toastr.success('You have been added to this Pool!')
+                        toastr.success('You have been added to this Pool!')
+                    }
+                })
             }
 
             $state.go('home');

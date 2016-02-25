@@ -20,6 +20,10 @@
         ////////////////
 
         function activate() {
+            if (vm.auth.$getAuth() === null) {
+                $state.go('login')
+            }
+
             // any time auth status updates, add the user data to scope
             vm.auth.$onAuth(function(authData) {
                 vm.authData = authData;
