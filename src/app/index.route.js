@@ -80,9 +80,9 @@
                     }]
                 }
             })
-            .state('faq', {
-                url: '/faq',
-                templateUrl: 'app/faq/faq.html'
+            .state('about', {
+                url: '/about',
+                templateUrl: 'app/about/about.html'
             });
 
         $urlRouterProvider.otherwise('/');
