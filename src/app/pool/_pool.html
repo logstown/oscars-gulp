@@ -1,20 +1,20 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="pull-left" style="margin-top: 10px;">{{pool.name}}</h3>
-        <i class="fa fa-close fa-2x pull-right text-danger" style="margin-top: 10px;" ng-click="leavePool(pool)" data-title="Leave Pool" data-container="body" bs-tooltip></i>
+        <i class="fa fa-close fa-2x pull-right text-danger" style="margin-top: 10px;" ng-click="leavePool(pool)" data-title="Leave Pool" bs-tooltip></i>
         <div class="clearfix"></div>
     </div>
     <div class="pool-competitors-wrapper">
         <table class="table pool-competitors">
             <tr ng-repeat="user in pool.users | orderBy: '-dateJoined'" class="competitor">
                 <td class="user-remove" ng-if="currentUid === pool.creator">
-                    <i class="fa fa-close text-danger" ng-click="removeUser(pool, user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" data-container="body" bs-tooltip></i>
+                    <i class="fa fa-close text-danger" ng-click="removeUser(pool, user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" bs-tooltip></i>
                 </td>
                 <td class="user-picture">
                     <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
                 </td>
                 <td class="user-name">
-                    <span data-title="Admin" data-container="body" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.fullName}}</span>
+                    <span data-title="Admin" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.fullName}}</span>
                 </td>
                 <td class="user-progress">
                     <div class="progress">
