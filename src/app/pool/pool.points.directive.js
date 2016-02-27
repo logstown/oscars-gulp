@@ -28,35 +28,14 @@
                 scope.pool.$loaded()
                     .then(function() {
                         scope.users = getUsers(scope.pool.competitors);
-                        AwardsService.onChange(function(award) {
-                            angular.forEach(scope.users, function(user) {
-                                user.$loaded()
-                                    .then(function() {
-                                        user.picks.$loaded()
-                                            .then(function() {
-                                                if (Number(user.picks[award.$id]) === Number(award.winner)) {
-                                                    if (user.uid === "facebook:883444438344103") {
-                                                        console.log(award.$id)
-                                                    }
-                                                    user.score += award.points;
-                                                }
-                                            })
-                                    })
-                            })
-                        })
                     });
 
-
-
+                AwardsService.onChange(updateUserScores)
             }
 
             function getUsers(competitors) {
                 return _.map(competitors, function(dateJoined, uid) {
                     var user = User(uid);
-
-                    // ref.child('users').child(uid).once('value', function(userSnap) {
-
-                    // })
 
                     user.$loaded()
                         .then(function() {
@@ -65,6 +44,20 @@
                         })
 
                     return user;
+                })
+            }
+
+            function updateUserScores(award) {
+                angular.forEach(scope.users, function(user) {
+                    user.$loaded()
+                        .then(function() {
+                            return user.picks.$loaded();
+                        })
+                        .then(function() {
+                            if (Number(user.picks[award.$id]) === Number(award.winner)) {
+                                user.score += award.points;
+                            }
+                        })
                 })
             }
         }
