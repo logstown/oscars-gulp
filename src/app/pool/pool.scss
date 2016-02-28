@@ -37,3 +37,29 @@ $competitor-height: 80px;
 .invite-others {
     padding: 10px;
 }
+
+.pool-points {
+    .users-points {
+        .photo-score {
+            display: inline-block;
+            // vertical-align: middle;
+        }
+        .score-bar {
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            right: 10px;
+            top: 25px;
+            width: 75%;
+            // margin-top: 15px;
+            .progress {
+                margin-bottom: 0;
+            }
+            .badge {
+                position: absolute;
+                top: 1px;
+                // left: 10px;
+            }
+        }
+    }
+}

@@ -9,14 +9,20 @@
     function AwardsService(FBUrl, $firebaseArray, $firebaseObject) {
         var ref = new Firebase(FBUrl);
         var awardsRef = ref.child('awards');
+        var latestAward = {};
 
         return {
             onChange: onChange,
-            get: get
+            getTotalPoints: getTotalPoints,
+            getLatestAward: getLatestAward
         };
 
-        function get() {
-            // return awards;
+        function getTotalPoints() {
+            var awards = $firebaseArray(awardsRef);
+            return awards.$loaded()
+                .then(function() {
+                    return _.sumBy(awards, 'points')
+                })
         }
 
         function onChange(cb) {
@@ -33,10 +39,18 @@
                 award.$loaded()
                     .then(function() {
                         if (award.winner !== null) {
-                            cb(award)
+                            cb(award, eventObj.event);
+
+                            if (award.winnerStamp > latestAward.winnerStamp || _.isEmpty(latestAward)) {
+                                latestAward = award;
+                            }
                         }
                     })
             });
+        }
+
+        function getLatestAward() {
+            return latestAward;
         }
     }
 })();

@@ -9,6 +9,7 @@
     function PicksController(FBUrl, $firebaseArray, $firebaseObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
         var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
         var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
+        var ADMIN_TWITTER_UID = 'twitter:21528048';
         var SCROLL_DURATION = 1000;
 
         var vm = this;
@@ -33,24 +34,24 @@
             vm.awards = $firebaseArray(ref.child('awards'));
             vm.picks = $firebaseObject(ref.child('picks').child(currentUserId));
 
-            if (TimeService.isAfterOscarStart()) {
-                afterStart();
-            }
+            // if (TimeService.isAfterOscarStart()) {
+            //     afterStart();
+            // }
         }
 
-        function afterStart() {
-            var competition
-            var user = User(currentUserId);
+        // function afterStart() {
+        //     var competition
+        //     var user = User(currentUserId);
 
-            user.$loaded()
-                .then(function() {
-                    competition = $firebaseObject(ref.child('competitions').child(user.compId));
-                    competition.$loaded()
-                        .then(function() {
+        //     user.$loaded()
+        //         .then(function() {
+        //             competition = $firebaseObject(ref.child('competitions').child(user.compId));
+        //             competition.$loaded()
+        //                 .then(function() {
 
-                        })
-                })
-        }
+        //                 })
+        //         })
+        // }
 
         function nomineeClicked(awardIdx) {
             vm.picks.$save();
@@ -69,20 +70,22 @@
             }
         }
 
-        function pickWinner(awardIdx, nomineeIdx) {
+        function pickWinner(award, nomineeIdx) {
             if (isAuthorized() && TimeService.isAfterOscarStart()) {
-                var award = vm.awards[awardIdx];
-                award.winner = nomineeIdx;
-                vm.awards.$save(award);
+                // var award = vm.awards[awardIdx];
+                // award.winner = nomineeIdx;
+                // vm.awards.$save(award);
+
+                ref.child('awards').child(award.$id).child('winner').set(nomineeIdx)
             }
         }
 
         function isAuthorized() {
-            return currentUserId === ADMIN_FACEBOOK_UID || currentUserId === ADMIN_GOOGLE_UID;
+            return currentUserId === ADMIN_FACEBOOK_UID || currentUserId === ADMIN_GOOGLE_UID || currentUserId === ADMIN_TWITTER_UID;
         }
 
         function validateAward(awardIdx) {
-            if (awardCantBeValidated()) {
+            if (awardCantBeValidated(awardIdx)) {
                 return;
             }
 
@@ -90,7 +93,7 @@
         }
 
         function validateNominee(awardIdx, nomineeIdx) {
-            if (awardCantBeValidated() || Number(vm.picks[awardIdx]) !== nomineeIdx) {
+            if (awardCantBeValidated(awardIdx) || Number(vm.picks[awardIdx]) !== nomineeIdx) {
                 return;
             }
 
@@ -98,7 +101,7 @@
         }
 
         function awardCantBeValidated(awardIdx) {
-            return !vm.picks[awardIdx] || !vm.awards[awardIdx].winner || !vm.isAfterOscarStart();
+            return !vm.picks[awardIdx] || vm.awards[awardIdx].winner === undefined || !vm.isAfterOscarStart();
         }
 
         function scrollToNext(awardIdxClicked) {

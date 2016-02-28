@@ -40,10 +40,10 @@
                                 <i ng-if="vm.isAfterOscarStart()" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
                             </label>
                         </div>
-                        <div class="pull-right">
+                        <!-- <div class="pull-right">
                             <img ng-repeat="voter in vm.getVoters($parent.$index, $index)" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
-                        </div>
-                        <button class="btn btn-default" ng-if="vm.isAfterOscarStart() &&  vm.isAuthorized()" style="position: absolute; right:-66px;" ng-click="vm.pickWinner($parent.$index, $index)">Winner</button>
+                        </div> -->
+                        <button class="btn btn-default" ng-if="vm.isAfterOscarStart() &&  vm.isAuthorized()" style="position: absolute; right:-66px;" ng-click="vm.pickWinner(award, $index)">Winner</button>
                         <div class="clearfix"></div>
                     </li>
                 </ul>
