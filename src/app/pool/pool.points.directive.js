@@ -24,7 +24,6 @@
 
             scope.possiblePoints = 0;
             scope.users = [];
-            scope.doneLoading = false;
 
             scope.getProgressWidth = getProgressWidth;
             scope.getProgressBarColor = getProgressBarColor;
@@ -70,8 +69,6 @@
                             return user.picks.$loaded();
                         })
                         .then(function() {
-                            scope.doneLoading = true;
-
                             var correct = Number(user.picks[award.$id]) === Number(award.winner)
 
                             if (correct) {
@@ -100,6 +97,10 @@
             }
 
             function getProgressBarColor(user) {
+                if (!user || !user.score) {
+                    return;
+                }
+
                 var latestAward = AwardsService.getLatestAward();
 
                 if (Number(user.picks[latestAward.$id]) === Number(latestAward.winner)) {

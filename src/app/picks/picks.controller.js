@@ -72,11 +72,9 @@
 
         function pickWinner(award, nomineeIdx) {
             if (isAuthorized() && TimeService.isAfterOscarStart()) {
-                // var award = vm.awards[awardIdx];
-                // award.winner = nomineeIdx;
-                // vm.awards.$save(award);
-
-                ref.child('awards').child(award.$id).child('winner').set(nomineeIdx)
+                vm.awards[award.$id].winner = nomineeIdx;
+                vm.awards[award.$id].winnerStamp = new Date().getTime();
+                vm.awards.$save(award);
             }
         }
 

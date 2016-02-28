@@ -38,7 +38,7 @@
                 var award = $firebaseObject(awardRef);
                 award.$loaded()
                     .then(function() {
-                        if (award.winner !== null) {
+                        if (award.winner !== undefined) {
                             cb(award, eventObj.event);
 
                             if (award.winnerStamp > latestAward.winnerStamp || _.isEmpty(latestAward)) {
