@@ -52,7 +52,7 @@
             }
 
             function getProgressWidth(picksSize) {
-                var width = picksSize ? (picksSize / 23) * 100 : '';
+                var width = picksSize ? (picksSize / 24) * 100 : '';
 
                 return width + '%';
             }
@@ -64,7 +64,7 @@
 
                 if (picksSize < 12) {
                     return 'progress-bar-danger';
-                } else if (picksSize < 23) {
+                } else if (picksSize < 24) {
                     return 'progress-bar-warning';
                 } else {
                     return 'progress-bar-success';
