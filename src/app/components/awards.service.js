@@ -14,8 +14,13 @@
         return {
             onChange: onChange,
             getTotalPoints: getTotalPoints,
-            getLatestAward: getLatestAward
+            getLatestAward: getLatestAward,
+            getAwards: getAwards
         };
+
+        function getAwards() {
+            return $firebaseArray(awardsRef);
+        }
 
         function getTotalPoints() {
             var awards = $firebaseArray(awardsRef);

@@ -1,13 +1,20 @@
 <div class="panel panel-default pool-points">
     <div class="panel-heading">
         <h3 class="pull-left" style="margin-top: 10px;">{{pool.name}}</h3>
-        <div class="pull-right">
-            Possible points: <span class="label label-info">{{possiblePoints}}</span>
+        <div class="pull-right" style="margin-top: 14px;">
+            Possible points: <span class="label label-info" style="font-size: initial;">{{possiblePoints}}</span>
         </div>
         <div class="clearfix"></div>
     </div>
+    <div class="panel-body text-center" ng-show="itsOver()">
+        <h2>Congratulations!</h2>
+        <h3 ng-repeat="winner in winners">{{winner.firstName || winner.screenName}}</h3>
+        <button class="btn btn-default btn-lg btn-block raised" ng-click="getSuperlatives()">
+            <h4><i class="fa fa-trophy" style="margin-right: 5px;"></i>Click to See Superlatives</h4>
+        </button>
+    </div>
     <ul class="list-group users-points">
-        <li class="list-group-item fx-fade-up fx-ease-sine" ng-repeat="user in users | orderBy: '-score' | filter:f">
+        <li class="list-group-item fx-fade-up fx-ease-sine" ng-class="{'correct': itsOver() && $first}" ng-repeat="user in users | orderBy: '-score' | filter:f">
             <div class="photo-score">
                 <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
             </div>
