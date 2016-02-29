@@ -7,14 +7,14 @@
         <div class="clearfix"></div>
     </div>
     <div class="panel-body text-center" ng-show="itsOver()">
-        <h2>Congratulations!</h2>
+        <h2><i class="fa fa-star"></i><span style="margin-left: 5px; margin-right: 5px;">Congratulations!</span><i class="fa fa-star"></i></h2>
         <h3 ng-repeat="winner in winners">{{winner.firstName || winner.screenName}}</h3>
-        <button class="btn btn-default btn-lg btn-block raised" ng-click="getSuperlatives()">
+        <!-- <button class="btn btn-default btn-lg btn-block raised" ng-click="getSuperlatives()" ng-disabled="!superlativesClickable">
             <h4><i class="fa fa-trophy" style="margin-right: 5px;"></i>Click to See Superlatives</h4>
-        </button>
+        </button> -->
     </div>
     <ul class="list-group users-points">
-        <li class="list-group-item fx-fade-up fx-ease-sine" ng-class="{'correct': itsOver() && $first}" ng-repeat="user in users | orderBy: '-score' | filter:f">
+        <li class="list-group-item fx-fade-up fx-ease-sine" ng-class="{'correct': isWinner(user.score)}" ng-repeat="user in users | orderBy: '-score' | filter:f">
             <div class="photo-score">
                 <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
             </div>

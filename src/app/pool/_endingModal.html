@@ -1,0 +1,31 @@
+<div class="jumbotron winner">
+    <h2 class="text-center">Congratulations <strong><span ng-repeat="champ in champions">{{champ.name}}<span ng-hide="$last">, </span></span></strong>!</h2>
+    <p class="lead text-center">...who won with {{champions[0].score}} points!</p>
+</div>
+<h3 class="title"><i class="fa fa-star"></i>Superlatives<i class="fa fa-star"></i></h3>
+<table class="superlatives">
+    <tr ng-repeat-start="superlative in superlatives" class="first">
+        <td>
+            <img ng-src="{{superlative.icon}}" style="height: 50px; width: 50px;" alt="">
+        </td>
+        <td class="big">
+            <strong>{{superlative.name}}</strong>
+        </td>
+        <td>
+            -
+        </td>
+        <td style="padding-left: 10px">
+            <em>{{superlative.description}}</em>
+        </td>
+    </tr>
+    <tr ng-repeat-end class="second">
+        <td colspan="2" class="text-right" style="padding-right: 5px;">
+            goes to...
+        </td>
+        <td colspan="2">
+            <div ng-repeat-start="winner in superlative.winners" class="big"><img ng-src="https://graph.facebook.com/{{winner.user.id}}/picture" height="50px;" style="margin-right: 10px;" alt="">{{winner.user.name}}
+            </div>
+            <div ng-repeat-end ng-if="$parent.$first">...chose <strong>{{winner.movie}}</strong> {{winner.count}} times!</div>
+        </td>
+    </tr>
+</table>

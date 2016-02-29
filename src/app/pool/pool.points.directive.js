@@ -22,6 +22,7 @@
         function link(scope) {
             var ref = new Firebase(FBUrl);
             var totalPossiblePoints;
+            var highestScore;
             var awards = [];
 
             scope.possiblePoints = 0;
@@ -31,6 +32,7 @@
             scope.getProgressBarColor = getProgressBarColor;
             scope.getBadgeLeft = getBadgeLeft;
             scope.itsOver = itsOver;
+            scope.isWinner = isWinner;
             scope.getSuperlatives = getSuperlatives;
 
             activate();
@@ -88,8 +90,10 @@
                                 }
                             }
 
-                            var highestScore = _.maxBy(scope.users, 'score').score;
-                            scope.winners = _.filter(scope.users, { score: highestScore })
+                            highestScore = _.maxBy(scope.users, 'score').score;
+                            scope.winners = _.filter(scope.users, { score: highestScore });
+
+                            scope.superlativesClickable = true;
                         })
                 })
             }
@@ -122,6 +126,10 @@
                 return scope.possiblePoints === totalPossiblePoints;
             }
 
+            function isWinner(score) {
+                return itsOver() && score === highestScore;
+            }
+
             function getSuperlatives() {
                 var techAndPeople = getTechAndPeople();
 
@@ -151,7 +159,7 @@
 
                 scope.endingModal = $modal({
                     title: 'Superlatives!',
-                    contentTemplate: 'views/ending-modal.html',
+                    contentTemplate: 'app/pool/_endingModal.html',
                     show: true,
                     scope: scope,
                     animation: 'am-fade-and-scale'
@@ -159,9 +167,15 @@
             }
 
             function getTechAndPeople() {
-                var counts = _.map(_.filter(scope.users, 'picks'), function(user) {
+                console.log(scope.users)
+                var counts = _.map(_.filter(scope.users, function(user) {
+                    return user.picks.$value;
+                }), function(user) {
+
+                    console.log(user)
 
                     var peopleCount = _.reduce(user.picks, function(result, nomI, awardI) {
+                        console.log(awardI)
                         if (nomI !== undefined && awards[awardI].nominees[nomI].nominee !== '' && awards[awardI].winner === nomI) {
                             result += 1;
                         }
@@ -198,18 +212,18 @@
             }
 
             function getFanboys() {
-                var winningCounts = _.map(_.filter(scope.users, 'picks'), function(user) {
+                var winningCounts = _.map(_.filter(scope.users, function(user) {
+                    return user.picks.$value;
+                }), function(user) {
                     var counts = _.countBy(user.picks, function(nomI, awardI) {
                         if (nomI === undefined) {
                             return 'stupid'
                         }
-                        return scope.awards[awardI].nominees[nomI].film
+                        return awards[awardI].nominees[nomI].film
                     })
 
                     counts = _.omit(counts, 'stupid');
-                    var max = _.maxBy(Object.keys(counts), function(key) {
-                        return counts[key]
-                    })
+                    var max = _.max(_.values(counts))
                     var movie = _.findKey(counts, function(count) {
                         return count === max
                     })
@@ -223,6 +237,35 @@
 
                 var top = _.maxBy(winningCounts, 'count').count
                 return _.filter(winningCounts, {
+                    count: top
+                })
+            }
+
+            function getDarkHorses() {
+                var userPoints = {}
+
+                angular.forEach(awards, function(award, aI) {
+
+                    var correctUsers = _.filter(scope.users, function(user) {
+                        return user.picks && user.picks[aI] !== undefined && user.picks[aI] === award.winner
+                    })
+
+                    angular.forEach(correctUsers, function(user) {
+                        if (userPoints[user.id] === undefined) {
+                            userPoints[user.id] = {
+                                user: user,
+                                count: 0
+                            };
+                        }
+
+                        userPoints[user.id].count += (1 / correctUsers.length)
+                    })
+                })
+
+                console.log(userPoints)
+
+                var top = _.maxBy(userPoints, 'count').count;
+                return _.filter(userPoints, {
                     count: top
                 })
             }

@@ -329,7 +329,8 @@
         "film": "Star Wars: The Force Awakens",
         "nominee": ""
     }],
-    "points": 1
+    "points": 1,
+    "technical": true
 }, {
     "award": "Sound Mixing",
     "nominees": [{
@@ -348,7 +349,8 @@
         "film": "Star Wars: The Force Awakens",
         "nominee": ""
     }],
-    "points": 1
+    "points": 1,
+    "technical": true
 }, {
     "award": "Production Design",
     "nominees": [{
@@ -437,7 +439,8 @@
         "film": "Star Wars: The Force Awakens",
         "nominee": "Maryann Brandon and Mary Jo Markey"
     }],
-    "points": 1
+    "points": 1,
+    "technical": true
 }, {
     "award": "Visual Effects",
     "nominees": [{
@@ -456,5 +459,6 @@
         "film": "Star Wars: The Force Awakens",
         "nominee": ""
     }],
-    "points": 1
+    "points": 1,
+    "technical": true
 }]
