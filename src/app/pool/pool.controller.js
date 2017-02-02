@@ -6,8 +6,8 @@
         .controller('PoolController', PoolController);
 
     /** @ngInject */
-    function PoolController(FBUrl, $stateParams, toastr, $state, currentAuth) {
-        var ref = new Firebase(FBUrl);
+    function PoolController($stateParams, toastr, $state, currentAuth) {
+        var ref = firebase.database().ref();
         var poolRef = ref.child('pools').child($stateParams.id);
 
         if (!currentAuth.uid) {

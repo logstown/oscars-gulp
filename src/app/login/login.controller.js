@@ -6,7 +6,7 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController(FBUrl, $firebaseObject, $state, Auth, currentAuth, $rootScope) {
+    function LoginController($firebaseObject, $state, Auth, currentAuth, $rootScope) {
         var vm = this;
 
         vm.login = login;
@@ -20,9 +20,10 @@
         }
 
         function login(provider) {
-            Auth.$authWithOAuthPopup(provider)
+            Auth.$signInWithPopup(provider)
                 .then(function(result) {
-                    var ref = new Firebase(FBUrl + 'users/' + result.auth.uid);
+                    var ref = firebase.database().ref('users').child(result.auth.uid);
+
                     var user = $firebaseObject(ref);
 
                     user.$loaded()

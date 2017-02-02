@@ -6,13 +6,14 @@
         .controller('BeforeStartController', BeforeStartController);
 
     /** @ngInject */
-    function BeforeStartController(Auth, FBUrl, User, $modal, baseUrl, $state) {
+    function BeforeStartController(Auth, User, $modal, baseUrl, $state) {
         var vm = this;
 
-        var ref = new Firebase(FBUrl);
+        var ref = firebase.database().ref();
+
         var poolsRef = ref.child('pools');
         var picksRef = ref.child('picks');
-        var usersRef = ref.child('users');
+        var usersRef = firebase.database().ref('users');
 
         vm.currentUid = Auth.$getAuth().uid;
         vm.pools = [];
@@ -47,7 +48,7 @@
             var userPoolsRef = usersRef.child(vm.currentUid).child('pools');
 
             userPoolsRef.on('child_added', function(poolIdSnap) {
-                var poolId = poolIdSnap.key();
+                var poolId = poolIdSnap.key;
                 var poolRef = poolsRef.child(poolId);
 
                 poolRef.once('value', function(poolSnap) {
@@ -64,7 +65,7 @@
                         vm.pools.push(pool);
 
                         poolRef.child('competitors').on('child_added', function(competitorIdSnap) {
-                            var competitorId = competitorIdSnap.key();
+                            var competitorId = competitorIdSnap.key;
 
                             usersRef.child(competitorId).once('value', function(competitorSnap) {
                                 var poolIdx = _.findIndex(vm.pools, { id: poolId });
@@ -84,14 +85,14 @@
 
                         poolRef.child('competitors').on('child_removed', function(competitorIdSnap) {
                             var poolIdx = _.findIndex(vm.pools, { id: poolId });
-                            _.remove(vm.pools[poolIdx].users, { id: competitorIdSnap.key() })
+                            _.remove(vm.pools[poolIdx].users, { id: competitorIdSnap.key })
                         })
                     }
                 })
             })
 
             userPoolsRef.on('child_removed', function(poolIdSnap) {
-                _.remove(vm.pools, { id: poolIdSnap.key() })
+                _.remove(vm.pools, { id: poolIdSnap.key })
 
                 if (!vm.pools.length) {
                     vm.noPools = true;

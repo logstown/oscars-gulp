@@ -6,7 +6,7 @@
         .directive('poolPoints', poolPoints);
 
     /** @ngInject */
-    function poolPoints(FBUrl, User, $firebaseObject, AwardsService, Auth, toastr, $modal) {
+    function poolPoints(User, $firebaseObject, AwardsService, Auth, toastr, $modal) {
         var directive = {
             restrict: 'E',
             templateUrl: 'app/pool/_poolPoints.html',
@@ -20,7 +20,7 @@
 
         /** @ngInject */
         function link(scope) {
-            var ref = new Firebase(FBUrl);
+            var ref = firebase.database().ref();
             var totalPossiblePoints;
             var highestScore;
             var awards = [];

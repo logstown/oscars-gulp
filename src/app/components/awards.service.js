@@ -6,9 +6,8 @@
         .factory('AwardsService', AwardsService);
 
     /** @ngInject */
-    function AwardsService(FBUrl, $firebaseArray, $firebaseObject) {
-        var ref = new Firebase(FBUrl);
-        var awardsRef = ref.child('awards');
+    function AwardsService($firebaseArray, $firebaseObject) {
+        var awardsRef = firebase.database().ref.child('awards');
         var latestAward = {};
 
         return {

@@ -6,9 +6,10 @@
         .controller('AfterStartController', AfterStartController);
 
     /** @ngInject */
-    function AfterStartController(Auth, User, FBUrl, $firebaseArray, $firebaseObject) {
+    function AfterStartController(Auth, User, $firebaseArray, $firebaseObject) {
         var vm = this;
-        var ref = new Firebase(FBUrl);
+        var ref = firebase.database().ref();
+
 
 
         var user = User(Auth.$getAuth().uid);

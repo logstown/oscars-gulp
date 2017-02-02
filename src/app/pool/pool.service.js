@@ -6,8 +6,8 @@
         .factory('PoolService', PoolService);
 
     /** @ngInject */
-    function PoolService(FBUrl, $firebaseArray, User) {
-        var poolsRef = new Firebase(FBUrl).child('pools');
+    function PoolService($firebaseArray, User) {
+        var poolsRef = firebase.database().ref('pools');
 
         return {
             create: create
@@ -32,11 +32,11 @@
                                 user.pools = {};
                             }
 
-                            user.pools[newPoolRef.key()] = new Date().getTime();
+                            user.pools[newPoolRef.key] = new Date().getTime();
 
                             return user.$save()
                                 .then(function() {
-                                    return newPoolRef.key();
+                                    return newPoolRef.key;
                                 });
                         })
                 });

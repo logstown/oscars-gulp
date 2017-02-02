@@ -6,7 +6,7 @@
         .directive('oscarPool', oscarPool);
 
     /** @ngInject */
-    function oscarPool(Auth, FBUrl, $modal, baseUrl) {
+    function oscarPool(Auth, $modal, baseUrl) {
         var directive = {
             restrict: 'E',
             templateUrl: 'app/pool/_pool.html',
@@ -20,7 +20,7 @@
 
         function link(scope) {
             scope.currentUid = Auth.$getAuth().uid;
-            var ref = new Firebase(FBUrl);
+            var ref = firebase.database().ref();
 
             scope.leavePool = leavePool;
             scope.removeUser = removeUser;

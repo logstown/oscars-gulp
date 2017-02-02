@@ -7,7 +7,6 @@
 
     /** @ngInject */
     function Auth($firebaseAuth) {
-        var ref = new Firebase('https://oscars.firebaseio.com/');
-        return $firebaseAuth(ref);
+        return $firebaseAuth();
     }
 })();

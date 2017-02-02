@@ -6,7 +6,7 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController(FBUrl, $firebaseArray, $firebaseObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
+    function PicksController($firebaseArray, $firebaseObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
         var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
         var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
         var ADMIN_TWITTER_UID = 'twitter:21528048';
@@ -15,7 +15,7 @@
         var vm = this;
         var currentUserId = currentAuth.uid;
         var informedUser = false;
-        var ref = new Firebase(FBUrl);
+        var ref = firebase.database().ref();
 
         vm.nomineeClicked = nomineeClicked;
         vm.isAfterOscarStart = TimeService.isAfterOscarStart;

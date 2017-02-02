@@ -6,9 +6,9 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController(FBUrl, toastr, currentAuth, User) {
+    function ProfileController(toastr, currentAuth, User) {
         var vm = this;
-        var ref = new Firebase(FBUrl);
+        var ref = firebase.database().ref();
 
         activate();
 

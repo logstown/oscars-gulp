@@ -25,7 +25,7 @@
             }
 
             // any time auth status updates, add the user data to scope
-            vm.auth.$onAuth(function(authData) {
+            vm.auth.$onAuthStateChanged(function(authData) {
                 vm.authData = authData;
                 if (vm.authData) {
                     vm.user = User(authData.uid)
@@ -34,7 +34,7 @@
         }
 
         function logout() {
-            vm.auth.$unauth();
+            vm.auth.$signOut();
             $state.go('login');
         }
 
@@ -44,7 +44,7 @@
                 show: true,
                 controllerAs: 'vm',
                 animation: 'am-fade-and-scale',
-                controller: ['FBUrl', 'User', 'Auth', function(FBUrl, User, Auth) {
+                controller: ['User', 'Auth', function(User, Auth) {
                     var profile = this;
 
                     profile.userNotLoaded = true;

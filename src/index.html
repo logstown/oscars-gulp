@@ -80,6 +80,17 @@
     <!-- run `gulp inject` to automatically populate bower script dependencies -->
     <!-- endbower -->
     <!-- endbuild -->
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAxc3uph6EmJgTzWtaqAo8tXjJ90MqT7rg",
+        authDomain: "oscars.firebaseapp.com",
+        databaseURL: "https://oscars.firebaseio.com",
+        storageBucket: "firebase-oscars.appspot.com",
+        messagingSenderId: "560662746392"
+    };
+    firebase.initializeApp(config);
+    </script>
     <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
     <!-- inject:js -->
     <!-- js files will be automatically insert here -->
