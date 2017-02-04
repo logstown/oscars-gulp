@@ -8,69 +8,67 @@
     /* @ngInject */
     function NavbarController(Auth, User, $state, $modal) {
         var vm = this;
-        vm.auth = Auth;
-        vm.authData = false;
-        vm.user = {};
+        vm.user = null;
 
         vm.logout = logout;
-        vm.editProfile = editProfile;
+        // vm.editProfile = editProfile;
 
         activate();
 
         ////////////////
 
         function activate() {
-            if (vm.auth.$getAuth() === null) {
-                $state.go('login')
-            }
-
             // any time auth status updates, add the user data to scope
-            vm.auth.$onAuthStateChanged(function(authData) {
-                vm.authData = authData;
-                if (vm.authData) {
-                    vm.user = User(authData.uid)
+            Auth.$onAuthStateChanged(function(authData) {
+                if (authData) {
+                    vm.user = User(authData.uid);
+                } else {
+                    vm.user = null;
+                    $state.go('login');
                 }
             });
         }
 
         function logout() {
-            vm.auth.$signOut();
-            $state.go('login');
+            Auth.$signOut()
+                .then(function() {
+                    $state.go('login')
+                });
         }
 
-        function editProfile() {
-            $modal({
-                templateUrl: 'app/profile/_editProfile.html',
-                show: true,
-                controllerAs: 'vm',
-                animation: 'am-fade-and-scale',
-                controller: ['User', 'Auth', function(User, Auth) {
-                    var profile = this;
+        // function editProfile() {
+        //     $modal({
+        //         templateUrl: 'app/profile/_editProfile.html',
+        //         show: true,
+        //         controllerAs: 'vm',
+        //         animation: 'am-fade-and-scale',
+        //         controller: ['User', 'Auth', function(User, Auth) {
+        //             var profile = this;
 
-                    profile.userNotLoaded = true;
-                    profile.saveProfile = saveProfile;
+        //             profile.userNotLoaded = true;
+        //             profile.saveProfile = saveProfile;
 
-                    activate();
+        //             activate();
 
-                    function activate() {
-                        profile.user = User(Auth.$getAuth().uid);
+        //             function activate() {
+        //                 profile.user = User(Auth.$getAuth().uid);
 
-                        profile.user.$loaded()
-                            .then(function() {
-                                profile.userNotLoaded = false;
-                            });
-                    }
+        //                 profile.user.$loaded()
+        //                     .then(function() {
+        //                         profile.userNotLoaded = false;
+        //                     });
+        //             }
 
-                    function saveProfile(hide) {
-                        profile.user.fullName = profile.user.fullName || profile.user.firstName + ' ' + profile.user.lastName;
+        //             function saveProfile(hide) {
+        //                 profile.user.fullName = profile.user.fullName || profile.user.firstName + ' ' + profile.user.lastName;
 
-                        profile.user.$save()
-                            .then(function() {
-                                hide();
-                            })
-                    }
-                }]
-            });
-        }
+        //                 profile.user.$save()
+        //                     .then(function() {
+        //                         hide();
+        //                     })
+        //             }
+        //         }]
+        //     });
+        // }
     }
 })();

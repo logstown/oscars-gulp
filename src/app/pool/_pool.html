@@ -11,10 +11,10 @@
                     <i class="fa fa-close text-danger" ng-click="removeUser(pool, user)" ng-hide="user.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" bs-tooltip></i>
                 </td>
                 <td class="user-picture">
-                    <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
+                    <img ng-src="{{user.photoURL}}" style="height: 40px;" alt="">
                 </td>
                 <td class="user-name">
-                    <span data-title="Admin" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.fullName}}</span>
+                    <span data-title="Admin" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.displayName}}</span>
                 </td>
                 <td class="user-progress">
                     <div class="progress">

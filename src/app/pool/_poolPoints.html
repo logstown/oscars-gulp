@@ -8,7 +8,7 @@
     </div>
     <div class="panel-body text-center" ng-show="itsOver()">
         <h2><i class="fa fa-star"></i><span style="margin-left: 5px; margin-right: 5px;">Congratulations!</span><i class="fa fa-star"></i></h2>
-        <h3 ng-repeat="winner in winners">{{winner.firstName || winner.screenName}}</h3>
+        <h3 ng-repeat="winner in winners">{{winner.displayName}}</h3>
         <!-- <button class="btn btn-default btn-lg btn-block raised" ng-click="getSuperlatives()" ng-disabled="!superlativesClickable">
             <h4><i class="fa fa-trophy" style="margin-right: 5px;"></i>Click to See Superlatives</h4>
         </button> -->
@@ -16,7 +16,7 @@
     <ul class="list-group users-points">
         <li class="list-group-item fx-fade-up fx-ease-sine" ng-class="{'correct': isWinner(user.score)}" ng-repeat="user in users | orderBy: '-score' | filter:f">
             <div class="photo-score">
-                <img ng-src="{{user.picture}}" style="height: 40px;" alt="">
+                <img ng-src="{{user.photoURL}}" style="height: 40px;" alt="">
             </div>
             <div class="text-right score-bar">
                 <span class="badge" ng-style="{'left': getBadgeLeft(user.score) + '%'}">{{user.score}}</span>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div>
-                <span data-title="Admin" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.firstName || user.screenName}}</span>
+                <span data-title="Admin" bs-tooltip data-bs-enabled="user.uid === pool.creator" ng-class="{'admin':user.uid === pool.creator}">{{user.displayName}}</span>
             </div>
             <!-- <div class="clearfix"></div> -->
         </li>

@@ -6,7 +6,7 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController($firebaseObject, $state, Auth, currentAuth, $rootScope) {
+    function LoginController($state, Auth, currentAuth, $rootScope) {
         var vm = this;
 
         vm.login = login;
@@ -22,81 +22,17 @@
         function login(provider) {
             Auth.$signInWithPopup(provider)
                 .then(function(result) {
-                    var ref = firebase.database().ref('users').child(result.auth.uid);
+                    firebase.database()
+                        .ref('users')
+                        .child(result.user.uid)
+                        .set(result.user.providerData[0]);
 
-                    var user = $firebaseObject(ref);
+                    var route = $rootScope.intendedRoute || { state: 'home', params: {} };
+                    $rootScope.intendedRoute = undefined;
 
-                    user.$loaded()
-                        .then(function() {
-                            var route = {
-                                state: 'home',
-                                params: {}
-                            };
-
-                            if ($rootScope.intendedRoute) {
-                                route = $rootScope.intendedRoute
-                                $rootScope.intendedRoute = undefined;
-                            }
-
-                            if (user.$value === null) {
-                                var profile = getProfile(result);
-                                profile.joinDate = new Date().getTime();
-                                user.$value = profile;
-                                user.$save();
-                            }
-
-                            $state.go(route.state, route.params);
-                        });
+                    $state.go(route.state, route.params);
                 });
         }
 
-        function getProfile(result) {
-            var profile = result[result.provider].cachedUserProfile;
-
-            switch (result.provider) {
-                case 'facebook':
-                    return {
-                        firstName: profile.first_name,
-                        lastName: profile.last_name,
-                        fullName: profile.name,
-                        link: profile.link,
-                        uid: result.auth.uid,
-                        locale: profile.locale,
-                        gender: profile.gender,
-                        picture: profile.picture.data.url
-                    };
-
-                case 'google':
-                    return {
-                        firstName: profile.given_name,
-                        lastName: profile.family_name,
-                        fullName: profile.name,
-                        link: profile.link,
-                        uid: result.auth.uid,
-                        locale: profile.locale,
-                        gender: profile.gender,
-                        picture: profile.picture
-                    };
-
-                case 'twitter':
-                    return {
-                        screenName: profile.screen_name,
-                        fullName: profile.name,
-                        link: profile.url,
-                        uid: result.auth.uid,
-                        locale: profile.lang,
-                        picture: profile.profile_image_url
-                    }
-
-                case 'github':
-                    return {
-                        screenName: profile.login,
-                        fullName: profile.name,
-                        link: profile.url,
-                        uid: result.auth.uid,
-                        picture: profile.avatar_url
-                    }
-            }
-        }
     }
 })();
