@@ -8,7 +8,7 @@
     /** @ngInject */
     function TimeService($interval) {
         var currentTime = new Date();
-        var oscarStart = new Date(2017, 1, 27, 0, 0 - currentTime.getTimezoneOffset());
+        var oscarStart = new Date(2016, 1, 27, 0, 0 - currentTime.getTimezoneOffset());
 
         console.log(oscarStart)
 

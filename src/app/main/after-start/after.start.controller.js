@@ -6,27 +6,12 @@
         .controller('AfterStartController', AfterStartController);
 
     /** @ngInject */
-    function AfterStartController(Auth, User, $firebaseArray, $firebaseObject) {
+    function AfterStartController(Auth, $firebaseArray) {
         var vm = this;
         var ref = firebase.database().ref();
+        var currentUid = Auth.$getAuth().uid;
 
-
-
-        var user = User(Auth.$getAuth().uid);
-
-        user.$loaded()
-            .then(function() {
-                var userPoolsRef = ref.child('users').child(user.uid).child('pools');
-
-                var pools = $firebaseArray(userPoolsRef);
-
-                pools.$loaded()
-                    .then(function() {
-                        vm.pools = _.map(pools, function(poolIdx) {
-                            var poolRef = ref.child('pools').child(poolIdx.$id);
-                            return $firebaseObject(poolRef);
-                        })
-                    })
-            })
+        var userPoolsRef = ref.child('user-pools').child(currentUid)
+        vm.userPools = $firebaseArray(userPoolsRef);
     }
 })();

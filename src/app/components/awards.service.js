@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function AwardsService($firebaseArray, $firebaseObject) {
-        var awardsRef = firebase.database().ref.child('awards');
+        var awardsRef = firebase.database().ref('awards');
         var latestAward = {};
 
         return {
@@ -23,7 +23,7 @@
 
         function getTotalPoints() {
             return getAwards().$loaded()
-                .then(function() {
+                .then(function(awards) {
                     return _.sumBy(awards, 'points')
                 })
         }

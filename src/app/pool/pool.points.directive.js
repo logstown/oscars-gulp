@@ -6,12 +6,12 @@
         .directive('poolPoints', poolPoints);
 
     /** @ngInject */
-    function poolPoints(User, $firebaseObject, AwardsService, Auth, toastr, $modal) {
+    function poolPoints(User, $firebaseObject, $firebaseArray, AwardsService, Auth, toastr, $modal) {
         var directive = {
             restrict: 'E',
             templateUrl: 'app/pool/_poolPoints.html',
             scope: {
-                pool: '='
+                poolId: '='
             },
             link: link
         };
@@ -26,7 +26,7 @@
             var awards = [];
 
             scope.possiblePoints = 0;
-            scope.users = [];
+            scope.competitors = [];
 
             scope.getProgressWidth = getProgressWidth;
             scope.getProgressBarColor = getProgressBarColor;
@@ -38,28 +38,29 @@
             activate();
 
             function activate() {
+                scope.pool = $firebaseObject(ref.child('pools').child(scope.poolId));
+                var competitors = $firebaseArray(ref.child('pool-users').child(scope.poolId));
 
-                scope.pool.$loaded()
+                competitors.$loaded()
                     .then(function() {
-                        scope.users = getUsers(scope.pool.competitors);
+                        scope.competitors = getCompetitors(competitors);
                     });
 
-                awards = AwardsService.getAwards();
-                awards.$loaded()
-                    .then(function() {
-                        totalPossiblePoints = _.sumBy(awards, 'points');
+                AwardsService.getTotalPoints()
+                    .then(function(result) {
+                        totalPossiblePoints = result;
                     })
 
                 AwardsService.onChange(updateUserScores);
             }
 
-            function getUsers(competitors) {
-                return _.map(competitors, function(dateJoined, uid) {
-                    var user = User(uid);
+            function getCompetitors(competitors) {
+                return _.map(competitors, function(competitor) {
+                    var user = User(competitor.$id);
 
                     user.$loaded()
                         .then(function() {
-                            user.picks = $firebaseObject(ref.child('picks').child(uid))
+                            user.picks = $firebaseObject(ref.child('picks').child(competitor.$id))
                             user.score = 0;
                         })
 
@@ -70,7 +71,7 @@
             function updateUserScores(award, event) {
                 scope.possiblePoints += award.points;
 
-                angular.forEach(scope.users, function(user) {
+                angular.forEach(scope.competitors, function(user) {
                     user.$loaded()
                         .then(function() {
                             return user.picks.$loaded();
@@ -90,8 +91,8 @@
                                 }
                             }
 
-                            highestScore = _.maxBy(scope.users, 'score').score;
-                            scope.winners = _.filter(scope.users, { score: highestScore });
+                            highestScore = _.maxBy(scope.competitors, 'score').score;
+                            scope.winners = _.filter(scope.competitors, { score: highestScore });
 
                             scope.superlativesClickable = true;
                         })
@@ -167,8 +168,8 @@
             }
 
             function getTechAndPeople() {
-                console.log(scope.users)
-                var counts = _.map(_.filter(scope.users, function(user) {
+                console.log(scope.competitors)
+                var counts = _.map(_.filter(scope.competitors, function(user) {
                     return user.picks.$value;
                 }), function(user) {
 
@@ -212,7 +213,7 @@
             }
 
             function getFanboys() {
-                var winningCounts = _.map(_.filter(scope.users, function(user) {
+                var winningCounts = _.map(_.filter(scope.competitors, function(user) {
                     return user.picks.$value;
                 }), function(user) {
                     var counts = _.countBy(user.picks, function(nomI, awardI) {
@@ -246,7 +247,7 @@
 
                 angular.forEach(awards, function(award, aI) {
 
-                    var correctUsers = _.filter(scope.users, function(user) {
+                    var correctUsers = _.filter(scope.competitors, function(user) {
                         return user.picks && user.picks[aI] !== undefined && user.picks[aI] === award.winner
                     })
 
