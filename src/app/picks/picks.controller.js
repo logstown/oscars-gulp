@@ -73,7 +73,7 @@
         function pickWinner(award, nomineeIdx) {
             if (isAuthorized() && TimeService.isAfterOscarStart()) {
                 vm.awards[award.$id].winner = nomineeIdx;
-                vm.awards[award.$id].winnerStamp = new Date().getTime();
+                vm.awards[award.$id].winnerStamp = firebase.database.ServerValue.TIMESTAMP;
                 vm.awards.$save(award);
             }
         }

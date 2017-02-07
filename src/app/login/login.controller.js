@@ -22,10 +22,14 @@
         function login(provider) {
             Auth.$signInWithPopup(provider)
                 .then(function(result) {
+                    var providerData = angular.copy(result.user.providerData[0])
+
+                    providerData.uid = result.user.uid;
+
                     firebase.database()
                         .ref('users')
                         .child(result.user.uid)
-                        .set(result.user.providerData[0]);
+                        .set(providerData);
 
                     var route = $rootScope.intendedRoute || { state: 'home', params: {} };
                     $rootScope.intendedRoute = undefined;

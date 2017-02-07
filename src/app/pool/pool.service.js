@@ -7,40 +7,62 @@
 
     /** @ngInject */
     function PoolService($firebaseArray, User) {
-        var poolsRef = firebase.database().ref('pools');
 
         return {
-            create: create
+            create: create,
+            addUser: addUser,
+            remove: remove,
+            removeUser: removeUser
         };
 
         function create(pool) {
-            var now = new Date().getTime();
+            var now = firebase.database.ServerValue.TIMESTAMP;
+            var updateData = {};
+            var newPoolKey = firebase.database().ref('pools').push().key;
 
-            pool.competitors = {};
-            pool.competitors[pool.creator] = now;
             pool.dateCreated = now;
 
-            var pools = $firebaseArray(poolsRef);
+            updateData['pools/' + newPoolKey] = pool;
+            updateData['pool-users/' + newPoolKey + '/' + pool.creator] = now;
+            updateData['user-pools/' + pool.creator + '/' + newPoolKey] = now;
 
-            return pools.$add(pool)
-                .then(function(newPoolRef) {
-                    var user = User(pool.creator);
-
-                    return user.$loaded()
-                        .then(function() {
-                            if (!user.pools) {
-                                user.pools = {};
-                            }
-
-                            user.pools[newPoolRef.key] = new Date().getTime();
-
-                            return user.$save()
-                                .then(function() {
-                                    return newPoolRef.key;
-                                });
-                        })
+            return firebase.database().ref().update(updateData)
+                .then(function() {
+                    return newPoolKey;
                 });
 
+        }
+
+        function addUser(uid, poolId) {
+            var updateData = {};
+            var now = firebase.database.ServerValue.TIMESTAMP;
+
+            updateData['pool-users/' + poolId + '/' + uid] = now;
+            updateData['user-pools/' + uid + '/' + poolId] = now;
+
+            return firebase.database().ref().update(updateData)
+        }
+
+        function remove(competitorIds, poolId) {
+            var updateData = {};
+
+            angular.forEach(competitorIds, function(competitor) {
+                updateData['user-pools/' + competitor.$id + '/' + poolId] = null;
+            })
+
+            updateData['pool-users/' + poolId] = null;
+            updateData['pools/' + poolId] = null;
+
+            return firebase.database().ref().update(updateData);
+        }
+
+        function removeUser(uid, poolId) {
+            var updateData = {};
+
+            updateData['pool-users/' + poolId + '/' + uid] = null;
+            updateData['user-pools/' + uid + '/' + poolId] = null;
+
+            return firebase.database().ref().update(updateData)
         }
 
     }

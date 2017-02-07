@@ -1,0 +1,19 @@
+<tr class="competitor">
+    <td class="user-remove" ng-if="currentUid === pool.creator">
+        <i class="fa fa-close text-danger" ng-click="removeUser()" ng-hide="competitor.uid === pool.creator" data-title="Remove from Pool" data-placement="auto left" bs-tooltip></i>
+    </td>
+    <td class="user-picture">
+        <img ng-src="{{competitor.photoURL}}" style="height: 40px;" alt="">
+    </td>
+    <td class="user-name">
+        <span data-title="Admin" bs-tooltip data-bs-enabled="competitor.uid === pool.creator" ng-class="{'admin':competitor.uid === pool.creator}">{{competitor.displayName}}</span>
+    </td>
+    <td class="user-progress">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{userPicks.length}}" aria-valuemin="0" aria-valuemax="24" ng-style="{'width': getProgressWidth(userPicks.length)}" ng-class="getProgressBarColor(userPicks.length)">
+                <span class="sr-only">{{getProgressWidth(userPicks.length)}}% Complete</span>
+            </div>
+        </div>
+        <div class="pull-right">{{userPicks.length}} / 24 nominees picked</div>
+    </td>
+</tr>

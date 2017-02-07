@@ -22,8 +22,7 @@
         }
 
         function getTotalPoints() {
-            var awards = $firebaseArray(awardsRef);
-            return awards.$loaded()
+            return getAwards().$loaded()
                 .then(function() {
                     return _.sumBy(awards, 'points')
                 })
