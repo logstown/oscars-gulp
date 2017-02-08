@@ -22,7 +22,7 @@ for line in f:
 		awards.append(award)
 	elif newAwardNext:
 		title = line.rstrip('\n')
-		award = {'award': title, 'nominees': []}
+		award = {'award': title, 'nominees': [], 'points': 1}
 
 		newAwardNext = False
 	else:
