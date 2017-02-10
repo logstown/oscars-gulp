@@ -21,12 +21,11 @@
         /** @ngInject */
         function link(scope) {
             var ref = firebase.database().ref();
-            var totalPossiblePoints;
-            var highestScore;
-            var awards = [];
+            var awards = $firebaseArray(ref.child('awards'));;
 
-            scope.possiblePoints = 0;
+            scope.pool = $firebaseObject(ref.child('pools').child(scope.poolId));
             scope.competitors = [];
+            scope.picks = {};
 
             scope.getProgressWidth = getProgressWidth;
             scope.getProgressBarColor = getProgressBarColor;
@@ -34,89 +33,51 @@
             scope.itsOver = itsOver;
             scope.isWinner = isWinner;
             scope.getSuperlatives = getSuperlatives;
+            scope.getScore = getScore;
 
             activate();
 
             function activate() {
-                scope.pool = $firebaseObject(ref.child('pools').child(scope.poolId));
                 var competitors = $firebaseArray(ref.child('pool-users').child(scope.poolId));
 
                 competitors.$loaded()
                     .then(function() {
                         scope.competitors = getCompetitors(competitors);
                     });
-
-                AwardsService.getTotalPoints()
-                    .then(function(result) {
-                        totalPossiblePoints = result;
-                    })
-
-                AwardsService.onChange(updateUserScores);
             }
 
             function getCompetitors(competitors) {
                 return _.map(competitors, function(competitor) {
-                    var user = User(competitor.$id);
+                    scope.picks[competitor.$id] = $firebaseObject(ref.child('picks').child(competitor.$id))
 
-                    user.$loaded()
-                        .then(function() {
-                            user.picks = $firebaseObject(ref.child('picks').child(competitor.$id))
-                            user.score = 0;
-                        })
-
-                    return user;
+                    return User(competitor.$id);
                 })
             }
 
-            function updateUserScores(award, event) {
-                scope.possiblePoints += award.points;
+            function getScore(user) {
+                return _.reduce(awards, function(sum, award, key) {
+                    if (Number(scope.picks[user.$id][Number(award.$id)]) === Number(award.winner)) {
+                        sum += award.points;
+                    }
 
-                angular.forEach(scope.competitors, function(user) {
-                    user.$loaded()
-                        .then(function() {
-                            return user.picks.$loaded();
-                        })
-                        .then(function() {
-                            var correct = Number(user.picks[award.$id]) === Number(award.winner)
-
-                            if (correct) {
-                                user.score += award.points;
-                            }
-
-                            if (user.uid === Auth.$getAuth().uid && event === 'child_changed') {
-                                if (correct) {
-                                    toastr.success('You got it Right!');
-                                } else {
-                                    toastr.error('Better luck on the next one.')
-                                }
-                            }
-
-                            highestScore = _.maxBy(scope.competitors, 'score').score;
-                            scope.winners = _.filter(scope.competitors, { score: highestScore });
-
-                            scope.superlativesClickable = true;
-                        })
-                })
+                    return sum
+                }, 0)
             }
 
-            function getProgressWidth(score) {
-                var width = score ? (score / scope.possiblePoints) * 100 : '';
+            function getProgressWidth(user) {
+                var width = (getScore(user) / AwardsService.getPossiblePoints()) * 100;
 
                 return width;
             }
 
-            function getBadgeLeft(score) {
-                return getProgressWidth(score) - 8;
+            function getBadgeLeft(user) {
+                return getProgressWidth(user) - 8;
             }
 
             function getProgressBarColor(user) {
-                if (!user || !user.score) {
-                    return;
-                }
-
                 var latestAward = AwardsService.getLatestAward();
 
-                if (Number(user.picks[latestAward.$id]) === Number(latestAward.winner)) {
+                if (Number(scope.picks[user.$id][latestAward.$id]) === Number(latestAward.winner)) {
                     return 'progress-bar-success';
                 } else {
                     return 'progress-bar-danger'
@@ -124,11 +85,20 @@
             }
 
             function itsOver() {
-                return scope.possiblePoints === totalPossiblePoints;
+                return AwardsService.getPossiblePoints() === AwardsService.getTotalPoints();
             }
 
-            function isWinner(score) {
-                return itsOver() && score === highestScore;
+            function isWinner(user) {
+                // return itsOver() && getScore(user) === getHighestScore();
+                return false;
+            }
+
+            function getHighestScore() {
+                return _.maxBy(scope.competitors, 'score').score;
+            }
+
+            function getWinners() {
+                return _.filter(scope.competitors, { score: getHighestScore() });
             }
 
             function getSuperlatives() {

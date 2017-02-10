@@ -8,52 +8,50 @@
     /** @ngInject */
     function AwardsService($firebaseArray, $firebaseObject) {
         var awardsRef = firebase.database().ref('awards');
-        var latestAward = {};
+        var totalPoints = 0;
+        var possiblePoints = 0;
+        var awards = $firebaseArray(awardsRef);
+        var latestAward = {
+            winnerStamp: 0
+        };
+
+        awards.$watch(function(eventObj) {
+            var award = awards[eventObj.key];
+
+            totalPoints += award.points;
+
+            if (award.winner === undefined) {
+                return;
+            }
+
+            possiblePoints += award.points;
+
+            if (award.winnerStamp > latestAward.winnerStamp) {
+                latestAward = award;
+            }
+        });
 
         return {
-            onChange: onChange,
             getTotalPoints: getTotalPoints,
             getLatestAward: getLatestAward,
-            getAwards: getAwards
+            getAwards: getAwards,
+            getPossiblePoints: getPossiblePoints
         };
 
         function getAwards() {
-            return $firebaseArray(awardsRef);
+            return awards;
         }
 
         function getTotalPoints() {
-            return getAwards().$loaded()
-                .then(function(awards) {
-                    return _.sumBy(awards, 'points')
-                })
-        }
-
-        function onChange(cb) {
-            var awards = $firebaseArray(awardsRef);
-            return awards.$watch(function(eventObj) {
-                var awardRef = awardsRef.child(eventObj.key);
-                // awardRef.child('winner').once('value', function(winnerSnap) {
-                //     if (winnerSnap.val() !== null) {
-                //         cb(eventObj.key, winnerSnap.val(), $firebaseObject(awardRef.child('points')))
-                //     }
-                // });
-
-                var award = $firebaseObject(awardRef);
-                award.$loaded()
-                    .then(function() {
-                        if (award.winner !== undefined) {
-                            cb(award, eventObj.event);
-
-                            if (award.winnerStamp > latestAward.winnerStamp || _.isEmpty(latestAward)) {
-                                latestAward = award;
-                            }
-                        }
-                    })
-            });
+            return totalPoints;
         }
 
         function getLatestAward() {
             return latestAward;
+        }
+
+        function getPossiblePoints() {
+            return possiblePoints;
         }
     }
 })();

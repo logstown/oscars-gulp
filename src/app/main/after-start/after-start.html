@@ -1,5 +1,22 @@
 <div class="container">
-    <div class="col-md-6" style="margin-bottom: 50px;">
-        <pool-points ng-repeat="pool in vm.userPools" pool-id="pool.$id"></pool-points>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div role="complementary" bs-affix style="z-index: 20;">
+                <div class="alert" ng-class="vm.getAlertClass()" role="alert">
+                    <span class="label label-primary" style="position: absolute; top: 0; left: 0;">Latest Winner</span>
+                    <span class="lead">{{vm.getLatestAward().award}}:</span>
+                    <span ng-if="vm.getLatestAward().nominees[vm.getLatestAward().winner].nominee"><span class="lead">{{vm.getLatestAward().nominees[vm.getLatestAward().winner].nominee}}</span> <span style="text-decoration: underline;">({{vm.getLatestAward().nominees[vm.getLatestAward().winner].film}})</span></span>
+                    <span ng-if="!vm.getLatestAward().nominees[vm.getLatestAward().winner].nominee"><span class="lead" style="text-decoration: underline;">{{vm.getLatestAward().nominees[vm.getLatestAward().winner].film}}</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        Possible points: <span class="label label-info" style="font-size: initial;">{{vm.getPossiblePoints()}}</span> Total possilbe points: <span class="label label-info" style="font-size: initial;">{{vm.getTotalPoints()}}</span>
+    </div>
+    <div class="row">
+        <div ng-class="{'col-md-8 col-md-offset-2': vm.userPools.length === 1, 'col-md-6': vm.userPools.length > 1}" style="margin-bottom: 50px;">
+            <pool-points ng-repeat="pool in vm.userPools" pool-id="pool.$id"></pool-points>
+        </div>
     </div>
 </div>
