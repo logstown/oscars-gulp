@@ -22,6 +22,7 @@
         function link(scope) {
             var ref = firebase.database().ref();
             var awards = $firebaseArray(ref.child('awards'));;
+            var competitors = $firebaseArray(ref.child('pool-users').child(scope.poolId));
 
             scope.pool = $firebaseObject(ref.child('pools').child(scope.poolId));
             scope.competitors = [];
@@ -32,40 +33,64 @@
             scope.getBadgeLeft = getBadgeLeft;
             scope.itsOver = itsOver;
             scope.isWinner = isWinner;
+            scope.getWinners = getWinners;
             scope.getSuperlatives = getSuperlatives;
-            scope.getScore = getScore;
 
             activate();
 
             function activate() {
-                var competitors = $firebaseArray(ref.child('pool-users').child(scope.poolId));
 
                 competitors.$loaded()
                     .then(function() {
                         scope.competitors = getCompetitors(competitors);
                     });
+
+                awards.$watch(function(eventObj) {
+                    var award = awards[eventObj.key];
+
+                    if (award.winner !== undefined) {
+                        updateScores(award);
+                    }
+                })
             }
 
             function getCompetitors(competitors) {
                 return _.map(competitors, function(competitor) {
-                    scope.picks[competitor.$id] = $firebaseObject(ref.child('picks').child(competitor.$id))
+                    var user = User(competitor.$id);
 
-                    return User(competitor.$id);
+                    user.$loaded()
+                        .then(function() {
+                            user.picks = $firebaseObject(ref.child('picks').child(competitor.$id));
+                            user.score = 0;
+                        });
+
+                    return user;
                 })
             }
 
-            function getScore(user) {
-                return _.reduce(awards, function(sum, award, key) {
-                    if (Number(scope.picks[user.$id][Number(award.$id)]) === Number(award.winner)) {
-                        sum += award.points;
-                    }
+            function updateScores(award) {
+                competitors.$loaded()
+                    .then(function() {
+                        angular.forEach(scope.competitors, function(competitor) {
+                            competitor.$loaded()
+                                .then(function() {
+                                    return competitor.picks.$loaded()
+                                })
+                                .then(function() {
+                                    if (Number(competitor.picks[award.$id]) === Number(award.winner)) {
+                                        competitor.score += award.points;
+                                    }
 
-                    return sum
-                }, 0)
+                                    if (itsOver()) {
+                                        scope.winners = _.filter(scope.competitors, { score: getHighestScore() });
+                                    }
+                                })
+                        })
+                    })
             }
 
             function getProgressWidth(user) {
-                var width = (getScore(user) / AwardsService.getPossiblePoints()) * 100;
+                var width = (user.score / AwardsService.getPossiblePoints()) * 100;
 
                 return width;
             }
@@ -77,7 +102,7 @@
             function getProgressBarColor(user) {
                 var latestAward = AwardsService.getLatestAward();
 
-                if (Number(scope.picks[user.$id][latestAward.$id]) === Number(latestAward.winner)) {
+                if (user.picks[latestAward.$id] === latestAward.winner) {
                     return 'progress-bar-success';
                 } else {
                     return 'progress-bar-danger'
@@ -89,8 +114,7 @@
             }
 
             function isWinner(user) {
-                // return itsOver() && getScore(user) === getHighestScore();
-                return false;
+                return itsOver() && user.score === getHighestScore();
             }
 
             function getHighestScore() {

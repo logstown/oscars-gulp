@@ -18,13 +18,16 @@
         awards.$watch(function(eventObj) {
             var award = awards[eventObj.key];
 
-            totalPoints += award.points;
+            possiblePoints = _.chain(awards)
+                .filter(function(award) {
+                    return award.winner !== undefined;
+                })
+                .sumBy('points')
+                .value();
 
-            if (award.winner === undefined) {
-                return;
+            if (eventObj.event === 'child_added') {
+                totalPoints += award.points;
             }
-
-            possiblePoints += award.points;
 
             if (award.winnerStamp > latestAward.winnerStamp) {
                 latestAward = award;
