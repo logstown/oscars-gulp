@@ -34,6 +34,8 @@
             scope.itsOver = itsOver;
             scope.isWinner = isWinner;
             scope.getWinners = getWinners;
+            scope.isEliminated = isEliminated;
+            scope.isAdmin = isAdmin;
             scope.getSuperlatives = getSuperlatives;
 
             activate();
@@ -123,6 +125,16 @@
 
             function getWinners() {
                 return _.filter(scope.competitors, { score: getHighestScore() });
+            }
+
+            function isEliminated(user) {
+                var pointsRemaining = AwardsService.getTotalPoints() - AwardsService.getPossiblePoints();
+
+                return user.score + pointsRemaining < getHighestScore();
+            }
+
+            function isAdmin(user) {
+                return user.uid === scope.pool.creator
             }
 
             function getSuperlatives() {

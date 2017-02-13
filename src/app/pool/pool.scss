@@ -18,10 +18,6 @@ $competitor-height: 80px;
             }
             .user-name {
                 width: 1px;
-                .admin {
-                    cursor: help;
-                    border-bottom: 1px dotted #777777
-                }
             }
             .user-progress {
                 padding-top: 15px;
@@ -32,6 +28,11 @@ $competitor-height: 80px;
             }
         }
     }
+}
+
+.admin {
+    cursor: help;
+    border-bottom: 1px dotted #777777
 }
 
 .invite-others {

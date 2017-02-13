@@ -10,7 +10,7 @@
         </button> -->
     </div>
     <ul class="list-group users-points">
-        <li ng-repeat="competitor in competitors | orderBy:'-score'" class="list-group-item fx-fade-up fx-ease-sine" ng-class="{'correct': isWinner(competitor)}" ng-if="competitor.picks.$resolved">
+        <li ng-repeat="competitor in competitors | orderBy:'-score'" class="list-group-item fx-fade-up fx-ease-sine" ng-class="{'correct': isWinner(competitor), 'eliminated': isEliminated(competitor)}" ng-if="competitor.picks.$resolved">
             <div class="photo-score">
                 <img ng-src="{{competitor.photoURL}}" style="height: 40px;" alt="">
             </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div>
-                <span data-title="Admin" bs-tooltip data-bs-enabled="competitor.uid === pool.creator" ng-class="{'admin':competitor.uid === pool.creator}">{{competitor.displayName}}</span>
+                <span data-title="Admin" bs-tooltip data-bs-enabled="isAdmin(competitor)" ng-class="{'admin':isAdmin(competitor)}">{{competitor.displayName}}</span>
             </div>
             <!-- <div class="clearfix"></div> -->
         </li>
