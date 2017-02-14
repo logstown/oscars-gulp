@@ -23,7 +23,7 @@
             goes to...
         </td>
         <td colspan="2">
-            <div ng-repeat-start="winner in superlative.winners" class="big"><img ng-src="https://graph.facebook.com/{{winner.user.id}}/picture" height="50px;" style="margin-right: 10px;" alt="">{{winner.user.name}}
+            <div ng-repeat-start="winner in superlative.winners" class="big"><img ng-src="{{winner.competitor.photoURL}}" height="50px;" style="margin-right: 10px;" alt="">{{winner.competitor.displayName}}
             </div>
             <div ng-repeat-end ng-if="$parent.$first">...chose <strong>{{winner.movie}}</strong> {{winner.count}} times!</div>
         </td>
