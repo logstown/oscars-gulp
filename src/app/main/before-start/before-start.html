@@ -17,7 +17,8 @@
                     </div>
                     <div ng-show="vm.picksSize === 24">
                         <p class="lead text-success">Your picks are complete!</p>
-                        <p class="lead">Check back in when the ceremony starts or second guess yourself below:</p>
+                        <p class="lead">Come back <strong>{{vm.oscarStart}}</strong> when the ceremony starts</p>
+                        <p>or second guess yourself:</p>
                     </div>
                     <a ui-sref="picks" class="btn btn-primary btn-lg raised">Make Picks</a>
                 </div>

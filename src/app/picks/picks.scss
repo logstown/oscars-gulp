@@ -1,6 +1,18 @@
 .award-radio {
-    .award-points {
-        font-size: 130%;
+    .panel-heading {
+        background-color: #af9751;
+        color: black;
+        .panel-title {
+            text-shadow: 2px 1px 2px lightgrey;
+            font-size: 20px;
+        }
+        .award-points {
+            font-size: 130%;
+            font-weight: normal;
+            .label {
+                background-color: black;
+            }
+        }
     }
     .nominees {
         li {

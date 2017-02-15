@@ -59,9 +59,10 @@
             if (PicksService.getSize(vm.picks) === vm.awards.length && !informedUser) {
                 $modal({
                     title: 'All Done!',
-                    content: 'Come back during the Oscars Ceremony to check on your progress.',
+                    content: 'Come back <strong>' + moment(TimeService.getOscarStart()).calendar() + '</strong> during the ceremony to watch the scores update LIVE!',
                     show: true,
-                    animation: 'am-fade-and-scale'
+                    animation: 'am-fade-and-scale',
+                    html: true
                 });
 
                 informedUser = true;

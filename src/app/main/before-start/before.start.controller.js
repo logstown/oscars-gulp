@@ -6,7 +6,7 @@
         .controller('BeforeStartController', BeforeStartController);
 
     /** @ngInject */
-    function BeforeStartController(Auth, $firebaseArray, $modal, baseUrl, $state) {
+    function BeforeStartController(Auth, $firebaseArray, $modal, baseUrl, $state, TimeService) {
         var vm = this;
 
         var ref = firebase.database().ref();
@@ -14,6 +14,7 @@
 
         vm.userPools = [];
         vm.picksSize = 0;
+        vm.oscarStart = moment(TimeService.getOscarStart()).calendar();
 
         vm.createNewPool = createNewPool;
 
