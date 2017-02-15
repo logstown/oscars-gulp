@@ -6,7 +6,7 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController($firebaseArray, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
+    function PicksController(Awards, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
         var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
         var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
         var ADMIN_TWITTER_UID = 'twitter:21528048';
@@ -31,7 +31,7 @@
                 $state.go('login');
             }
 
-            vm.awards = $firebaseArray(ref.child('awards'));
+            vm.awards = Awards();
             vm.picks = PicksObject(currentUserId);
         }
 

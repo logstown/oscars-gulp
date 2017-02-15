@@ -6,7 +6,7 @@
         .directive('poolPoints', poolPoints);
 
     /** @ngInject */
-    function poolPoints(User, Pool, $firebaseArray, AwardsService, Auth, toastr, $modal, PicksObject, PoolUsers) {
+    function poolPoints(User, Pool, Awards, AwardsService, Auth, toastr, $modal, PicksObject, PoolUsers) {
         var directive = {
             restrict: 'E',
             templateUrl: 'app/pool/_poolPoints.html',
@@ -21,7 +21,7 @@
         /** @ngInject */
         function link(scope) {
             var ref = firebase.database().ref();
-            var awards = $firebaseArray(ref.child('awards'));
+            var awards = Awards();
             var competitors = PoolUsers(scope.poolId);
 
             scope.pool = Pool(scope.poolId);

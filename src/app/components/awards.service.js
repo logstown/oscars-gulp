@@ -6,11 +6,10 @@
         .factory('AwardsService', AwardsService);
 
     /** @ngInject */
-    function AwardsService($firebaseArray, $firebaseObject) {
-        var awardsRef = firebase.database().ref('awards');
+    function AwardsService(Awards) {
         var totalPoints = 0;
         var possiblePoints = 0;
-        var awards = $firebaseArray(awardsRef);
+        var awards = Awards();
         var latestAward = {
             winnerStamp: 0
         };
@@ -37,13 +36,8 @@
         return {
             getTotalPoints: getTotalPoints,
             getLatestAward: getLatestAward,
-            getAwards: getAwards,
             getPossiblePoints: getPossiblePoints
         };
-
-        function getAwards() {
-            return awards;
-        }
 
         function getTotalPoints() {
             return totalPoints;

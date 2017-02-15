@@ -6,7 +6,7 @@
         .factory('PoolService', PoolService);
 
     /** @ngInject */
-    function PoolService($firebaseArray, User) {
+    function PoolService() {
 
         return {
             create: create,
