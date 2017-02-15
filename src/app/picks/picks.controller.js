@@ -6,7 +6,7 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController($firebaseArray, $firebaseObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
+    function PicksController($firebaseArray, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
         var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
         var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
         var ADMIN_TWITTER_UID = 'twitter:21528048';
@@ -32,26 +32,8 @@
             }
 
             vm.awards = $firebaseArray(ref.child('awards'));
-            vm.picks = $firebaseObject(ref.child('picks').child(currentUserId));
-
-            // if (TimeService.isAfterOscarStart()) {
-            //     afterStart();
-            // }
+            vm.picks = PicksObject(currentUserId);
         }
-
-        // function afterStart() {
-        //     var competition
-        //     var user = User(currentUserId);
-
-        //     user.$loaded()
-        //         .then(function() {
-        //             competition = $firebaseObject(ref.child('competitions').child(user.compId));
-        //             competition.$loaded()
-        //                 .then(function() {
-
-        //                 })
-        //         })
-        // }
 
         function nomineeClicked(awardIdx) {
             vm.picks.$save();

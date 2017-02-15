@@ -6,7 +6,7 @@
         .directive('poolCompetitor', poolCompetitor);
 
     /** @ngInject */
-    function poolCompetitor($firebaseObject, PoolService, $firebaseArray, Auth) {
+    function poolCompetitor($firebaseObject, PoolService, PicksArray, Auth) {
         var directive = {
             restrict: 'A',
             templateUrl: 'app/pool/_poolCompetitor.html',
@@ -32,7 +32,7 @@
 
             function activate() {
                 scope.competitor = $firebaseObject(ref.child('users').child(scope.competitorId));
-                scope.userPicks = $firebaseArray(ref.child('picks').child(scope.competitorId));
+                scope.userPicks = PicksArray(scope.competitorId)
             }
 
             function removeUser() {

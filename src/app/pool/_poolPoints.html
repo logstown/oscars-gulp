@@ -12,7 +12,7 @@
     <ul class="list-group users-points">
         <li ng-repeat="competitor in competitors | orderBy:'-score'" class="list-group-item fx-fade-up fx-ease-sine" ng-class="{'correct': isWinner(competitor), 'eliminated': isEliminated(competitor)}" ng-if="competitor.picks.$resolved">
             <div class="photo-score">
-                <img ng-src="{{competitor.photoURL}}" style="height: 40px;" alt="">
+                <img ng-src="{{competitor.info.photoURL}}" style="height: 40px;" alt="">
             </div>
             <div class="text-right score-bar">
                 <span class="badge" ng-style="{'left': getBadgeLeft(competitor) + '%'}">{{competitor.score}}</span>
@@ -22,9 +22,8 @@
                 </div>
             </div>
             <div>
-                <span data-title="Admin" bs-tooltip data-bs-enabled="isAdmin(competitor)" ng-class="{'admin':isAdmin(competitor)}">{{competitor.displayName}}</span>
+                <span data-title="Admin" bs-tooltip data-bs-enabled="isAdmin(competitor)" ng-class="{'admin':isAdmin(competitor)}">{{competitor.info.displayName}}</span>
             </div>
-            <!-- <div class="clearfix"></div> -->
         </li>
     </ul>
 </div>

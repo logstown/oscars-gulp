@@ -6,7 +6,7 @@
         .directive('poolPoints', poolPoints);
 
     /** @ngInject */
-    function poolPoints(User, $firebaseObject, $firebaseArray, AwardsService, Auth, toastr, $modal) {
+    function poolPoints(User, Pool, $firebaseArray, AwardsService, Auth, toastr, $modal, PicksObject, PoolUsers) {
         var directive = {
             restrict: 'E',
             templateUrl: 'app/pool/_poolPoints.html',
@@ -21,10 +21,10 @@
         /** @ngInject */
         function link(scope) {
             var ref = firebase.database().ref();
-            var awards = $firebaseArray(ref.child('awards'));;
-            var competitors = $firebaseArray(ref.child('pool-users').child(scope.poolId));
+            var awards = $firebaseArray(ref.child('awards'));
+            var competitors = PoolUsers(scope.poolId);
 
-            scope.pool = $firebaseObject(ref.child('pools').child(scope.poolId));
+            scope.pool = Pool(scope.poolId);
             scope.competitors = [];
             scope.picks = {};
 
@@ -33,7 +33,6 @@
             scope.getBadgeLeft = getBadgeLeft;
             scope.itsOver = itsOver;
             scope.isWinner = isWinner;
-            scope.getWinners = getWinners;
             scope.isEliminated = isEliminated;
             scope.isAdmin = isAdmin;
             scope.getSuperlatives = getSuperlatives;
@@ -58,15 +57,11 @@
 
             function getCompetitors(competitors) {
                 return _.map(competitors, function(competitor) {
-                    var user = User(competitor.$id);
+                    competitor.info = User(competitor.$id);
+                    competitor.picks = PicksObject(competitor.$id);
+                    competitor.score = 0;
 
-                    user.$loaded()
-                        .then(function() {
-                            user.picks = $firebaseObject(ref.child('picks').child(competitor.$id));
-                            user.score = 0;
-                        });
-
-                    return user;
+                    return competitor
                 })
             }
 
@@ -74,10 +69,7 @@
                 competitors.$loaded()
                     .then(function() {
                         angular.forEach(scope.competitors, function(competitor) {
-                            competitor.$loaded()
-                                .then(function() {
-                                    return competitor.picks.$loaded()
-                                })
+                            competitor.picks.$loaded()
                                 .then(function() {
                                     if (Number(competitor.picks[award.$id]) === Number(award.winner)) {
                                         competitor.score += award.points;
@@ -123,10 +115,6 @@
                 return _.maxBy(scope.competitors, 'score').score;
             }
 
-            function getWinners() {
-                return _.filter(scope.competitors, { score: getHighestScore() });
-            }
-
             function isEliminated(user) {
                 var pointsRemaining = AwardsService.getTotalPoints() - AwardsService.getPossiblePoints();
 
@@ -134,7 +122,7 @@
             }
 
             function isAdmin(user) {
-                return user.uid === scope.pool.creator
+                return user.$id === scope.pool.creator
             }
 
             function getSuperlatives() {
@@ -160,9 +148,7 @@
                     description: 'Correctly predicted awards that went against the opinion of the crowd. Arguably almost as prestigious as the overall winner. Contact Logan if you want more details.',
                     winners: getDarkHorses(),
                     icon: 'assets/images/psychic.png'
-                }]
-
-                console.log(scope.superlatives)
+                }];
 
                 scope.endingModal = $modal({
                     // title: 'Superlatives!',  This is a bug

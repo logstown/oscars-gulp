@@ -6,7 +6,7 @@
         .directive('oscarPool', oscarPool);
 
     /** @ngInject */
-    function oscarPool(Auth, $modal, baseUrl, $firebaseObject, $firebaseArray, PoolService) {
+    function oscarPool(Auth, $modal, baseUrl, Pool, PoolUsers, PoolService) {
         var directive = {
             restrict: 'E',
             templateUrl: 'app/pool/_pool.html',
@@ -28,13 +28,12 @@
             activate()
 
             function activate() {
-                scope.pool = $firebaseObject(ref.child('pools').child(scope.poolId));
-                scope.competitors = $firebaseArray(ref.child('pool-users').child(scope.poolId));
+                scope.pool = Pool(scope.poolId);
+                scope.competitors = PoolUsers(scope.poolId);
             }
 
             function leavePool(pool) {
                 var message = 'Are you sure you want to leave ' + pool.name + '?';
-                var poolRef = ref.child('pools').child(pool.$id);
 
                 if (scope.currentUid === pool.creator) {
                     message += ' Note: Since you are the Admin, you will be deleting the entire pool as well.'

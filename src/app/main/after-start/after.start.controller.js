@@ -6,11 +6,11 @@
         .controller('AfterStartController', AfterStartController);
 
     /** @ngInject */
-    function AfterStartController(Auth, $firebaseArray, AwardsService, $firebaseObject, toastr) {
+    function AfterStartController(Auth, UserPools, AwardsService, PicksObject, toastr) {
         var vm = this;
         var ref = firebase.database().ref();
         var currentUid = Auth.$getAuth().uid;
-        var userPicks = $firebaseObject(ref.child('picks').child(currentUid));
+        var userPicks = PicksObject(currentUid);
 
         userPicks.$loaded()
             .then(function() {
@@ -26,7 +26,7 @@
                 })
             })
 
-        vm.userPools = $firebaseArray(ref.child('user-pools').child(currentUid));
+        vm.userPools = UserPools(currentUid);
 
         vm.getLatestAward = AwardsService.getLatestAward;
         vm.getPossiblePoints = AwardsService.getPossiblePoints;

@@ -6,7 +6,7 @@
         .controller('BeforeStartController', BeforeStartController);
 
     /** @ngInject */
-    function BeforeStartController(Auth, $firebaseArray, $modal, baseUrl, $state, TimeService) {
+    function BeforeStartController(Auth, UserPools, $modal, baseUrl, $state, TimeService) {
         var vm = this;
 
         var ref = firebase.database().ref();
@@ -30,10 +30,9 @@
                 .once('value')
                 .then(function(userPicksSnap) {
                     vm.picksSize = userPicksSnap.numChildren();
-                })
+                });
 
-            var userPoolsRef = ref.child('user-pools').child(currentUid)
-            vm.userPools = $firebaseArray(userPoolsRef);
+            vm.userPools = UserPools(currentUid);
         }
 
         function createNewPool() {
