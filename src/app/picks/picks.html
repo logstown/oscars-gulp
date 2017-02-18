@@ -2,18 +2,18 @@
     <div class="page-header" style="border-bottom: 1px solid lightgray;">
         <h1 class="pull-left" style="margin-top: 0;">Your Picks</h1>
         <div class="col-sm-5 col-xs-12 pull-right">
-            <input type="search" class="form-control" placeholder="Search award or nominee..." ng-model="vm.searchTerm">
+            <input type="search" class="form-control" placeholder="Search award or nominee..." ng-model="searchTerm">
         </div>
         <div class="clearfix"></div>
     </div>
     <div class="row">
     </div>
     <div class="row" style="margin-top: 20px;">
-        <div class="col-md-3 hidden-sm hidden-xs award-list" ng-if="!vm.searchTerm">
+        <div class="col-md-3 hidden-sm hidden-xs award-list" ng-if="!searchTerm">
             <div class="affix hidden-print" bs-affix data-offset-top="-15">
                 <ul class="nav nav-stacked nav-pills">
-                    <li ng-repeat="award in vm.awards" ng-class="vm.validateAward($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
-                        <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">{{award.award}} <i ng-if="!vm.isAfterOscarStart()" ng-show="vm.picks[$index]"class="fa fa-check fa-fw text-success"></i></a>
+                    <li ng-repeat="award in awards" ng-class="validateAward($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
+                        <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">{{award.award}} <i ng-if="!isAfterOscarStart()" ng-show="picks[$index]"class="fa fa-check fa-fw text-success"></i></a>
                     </li>
                     <li style="margin-top: 1px;">
                         <a href="#navbar" du-smooth-scroll style="padding: 3px 15px;"><small class="text-primary">Go to Top</small></a>
@@ -21,8 +21,8 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-9" ng-class="{'col-md-offset-1': vm.searchTerm}">
-            <div id="award-{{$index}}" ng-repeat="award in vm.awards | filter:vm.searchTerm" class="panel panel-default award-radio">
+        <div class="col-md-9" ng-class="{'col-md-offset-1': searchTerm}">
+            <div id="award-{{$index}}" ng-repeat="award in awards | filter:searchTerm" class="panel panel-default award-radio">
                 <div class="panel-heading">
                     <h1 class="panel-title pull-left"><i class="fa fa-star"></i> {{award.award}}</h1>
                     <div class="pull-right award-points">
@@ -31,19 +31,19 @@
                     <div class="clearfix"></div>
                 </div>
                 <ul class="list-group nominees">
-                    <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="vm.validateNominee($parent.$index, $index)">
+                    <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="validateNominee($parent.$index, $index)">
                         <div class="radio pull-left" style="margin: 0;">
                             <label>
-                                <input type="radio" ng-model="vm.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="vm.isAfterOscarStart()" style="margin-top: 8px" ng-change="vm.nomineeClicked($parent.$index)">
+                                <input type="radio" ng-model="picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="isAfterOscarStart()" style="margin-top: 8px" ng-change="nomineeClicked($parent.$index)">
                                 <span ng-show="nom.nominee"><span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span></span>
                                 <span ng-hide="nom.nominee"><span class="lead">{{nom.film}}</span></span>
-                                <i ng-if="vm.isAfterOscarStart()" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
+                                <i ng-if="isAfterOscarStart()" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
                             </label>
                         </div>
                         <!-- <div class="pull-right">
-                            <img ng-repeat="voter in vm.getVoters($parent.$index, $index)" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
+                            <img ng-repeat="voter in getVoters($parent.$index, $index)" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
                         </div> -->
-                        <button class="btn btn-default" ng-if="vm.isAfterOscarStart() &&  vm.isAuthorized()" style="position: absolute; right:-66px;" ng-click="vm.pickWinner(award, $index)">Winner</button>
+                        <button class="btn btn-default" ng-if="isAfterOscarStart() &&  isAuthorized()" style="position: absolute; right:-66px;" ng-click="pickWinner(award, $index)">Winner</button>
                         <div class="clearfix"></div>
                     </li>
                 </ul>

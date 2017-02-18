@@ -6,23 +6,22 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController(Awards, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
+    function PicksController($scope, Awards, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
         var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
         var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
         var ADMIN_TWITTER_UID = 'twitter:21528048';
         var SCROLL_DURATION = 1000;
 
-        var vm = this;
         var currentUserId = currentAuth.uid;
         var informedUser = false;
         var ref = firebase.database().ref();
 
-        vm.nomineeClicked = nomineeClicked;
-        vm.isAfterOscarStart = TimeService.isAfterOscarStart;
-        vm.validateAward = validateAward;
-        vm.validateNominee = validateNominee;
-        vm.pickWinner = pickWinner;
-        vm.isAuthorized = isAuthorized;
+        $scope.nomineeClicked = nomineeClicked;
+        $scope.isAfterOscarStart = TimeService.isAfterOscarStart;
+        $scope.validateAward = validateAward;
+        $scope.validateNominee = validateNominee;
+        $scope.pickWinner = pickWinner;
+        $scope.isAuthorized = isAuthorized;
 
         activate();
 
@@ -31,14 +30,14 @@
                 $state.go('login');
             }
 
-            vm.awards = Awards();
-            vm.picks = PicksObject(currentUserId);
+            $scope.awards = Awards();
+
+            var picks = PicksObject(currentUserId);
+            picks.$bindTo($scope, 'picks')
         }
 
         function nomineeClicked(awardIdx) {
-            vm.picks.$save();
-
-            if (PicksService.getSize(vm.picks) === vm.awards.length && !informedUser) {
+            if (PicksService.getSize($scope.picks) === $scope.awards.length && !informedUser) {
                 $modal({
                     title: 'All Done!',
                     content: 'Come back <strong>' + moment(TimeService.getOscarStart()).calendar() + '</strong> during the ceremony to watch the scores update LIVE!',
@@ -55,9 +54,9 @@
 
         function pickWinner(award, nomineeIdx) {
             if (isAuthorized() && TimeService.isAfterOscarStart()) {
-                vm.awards[award.$id].winner = nomineeIdx;
-                vm.awards[award.$id].winnerStamp = firebase.database.ServerValue.TIMESTAMP;
-                vm.awards.$save(award);
+                $scope.awards[award.$id].winner = nomineeIdx;
+                $scope.awards[award.$id].winnerStamp = firebase.database.ServerValue.TIMESTAMP;
+                $scope.awards.$save(award);
             }
         }
 
@@ -70,23 +69,23 @@
                 return;
             }
 
-            return Number(vm.picks[awardIdx]) === vm.awards[awardIdx].winner ? 'correct' : 'incorrect';
+            return Number($scope.picks[awardIdx]) === $scope.awards[awardIdx].winner ? 'correct' : 'incorrect';
         }
 
         function validateNominee(awardIdx, nomineeIdx) {
-            if (awardCantBeValidated(awardIdx) || Number(vm.picks[awardIdx]) !== nomineeIdx) {
+            if (awardCantBeValidated(awardIdx) || Number($scope.picks[awardIdx]) !== nomineeIdx) {
                 return;
             }
 
-            return nomineeIdx === vm.awards[awardIdx].winner ? 'correct' : 'incorrect';
+            return nomineeIdx === $scope.awards[awardIdx].winner ? 'correct' : 'incorrect';
         }
 
         function awardCantBeValidated(awardIdx) {
-            return !vm.picks[awardIdx] || vm.awards[awardIdx].winner === undefined || !vm.isAfterOscarStart();
+            return !$scope.picks[awardIdx] || $scope.awards[awardIdx].winner === undefined || !$scope.isAfterOscarStart();
         }
 
         function scrollToNext(awardIdxClicked) {
-            var nextAwards = _.omitBy(vm.picks, function(nomineeIdx, awardIdx) {
+            var nextAwards = _.omitBy($scope.picks, function(nomineeIdx, awardIdx) {
                 return awardIdx <= awardIdxClicked;
             })
 
@@ -101,7 +100,7 @@
                 lastIdx = awardIdx;
             });
 
-            if (lastIdx === vm.awards.length - 1) {
+            if (lastIdx === $scope.awards.length - 1) {
                 return;
             }
 
