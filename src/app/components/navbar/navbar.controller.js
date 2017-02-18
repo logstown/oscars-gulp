@@ -30,10 +30,7 @@
         }
 
         function logout() {
-            Auth.$signOut()
-                .then(function() {
-                    $state.go('login')
-                });
+            Auth.$signOut();
         }
 
         // function editProfile() {

@@ -25,14 +25,23 @@
                 $state.go('login');
             }
 
+            vm.picksLoading = true;
             ref.child('picks')
                 .child(currentUid)
                 .once('value')
                 .then(function(userPicksSnap) {
                     vm.picksSize = userPicksSnap.numChildren();
+
+                    vm.picksLoading = false;
                 });
 
+            vm.poolsLoading = true;
             vm.userPools = UserPools(currentUid);
+
+            vm.userPools.$loaded()
+                .then(function() {
+                    vm.poolsLoading = false;
+                });
         }
 
         function createNewPool() {
