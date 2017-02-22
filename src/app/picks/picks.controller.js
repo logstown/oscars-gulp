@@ -6,7 +6,7 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController($scope, Awards, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state) {
+    function PicksController($scope, Awards, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state, UserPools, Pool, PoolUsers) {
         var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
         var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
         var ADMIN_TWITTER_UID = 'twitter:21528048';
@@ -22,6 +22,7 @@
         $scope.validateNominee = validateNominee;
         $scope.pickWinner = pickWinner;
         $scope.isAuthorized = isAuthorized;
+        $scope.getVoters = getVoters;
 
         activate();
 
@@ -33,7 +34,39 @@
             $scope.awards = Awards();
 
             var picks = PicksObject(currentUserId);
-            picks.$bindTo($scope, 'picks')
+            picks.$bindTo($scope, 'picks');
+
+            if ($scope.isAfterOscarStart) {
+                var userPools = UserPools(currentUserId);
+
+                userPools.$loaded()
+                    .then(function() {
+                        $scope.userPools = _.map(userPools, function(pool) {
+                            return Pool(pool.$id)
+                        });
+
+                        return $scope.userPools[0].$loaded()
+
+                    })
+                    .then(function() {
+                        $scope.userPool = $scope.userPools[0];
+                        userPoolChanged();
+                    })
+            }
+        }
+
+        function userPoolChanged() {
+            var poolUsers = PoolUsers($scope.userPool.$id);
+
+            poolUsers.$loaded()
+                .then(function() {
+                    $scope.poolUsers = _.map(poolUsers, function(user) {
+                        return {
+                            picks: PicksObject(user.$id),
+                            info: User(user.$id)
+                        }
+                    });
+                })
         }
 
         function nomineeClicked(awardIdx) {
@@ -81,6 +114,10 @@
         }
 
         function awardCantBeValidated(awardIdx) {
+            if (!$scope.picks) {
+                return;
+            }
+
             return !$scope.picks[awardIdx] || $scope.awards[awardIdx].winner === undefined || !$scope.isAfterOscarStart();
         }
 
@@ -106,6 +143,12 @@
 
             var nextAward = angular.element(document.getElementById('award-' + (lastIdx + 1)));
             $document.scrollToElementAnimated(nextAward, 0, SCROLL_DURATION);
+        }
+
+        function getVoters(awardI, nomI) {
+            return _.filter($scope.poolUsers, function(user) {
+                return Number(user.picks[awardI]) === nomI;
+            })
         }
     }
 })();

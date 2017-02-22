@@ -6,14 +6,15 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="row">
+    <div class="row text-center">
+        <select ng-if="isAfterOscarStart()" ng-model="userPool" ng-options="pool as pool.name for pool in userPools" class="form-control" style="width: auto; display: inline-block; font-size: 120%;"></select>
     </div>
     <div class="row" style="margin-top: 20px;">
         <div class="col-md-3 hidden-sm hidden-xs award-list" ng-if="!searchTerm">
             <div class="affix hidden-print" bs-affix data-offset-top="-15">
                 <ul class="nav nav-stacked nav-pills">
                     <li ng-repeat="award in awards" ng-class="validateAward($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
-                        <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">{{award.award}} <i ng-if="!isAfterOscarStart()" ng-show="picks[$index]"class="fa fa-check fa-fw text-success"></i></a>
+                        <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">{{award.award}} <i ng-if="!isAfterOscarStart()" ng-show="picks[$index]" class="fa fa-check fa-fw text-success"></i></a>
                     </li>
                     <li style="margin-top: 1px;">
                         <a href="#navbar" du-smooth-scroll style="padding: 3px 15px;"><small class="text-primary">Go to Top</small></a>
@@ -32,18 +33,24 @@
                 </div>
                 <ul class="list-group nominees">
                     <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="validateNominee($parent.$index, $index)">
-                        <div class="radio" style="margin: 0;">
+                        <div class="radio">
                             <label>
                                 <input type="radio" ng-model="picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="isAfterOscarStart()" style="margin-top: 6px;" ng-change="nomineeClicked($parent.$index)">
-                                <span ng-show="nom.nominee"><span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span></span>
-                                <span ng-hide="nom.nominee"><span class="lead">{{nom.film}}</span></span>
-                                <i ng-if="isAfterOscarStart()" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
+                                <div ng-show="nom.nominee">
+                                    <span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span>
+                                </div>
+                                <div ng-hide="nom.nominee">
+                                    <span class="lead">{{nom.film}}</span>
+                                </div>
+                                <div>
+                                    <i ng-if="isAfterOscarStart()" ng-show="award.winner===$index" class="fa fa-trophy fa-lg"></i>
+                                </div>
                             </label>
                         </div>
-                        <!-- <div class="pull-right">
-                            <img ng-repeat="voter in getVoters($parent.$index, $index)" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
-                        </div> -->
-                        <button class="btn btn-default" ng-if="isAfterOscarStart() &&  isAuthorized()" style="position: absolute; right:-66px;" ng-click="pickWinner(award, $index)">Winner</button>
+                        <div class="pull-right" ng-if="isAfterOscarStart()">
+                            <img ng-repeat="voter in getVoters($parent.$index, $index)" style="margin-left: 2px;" ng-src="{{voter.info.photoURL}}" alt="" height="30" data-type="success" data-title="{{voter.info.displayName}}" bs-tooltip>
+                        </div>
+                        <button class="btn btn-default" ng-if="isAfterOscarStart() &&  isAuthorized()" style="position: absolute; right:-66px; top: 0;" ng-click="pickWinner(award, $index)">Winner</button>
                     </li>
                 </ul>
             </div>

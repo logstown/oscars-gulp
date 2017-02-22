@@ -19,6 +19,21 @@
             &:focus {
                 outline: none;
             }
+            .radio {
+                margin: 0;
+                display: inline-block;
+                div,
+                input {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                i.fa-trophy {
+                    color: darken(gold, 10%);
+                }
+                i.fa-square {
+                    color: gray;
+                }
+            }
         }
     }
 }

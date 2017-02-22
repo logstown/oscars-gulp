@@ -144,11 +144,11 @@ h3,
 }
 
 .correct {
-    background-color: lightgreen;
+    background-color: rgba(lightgreen, 0.4);
 }
 
 .incorrect {
-    background-color: rgb(255, 192, 203);
+    background-color: rgba(rgb(255, 192, 203), 0.4);
 }
 
 .eliminated {
