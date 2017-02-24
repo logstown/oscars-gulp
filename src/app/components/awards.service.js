@@ -22,7 +22,7 @@
                     return award.winner !== undefined;
                 })
                 .sumBy('points')
-                .value();
+                .value() || 0;
 
             if (eventObj.event === 'child_added') {
                 totalPoints += award.points;

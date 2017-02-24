@@ -9,7 +9,7 @@
     <div class="row text-center">
         <select ng-if="isAfterOscarStart()" ng-model="userPool" ng-options="pool as pool.name for pool in userPools" class="form-control" style="width: auto; display: inline-block; font-size: 120%;"></select>
     </div>
-    <div class="row" style="margin-top: 20px;">
+    <div class="row" style="margin-top: 20px;" ng-if="picks">
         <div class="col-md-3 hidden-sm hidden-xs award-list" ng-if="!searchTerm">
             <div class="affix hidden-print" bs-affix data-offset-top="-15">
                 <ul class="nav nav-stacked nav-pills">
@@ -47,8 +47,8 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="pull-right" ng-if="isAfterOscarStart()">
-                            <img ng-repeat="voter in getVoters($parent.$index, $index)" style="margin-left: 2px;" ng-src="{{voter.info.photoURL}}" alt="" height="30" data-type="success" data-title="{{voter.info.displayName}}" bs-tooltip>
+                        <div class="pull-right" ng-if="isAfterOscarStart() && voters">
+                            <img ng-repeat="voter in getVoters(award.$id, $index)" style="margin-left: 2px;" ng-src="{{voter.info.photoURL}}" alt="" height="30" data-type="success" data-title="{{voter.info.displayName}}" bs-tooltip>
                         </div>
                         <button class="btn btn-default" ng-if="isAfterOscarStart() &&  isAuthorized()" style="position: absolute; right:-66px; top: 0;" ng-click="pickWinner(award, $index)">Winner</button>
                     </li>

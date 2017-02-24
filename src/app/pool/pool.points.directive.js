@@ -84,9 +84,13 @@
             }
 
             function getProgressWidth(user) {
-                var width = (user.score / AwardsService.getPossiblePoints()) * 100;
+                var possiblePoints = AwardsService.getPossiblePoints();
 
-                return width;
+                if (possiblePoints) {
+                    return (user.score / possiblePoints) * 100;
+                } else {
+                    return 0;
+                }
             }
 
             function getBadgeLeft(user) {
@@ -96,7 +100,7 @@
             function getProgressBarColor(user) {
                 var latestAward = AwardsService.getLatestAward();
 
-                if (user.picks[latestAward.$id] === latestAward.winner) {
+                if (Number(user.picks[latestAward.$id]) === latestAward.winner) {
                     return 'progress-bar-success';
                 } else {
                     return 'progress-bar-danger'

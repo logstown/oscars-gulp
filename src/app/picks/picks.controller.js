@@ -6,7 +6,7 @@
         .controller('PicksController', PicksController);
 
     /** @ngInject */
-    function PicksController($scope, Awards, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state, UserPools, Pool, PoolUsers) {
+    function PicksController($scope, Awards, PicksObject, currentAuth, TimeService, $document, $modal, User, PicksService, $state, UserPools, Pool, PoolUsers, $q) {
         var ADMIN_GOOGLE_UID = 'google:106090281405764589476';
         var ADMIN_FACEBOOK_UID = 'facebook:10101440252179991';
         var ADMIN_TWITTER_UID = 'twitter:21528048';
@@ -60,12 +60,36 @@
 
             poolUsers.$loaded()
                 .then(function() {
-                    $scope.poolUsers = _.map(poolUsers, function(user) {
-                        return {
-                            picks: PicksObject(user.$id),
-                            info: User(user.$id)
-                        }
-                    });
+                    $scope.poolUsers = _.chain(poolUsers)
+                        .map(function(user) {
+                            return {
+                                picks: PicksObject(user.$id),
+                                info: User(user.$id)
+                            }
+                        })
+                        .value();
+
+                    $scope.awards.$loaded()
+                        .then(function() {
+                            var promises = _.map($scope.poolUsers, function(user) {
+                                return user.picks.$loaded();
+                            });
+
+                            return $q.all(promises)
+
+                        })
+                        .then(function() {
+                            $scope.voters = [];
+
+                            angular.forEach($scope.awards, function(award) {
+                                $scope.voters[award.$id] = _.groupBy($scope.poolUsers, function(user) {
+                                    var i = Number(award.$id);
+                                    var thing = user.picks[i];
+                                    return thing;
+                                })
+                            })
+                        })
+
                 })
         }
 
@@ -114,10 +138,6 @@
         }
 
         function awardCantBeValidated(awardIdx) {
-            if (!$scope.picks) {
-                return;
-            }
-
             return !$scope.picks[awardIdx] || $scope.awards[awardIdx].winner === undefined || !$scope.isAfterOscarStart();
         }
 
@@ -146,9 +166,7 @@
         }
 
         function getVoters(awardI, nomI) {
-            return _.filter($scope.poolUsers, function(user) {
-                return Number(user.picks[awardI]) === nomI;
-            })
+            return $scope.voters[awardI][nomI];
         }
     }
 })();
