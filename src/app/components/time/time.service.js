@@ -9,9 +9,6 @@
     function TimeService($interval) {
         var currentTime = new Date();
         var oscarStart = new Date(2017, 1, 27, 1, 30 - currentTime.getTimezoneOffset());
-
-        console.log(oscarStart)
-
         var stopTime = $interval(updateTime, 1000);
 
         return {

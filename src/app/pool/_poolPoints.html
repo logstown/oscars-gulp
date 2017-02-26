@@ -4,7 +4,7 @@
     </div>
     <div class="panel-body text-center" ng-show="itsOver()">
         <h2><i class="fa fa-star"></i><span style="margin-left: 5px; margin-right: 5px;">Congratulations!</span><i class="fa fa-star"></i></h2>
-        <h3 ng-repeat="winner in winners">{{winner.displayName}}</h3>
+        <h3 ng-repeat="winner in winners">{{winner.info.displayName}}</h3>
         <button class="btn btn-default btn-lg btn-block raised" ng-click="getSuperlatives()">
             <h4><i class="fa fa-trophy" style="margin-right: 5px;"></i>Click to See Superlatives</h4>
         </button>

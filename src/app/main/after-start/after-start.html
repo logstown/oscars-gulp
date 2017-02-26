@@ -16,8 +16,8 @@
         Possible points: <span class="label label-primary" style="font-size: initial;">{{vm.getPossiblePoints()}}</span> Total possible points: <span class="label label-primary" style="font-size: initial;">{{vm.getTotalPoints()}}</span>
     </div>
     <div class="row">
-        <div ng-class="{'col-md-8 col-md-offset-2': vm.userPools.length === 1, 'col-md-6': vm.userPools.length > 1}" style="margin-bottom: 50px;">
-            <pool-points ng-repeat="pool in vm.userPools" pool-id="pool.$id"></pool-points>
+        <div ng-repeat="pool in vm.userPools" ng-class="{'col-md-8 col-md-offset-2': vm.userPools.length === 1, 'col-md-6': vm.userPools.length > 1}" style="margin-bottom: 50px;">
+            <pool-points pool-id="pool.$id"></pool-points>
         </div>
     </div>
 </div>

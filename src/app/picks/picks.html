@@ -47,7 +47,7 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="pull-right" ng-if="isAfterOscarStart() && voters">
+                        <div class="text-right" ng-if="isAfterOscarStart() && voters">
                             <img ng-repeat="voter in getVoters(award.$id, $index)" style="margin-left: 2px;" ng-src="{{voter.info.photoURL}}" alt="" height="30" data-type="success" data-title="{{voter.info.displayName}}" bs-tooltip>
                         </div>
                         <button class="btn btn-default" ng-if="isAfterOscarStart() &&  isAuthorized()" style="position: absolute; right:-66px; top: 0;" ng-click="pickWinner(award, $index)">Winner</button>

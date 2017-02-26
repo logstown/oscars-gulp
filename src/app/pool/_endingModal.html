@@ -1,5 +1,5 @@
 <div class="jumbotron winner">
-    <h2 class="text-center">Congratulations <strong><span ng-repeat="champ in champions">{{champ.name}}<span ng-hide="$last">, </span></span></strong>!</h2>
+    <h2 class="text-center">Congratulations <strong><span ng-repeat="winner in winners">{{winner.info.displayName}}<span ng-hide="$last">, </span></span></strong>!</h2>
     <p class="lead text-center">...who won with {{champions[0].score}} points!</p>
 </div>
 <h3 class="title"><i class="fa fa-star"></i>Superlatives<i class="fa fa-star"></i></h3>
