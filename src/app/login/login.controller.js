@@ -6,7 +6,7 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController($state, Auth, currentAuth, $rootScope) {
+    function LoginController($state, Auth, currentAuth, $rootScope, User) {
         var vm = this;
 
         vm.login = login;
@@ -26,15 +26,23 @@
 
                     providerData.uid = result.user.uid;
 
-                    firebase.database()
-                        .ref('users')
-                        .child(result.user.uid)
-                        .set(providerData);
+                    var user = User(result.user.uid);
 
-                    var route = $rootScope.intendedRoute || { state: 'home', params: {} };
-                    $rootScope.intendedRoute = undefined;
+                    user.$loaded()
+                        .then(function() {
+                            if (user.$value === null) {
+                                firebase.database()
+                                    .ref('users')
+                                    .child(result.user.uid)
+                                    .set(providerData)
+                            }
 
-                    $state.go(route.state, route.params);
+                            var route = $rootScope.intendedRoute || { state: 'home', params: {} };
+                            $rootScope.intendedRoute = undefined;
+
+                            $state.go(route.state, route.params);
+                        })
+
                 });
         }
 
