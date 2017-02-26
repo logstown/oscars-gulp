@@ -23,6 +23,7 @@
         $scope.pickWinner = pickWinner;
         $scope.isAuthorized = isAuthorized;
         $scope.getVoters = getVoters;
+        $scope.userPoolChanged = userPoolChanged;
 
         activate();
 
@@ -50,13 +51,13 @@
                     })
                     .then(function() {
                         $scope.userPool = $scope.userPools[0];
-                        userPoolChanged();
+                        userPoolChanged($scope.userPool);
                     })
             }
         }
 
-        function userPoolChanged() {
-            var poolUsers = PoolUsers($scope.userPool.$id);
+        function userPoolChanged(pool) {
+            var poolUsers = PoolUsers(pool.$id);
 
             poolUsers.$loaded()
                 .then(function() {

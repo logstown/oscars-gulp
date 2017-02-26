@@ -12,8 +12,12 @@
             </div>
         </div>
     </div>
-    <div class="row text-center">
-        Possible points: <span class="label label-primary" style="font-size: initial;">{{vm.getPossiblePoints()}}</span> Total possible points: <span class="label label-primary" style="font-size: initial;">{{vm.getTotalPoints()}}</span>
+    <div class="row text-center" style="margin-bottom: 30px;">
+        <div class="lead" style="margin-bottom: 0; display: inline-block; vertical-align: middle;">Click here to see what everyone chose:</div>
+        <button class="btn btn-primary btn-lg raised" ui-sref="picks">Picks</button>
+    </div>
+    <div class="row text-center" style="margin-bottom: 20px;">
+        Possible points: <span class="label label-info" style="font-size: initial;">{{vm.getPossiblePoints()}}</span> Total possible points: <span class="label label-info" style="font-size: initial;">{{vm.getTotalPoints()}}</span>
     </div>
     <div class="row">
         <div ng-repeat="pool in vm.userPools" ng-class="{'col-md-8 col-md-offset-2': vm.userPools.length === 1, 'col-md-6': vm.userPools.length > 1}" style="margin-bottom: 50px;">

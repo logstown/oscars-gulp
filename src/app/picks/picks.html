@@ -7,7 +7,12 @@
         <div class="clearfix"></div>
     </div>
     <div class="row text-center">
-        <select ng-if="isAfterOscarStart()" ng-model="userPool" ng-options="pool as pool.name for pool in userPools" class="form-control" style="width: auto; display: inline-block; font-size: 120%;"></select>
+        <div class="lead" style="display: inline-block; vertical-align: middle; margin-bottom: 0; margin-right: 7px;">
+            Pool:
+        </div>
+        <div style="display: inline-block; vertical-align: middle;">
+            <select ng-if="isAfterOscarStart()" ng-model="userPool" ng-options="pool as pool.name for pool in userPools" class="form-control" style="width: auto; display: inline-block; font-size: 120%;" ng-change="userPoolChanged(userPool)"></select>
+        </div>
     </div>
     <div class="row" style="margin-top: 20px;" ng-if="picks">
         <div class="col-md-3 hidden-sm hidden-xs award-list" ng-if="!searchTerm">
