@@ -5,8 +5,8 @@ import json
 # with open("noms.txt") as f:
 #     content = f.readlines()
 
-f = open("2017.txt")
-newOne = open('nomnom.json', 'w')
+f = open("2018.txt")
+newOne = open('nomnom2018.json', 'w')
 
 newAwardNext = True
 awards = []

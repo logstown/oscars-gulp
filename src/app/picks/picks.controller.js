@@ -37,7 +37,7 @@
             var picks = PicksObject(currentUserId);
             picks.$bindTo($scope, 'picks');
 
-            if ($scope.isAfterOscarStart) {
+            if ($scope.isAfterOscarStart()) {
                 var userPools = UserPools(currentUserId);
 
                 userPools.$loaded()

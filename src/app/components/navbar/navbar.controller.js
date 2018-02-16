@@ -12,6 +12,7 @@
 
         vm.logout = logout;
         vm.editProfile = editProfile;
+        vm.getAvatarUrl = getAvatarUrl;
 
         activate();
 
@@ -31,6 +32,14 @@
 
         function logout() {
             Auth.$signOut();
+        }
+
+        function getAvatarUrl() {
+            if(vm.user) {
+                return 'avatars/' + vm.user.uid
+            } else {
+                return '';
+            }
         }
 
         function editProfile() {

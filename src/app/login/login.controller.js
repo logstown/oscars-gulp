@@ -6,7 +6,7 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController($state, Auth, currentAuth, $rootScope, User) {
+    function LoginController($state, Auth, currentAuth, $rootScope, User, $firebaseStorage) {
         var vm = this;
 
         vm.login = login;
@@ -36,6 +36,16 @@
                                     .child(result.user.uid)
                                     .set(providerData)
                             }
+
+                            var storageRef = firebase.storage().ref("avatars/" + result.user.uid);
+
+                            fetch(providerData.photoURL)
+                                .then(function(res) {
+                                    return res.blob()
+                                })
+                                .then(function(blob) {
+                                    $firebaseStorage(storageRef).$put(blob, {contentType: "image/jpg"})
+                                });
 
                             var route = $rootScope.intendedRoute || { state: 'home', params: {} };
                             $rootScope.intendedRoute = undefined;

@@ -42,11 +42,11 @@
                     <ul class="nav navbar-nav navbar-left">
                         <li><a ui-sref="about">About</a></li>
                     </ul>
-                    <ul ng-show="nav.user" class="nav navbar-nav navbar-right">
+                    <ul ng-if="nav.user" class="nav navbar-nav navbar-right">
                         <!-- <li class="divider-vertical"></li> -->
                         <li class="dropdown ng-cloak">
                             <a href bs-dropdown role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 5px;" data-animation="am-fade" data-placement="bottom-right">
-                                <img ng-src="{{nav.user.photoURL}}" style="height: 40px; margin-right: 10px;" alt=""> {{nav.user.displayName}}
+                                <img firebase-src="{{nav.getAvatarUrl()}}" style="height: 40px; margin-right: 10px;"> {{nav.user.displayName}}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
@@ -66,7 +66,7 @@
     <div ui-view></div>
     <footer class="footer">
         <div class="container text-center">
-            <p class="text-muted">© Copyright 2017, Logan Joecks</p>
+            <p class="text-muted">© Copyright 2018, Logan Joecks</p>
         </div>
     </footer>
     <!-- build:js(src) scripts/vendor.js -->
