@@ -37,15 +37,15 @@
                                     .set(providerData)
                             }
 
-                            var storageRef = firebase.storage().ref("avatars/" + result.user.uid);
+                            // var storageRef = firebase.storage().ref("avatars/" + result.user.uid);
 
-                            fetch(providerData.photoURL)
-                                .then(function(res) {
-                                    return res.blob()
-                                })
-                                .then(function(blob) {
-                                    $firebaseStorage(storageRef).$put(blob, {contentType: "image/jpg"})
-                                });
+                            // fetch(providerData.photoURL)
+                            //     .then(function(res) {
+                            //         return res.blob()
+                            //     })
+                            //     .then(function(blob) {
+                            //         $firebaseStorage(storageRef).$put(blob, {contentType: "image/jpg"})
+                            //     });
 
                             var route = $rootScope.intendedRoute || { state: 'home', params: {} };
                             $rootScope.intendedRoute = undefined;

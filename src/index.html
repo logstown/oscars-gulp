@@ -46,7 +46,7 @@
                         <!-- <li class="divider-vertical"></li> -->
                         <li class="dropdown ng-cloak">
                             <a href bs-dropdown role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 5px;" data-animation="am-fade" data-placement="bottom-right">
-                                <img firebase-src="{{nav.getAvatarUrl()}}" style="height: 40px; margin-right: 10px;"> {{nav.user.displayName}}
+                                <img ng-src="{{nav.user.photoURL}}" style="height: 40px; margin-right: 10px;" alt=""> {{nav.user.displayName}}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
